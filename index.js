@@ -10,6 +10,7 @@ const config = require("./config.json");
 client.config = config;
 client.commands = new Collection();
 const noprefixCommand = new Collection()
+const noprefixList = []
 
 const events = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of events) {
@@ -36,12 +37,14 @@ for (const file of noprefixes) {
 
   console.log(`🔧 | Loaded ${noprefixName} | NON PREFIX COMMAND`);
   noprefixCommand.set(noprefixName, noprefix);
+  noprefixList.push(noprefixName)
 }
+
 
 client.login(config.token);
 
 
 
 //exports the noprefixCommand array so you can import them on another js file
-module.exports = noprefixCommand
+module.exports = [noprefixCommand, noprefixList]
 console.log('--- Mogusbot succesfully ran! ---')

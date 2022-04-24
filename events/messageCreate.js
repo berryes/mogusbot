@@ -1,27 +1,18 @@
-
 module.exports = (client, message) => {
   // Ignore all bots
-  const noprefixCommand = require("../index");
+  const [noprefixCommand,noprefixList] = require("../index");
   if (message.author.bot) return;
-  /*
-  function chanche() {
-    var randomus = Math.floor(Math.random() * 2);
-    if randomus == 1 {
-      cmd = noprefixCommand(gay)
-      cmd.run(client, message)
-    }
-  }
-  */
-  function notprefix() {
-    const command = message.content 
-    const cmd = noprefixCommand.get(command)
-    if (!cmd) return;
-    cmd.run(client,message)
 
-  }
-  
+  function notprefix() {
+    text = message.content
+    for (let x in noprefixList) {
+      if (text.includes(noprefixList[x])) {
+        const commandus = noprefixCommand.get(noprefixList[x])
+        commandus.run(client,message)
+      }}}
+
   // Ignore messages not starting with the prefix (in config.json)
-  if (message.content.indexOf(client.config.prefix) !== 0) {  
+  if  (message.content.indexOf(client.config.prefix) !== 0) {  
     notprefix()
   };
 
