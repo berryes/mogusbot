@@ -1,21 +1,18 @@
+
 module.exports = (client, message) => {
-  // Ignore all bots
   const [noprefixCommand,noprefixList] = require("../index");
   if (message.author.bot) return;
 
   function notprefix() {
-    text = message.content
-    for (let x in noprefixList) {
-      if (text.includes(noprefixList[x])) {
-        const commandus = noprefixCommand.get(noprefixList[x])
-        commandus.run(client,message)
-      }}}
+    replyus = noprefixCommand.get('reply')
+    replyus.run(client,message)
+  }
 
-  // Ignore messages not starting with the prefix (in config.json)
+  // If messages have the prefix, run the command. If not run the notprefix which generates a chanche. IF its true it replies with a random line to the same channel
   if  (message.content.indexOf(client.config.prefix) !== 0) {  
     notprefix()
   };
-
+  notprefix()
 
 
   // Our standard argument/command name definition.

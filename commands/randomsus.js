@@ -3,7 +3,7 @@ exports.run = (client, message, args) => {
     var random = Math.floor(Math.random() * suses.length);
     message.channel.send(`${suses[random]}`).catch(console.error);
 }
-
+// Generates random word from list  and prints it out
 exports.name = "randomsus";
 
 // https://www.thefreedictionary.com/words-that-end-in-us 

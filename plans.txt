@@ -1,0 +1,3 @@
+add a log system 
+though only log when an action actually happness. like call of a command
+and if it generates a reply chanche only if it executes so you dont flood the storage XD

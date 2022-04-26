@@ -15,6 +15,6 @@ exports.run = (client, message, args) => {
     var pic = suss[randoma]
     message.channel.send({files:[`./images/${pic}`]});
 }
-
-exports.name = "sussypic";
+// Generates random word from list  and image and prints it out 
+exports.name = "random";
 
