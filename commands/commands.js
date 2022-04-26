@@ -16,7 +16,7 @@ const exampleEmbed = new MessageEmbed()
 		{ name: 'aincentmogus', value: 'history of mogus', inline: true },
 	)
 	.setTimestamp()
-	.setFooter({ text: 'Mogusbot version 0.0.0.1'});
+	.setFooter({ text: 'Mogusbot version 0.0.0.4'});
 
     message.channel.send({ embeds: [exampleEmbed] });
 }

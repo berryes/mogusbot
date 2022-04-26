@@ -14,6 +14,8 @@ var negative = [
     "i think i have HIV",
     "i broke my dick",
     "fag",
+    "i hate you for this",
+    "the migthy mogus had put a curse on you",
     "fat fuck",
     "omg just shut the fuck up already",
     "You wanna know what is an absolute banger? Me and ur mom every night",
@@ -32,6 +34,9 @@ var positive = [
     "will u be my gf?",
     "my penis is 13 inches long",
     "i am motivated",
+    "i am in deeply love with you",
+    "BABE 😫 STAAAAAPH",
+    "you smell gay. i like it :3",
     "mi eres mi amante?",
     "no bitches?",
     "may the mighty mogus bless you",
@@ -41,22 +46,24 @@ var positive = [
     "Nice cock bro. Good girth, pretty nice curve, tip-to-shaft ratio is perfect; only issue is the colour consistency, it gets a little light near the tip. I give it an overall 8.7/10; now onto the cum velocity testing.",
     "u-uuuwaaaa~ OmO i-i let my boifwendu do a cummy cum in my boipucccwie~!!! and he didn't wear a boicondom O////O a-a-am i gonna get boipreggers now?? 3: i is too young to be a boimother! >///< c-c-can i getsies a boibortion? uwu c-can i pay my boinecologist with my boipucccwie-wucie? O////< p-perhaps i could offer him my tasty boimilk uwu. o-or m-maybe i'll ask if he will accept a pint of my sticky boisyrup instead UwU",
     "Welcome to the cum zone Only cum inside anime girls Quivering clit, double jointed pussy Fresh balls, elegant ejaculation First the kiss, then the cum My dick is in love with pain Co-op cock torture Stuff my dick into a furnace Stitch my cock shut Pressure cook my greasy balls Cumblast me and make it snappy Cum, cum, cum, cum, cum, cum, cum, cum Cum, cum, cum, cum, cum, cum, cum, cum Cum, cum, cum, cum, cum, cum, cum, cum Cum, cum, cum, cum, cum, cum, cum, cum What's all the cummotion? My dad fell into a cum shaft My dad glazed my face with cum Fertilize a baby with hunk spunk Cum spunk in my trunk Cum craving toddler Cum drippin' cunt Cummy Rae Jepsen Cum me maybe Cummy bottom boy Night of the living cum Nefarious cum mastermind Cum makes me fearless Cum crammer, cock slammer Cum slammed ya mum Mail your mums pieces of my dick Bazinga! Chug the cum, fug ya mum Fuck my asshole full of cum Three little words Get fucked, nerd Cum stuffer, jenkem huffer Fuck my cum puddle Bottom stuffer, semen huffer Would love a gator to fuck me Undercooked baby pig penises Help my dogs get a huge boner Water bong full of cat cum Accidentally fucked my own ass I barely had any dicks inside me Who ate all my cum? A mystery Cum detective hot on the trail Bees make honey, I make cummy",
-    "My SUSSY POWERS ARE AWAKENING 😱😎 Part 1. I just did my daily jackoff ☺️ to my impostor body pillow, 😱 but when I came, 👻 I started floating, 😱 and think I got teleported into the skeld. 😮 I swear for a second I felt the imposter's strong hands grip my asscheeks.🤤 🍑 🍑 I immediately was transported back to earth, 😭 and I instantly got on all fours on my bed naked, 🤪 as you would, and started screaming in my best efforts to summon the imposter 💪 “IM READY FUCK ME FUCK ME FUCK ME FUCK ME PLEASE DADDY IMPOSTER” I was so close to feeling the imposters sweet cock fuck the shit out of me 🤤 but then my NAZI RACIST mother came in and beat the shit out of me. 😔😒🙁☹️ She then said I was going to a magical place called the “mental asylum” 🤔 I’m not too sure where that dimension is located but it sounds EPIC 😮"
-
-]
-
+    "My SUSSY POWERS ARE AWAKENING 😱😎 Part 1. I just did my daily jackoff ☺️ to my impostor body pillow, 😱 but when I came, 👻 I started floating, 😱 and think I got teleported into the skeld. 😮 I swear for a second I felt the imposter's strong hands grip my asscheeks.🤤 🍑 🍑 I immediately was transported back to earth, 😭 and I instantly got on all fours on my bed naked, 🤪 as you would, and started screaming in my best efforts to summon the imposter 💪 “IM READY FUCK ME FUCK ME FUCK ME FUCK ME PLEASE DADDY IMPOSTER” I was so close to feeling the imposters sweet cock fuck the shit out of me 🤤 but then my NAZI RACIST mother came in and beat the shit out of me. 😔😒🙁☹️ She then said I was going to a magical place called the “mental asylum” 🤔 I’m not too sure where that dimension is located but it sounds EPIC 😮",
+    "sus af. i like it"
+];
 // Generates a random number, if its 1 then the bot replies with a random Positive/negative quote.
 // i will store the data in a database later if i learn to use it
+
+
+
 exports.run = (client, message, args) => {
     var chanceForReply = Math.floor(Math.random() * 50);
     var ReplyChancheValue = Math.floor(Math.random() * 3);
     if (chanceForReply == 1) {
         if (ReplyChancheValue == 1) {
            var random = Math.floor(Math.random() * positive.length)
-           message.channel.send(positive[random])
+           message.reply(positive[random])
         } else if (ReplyChancheValue == 2){
-            var random = Math.floor(Math.random() * positive.length)
-            message.channel.send(negative[random])
+            var random = Math.floor(Math.random() * negative.length)
+            message.reply(negative[random])
         }
     }
 }

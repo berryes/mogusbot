@@ -1,24 +1,27 @@
 const { Client, Intents, Collection, presence  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
-function addTag(args, client) {
-  const tag = Tags.create({
-    name: args,
-  });
-}
+
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
 });
+
+
+
+
 
 // Rich presence
 client.on('ready', () => {
   client.user.setActivity("Among Drip 10 hours sussy baka edition", {
     type: "LISTENING",
   });
+
 });
 
 const config = require("./config.json");
 client.config = config;
+
+
 
 // Command's list
 client.commands = new Collection();
@@ -65,7 +68,7 @@ client.login(config.token);
 
 
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
-module.exports = [noprefixCommand, noprefixList, commandListus,]
+module.exports = [noprefixCommand, noprefixList, commandListus]
 console.log('--- Mogusbot succesfully ran! ---')
 
 
