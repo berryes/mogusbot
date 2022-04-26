@@ -1,1 +1,1 @@
-0.0.0.1 - 2022.04.26 - Added random replies, made commands better and addedd command request | Chad.js now cannot generate the same image twice
+0.0.0.2 - 2022.04.26 - Added random replies, made commands better and addedd command request | Chad.js now cannot generate the same image twice
