@@ -61,8 +61,6 @@ for (const noprefixFile of noprefixes) {
 
 client.login(config.token);
 
-
-
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
 module.exports = [noprefixCommand, noprefixList, commandListus]
 console.log('--- Mogusbot succesfully ran! ---')
