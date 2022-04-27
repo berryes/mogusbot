@@ -1,13 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define('users', {
+	return sequelize.define('quotes', {
 		quote: {
 			type: DataTypes.STRING,
 			primaryKey: true,
 		},
-		meaning: {
-			type: DataTypes.STRING,
-			defaultValue: 0,
-			allowNull: false,
+		nORp: {
+			type: DataTypes.STRING
 		},
 	}, {
 		timestamps: false,

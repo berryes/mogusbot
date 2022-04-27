@@ -52,10 +52,17 @@ var positive = [
 // Generates a random number, if its 1 then the bot replies with a random Positive/negative quote.
 // i will store the data in a database later if i learn to use it
 
+const Keyv = require('keyv');
+const keyv = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
 
+const chancheDB = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
 
 exports.run = (client, message, args) => {
-    var chanceForReply = Math.floor(Math.random() * 50);
+    (async () => {
+        // true
+        const databaseValue = await chancheDB.get('chanche');
+
+    var chanceForReply = Math.floor(Math.random() * databaseValue);
     var ReplyChancheValue = Math.floor(Math.random() * 3);
     if (chanceForReply == 1) {
         if (ReplyChancheValue == 1) {
@@ -66,6 +73,8 @@ exports.run = (client, message, args) => {
             message.reply(negative[random])
         }
     }
+})();
 }
+
 exports.name = "reply";
 

@@ -12,7 +12,6 @@ module.exports = (client, message) => {
   if  (message.content.indexOf(client.config.prefix) !== 0) {  
     notprefix()
   };
-  notprefix()
 
 
   // Our standard argument/command name definition.

@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
     if (minutes > 60) {
     minutes = 0;
             }
-            uptime += `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`
+            uptime += `My uptime is: ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`
     message.channel.send(`${uptime}`)
 }
 

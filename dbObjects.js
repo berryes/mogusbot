@@ -10,4 +10,4 @@ const sequelize = new Sequelize('mogusbot', 'bot', 'root', {
 const quotes = require('./models/quotes.js')(sequelize, Sequelize.DataTypes);
 
 
-module.exports = { Users, CurrencyShop, UserItems };
+module.exports = { quotes };

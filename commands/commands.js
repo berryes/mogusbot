@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+
 exports.run = (client, message, args) => {
 // inside a command, event listener, etc.
 const exampleEmbed = new MessageEmbed()
@@ -16,8 +17,7 @@ const exampleEmbed = new MessageEmbed()
 		{ name: 'aincentmogus', value: 'history of mogus', inline: true },
 	)
 	.setTimestamp()
-	.setFooter({ text: 'Mogusbot version 0.0.0.4'});
-
+	.setFooter({ text: 'Mogusbot version 0.0.0.5'});
     message.channel.send({ embeds: [exampleEmbed] });
 }
 
