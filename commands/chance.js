@@ -11,7 +11,7 @@ exports.run = (client, message, args, roles) => {
                 await message.channel.send(` Reply chanche set to : 1/${chancheValue}`)
             }
             else {
-                await message.channel.send('You dont have permision for this... sussy baka')
+                await message.reply('You dont have permision for this... sussy baka')
             }
             // true
 

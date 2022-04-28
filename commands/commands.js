@@ -17,9 +17,10 @@ const exampleEmbed = new MessageEmbed()
 		{ name: 'choose', value: 'choose between two number/words. put space between em', inline: true },
 		{ name: 'chance', value: 'change replychance value', inline: true },
 		{ name: 'uptime', value: 'how long have the bot been running for', inline: true },
+		{ name: 'quotes add', value: 'add a quote to the database | add positive or negative to the end', inline: true },
 	)
 	.setTimestamp()
-	.setFooter({ text: 'Mogusbot version 0.0.0.6'});
+	.setFooter({ text: 'Mogusbot version 0.0.0.9'});
     message.channel.send({ embeds: [exampleEmbed] });
 }
 
