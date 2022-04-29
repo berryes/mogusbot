@@ -1,19 +1,115 @@
-# mogusbot
-The mogus bot is one my biggest Js projects.
-I started actually learning Js basics with the discordjs. I am enjoying it so far.
-Yes, i get it the among us is a "dead" meme. but i and many of my friends still enjoy em' so i tought I would theme the bot around it.
+<br/>
+<p align="center">
+  <a href="https://github.com/berryes/mogusbot">
+    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
+  </a>
 
-Some features: (prefix is .sus)
+  <h3 align="center">Mogus Bot</h3>
 
-COMMANDS
-chad - generate a random image from the chads folder.
-randomsus - generates a random word ending with "us".
-sussypic - generates a random picture from the images folder
-random - sussypic&randomsus combined
+  <p align="center">
+    Basic DiscordJS-13 bot.
+    <br/>
+    <br/>
+  </p>
+</p>
 
-PASSIVE
-The bot has a 1 out of 50 chance to reply to a message with a positive or negative quote. You can change them in the "noprefix" folder / reply.ks
+![Contributors](https://img.shields.io/github/contributors/berryes/mogusbot?color=dark-green) ![Issues](https://img.shields.io/github/issues/berryes/mogusbot) ![License](https://img.shields.io/github/license/berryes/mogusbot) 
 
-I also plan on using database management with all sorts of other features like a working website and musicbot. 
-And maybe a connecting it with a TS3 bot so it would tunnel the audio thru the two platforms
+## Table Of Contents
 
+* [About the Project](#about-the-project)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [License](#license)
+* [Authors](#authors)
+* [Acknowledgements](#acknowledgements)
+
+## About The Project
+
+![Screen Shot](images/screenshot.png)
+
+The mogus bot is one of my many projects that actually succeeded(succeeded= finished).
+
+I started it as a joke but it got out of hand really fast. I was enjoying my self too much. Made lot of functions, checks. Database management and I learned Linux on the way, since I was 24/7 running it on my VPS. 
+
+## Getting Started
+
+Here are some information you need before running the bot!
+
+### Prerequisites
+
+You will need a mysql databse for it to work.
+
+### Installation
+
+1. Download it, and extract it to a folder
+
+OR
+```sh
+git clone https://github.com/berryes/mogusbot.git
+```
+
+3. Install NPM packages
+
+```sh
+npm install
+```
+
+4. Enter your API key in  in `config.json`
+
+```JS
+    "token": "your-very-long-api-key-here",
+
+```
+4. Change database login info in  `index.js`
+```JS
+    const sequelize = new Sequelize('database', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'mysql',
+	logging: false,
+	storage: 'database.mysql',
+});
+
+const chancheDB = new Keyv('mysql://username:password@localhost:3306/database');
+
+```
+
+
+
+## Usage
+
+This bot was built on regular prefix chat commands. /commands do not work. Every command has start with the given prefix (.sus by default) and must be a valid command. Everytime the user send a message to any channel the bot has acces to, the noprefix reply command runs. If the random generator generates 1, the bot will reply to the user with a negative/positive "quote". This is just a fan part of the bot. Just to spice up everyday convertisations 
+
+## Commands
+
+- *chad* - Generates random image from chads folder.
+- *randomsus* - Generates random word ending with us.
+- *sussypic* - Generates random image from images folder.
+- *random* -sussypic&randomsus combined
+- *uptime* - Displays the bot's uptime.
+- *commands* - Displays commands.
+- *choose* - Chooses between items (.sus choose item1 item2 item3...)
+- *quote [random text] | [positive/negative]* - adds a quote to the database as negative or positive. 
+- *chance* - shows the chance to a random reply
+- *chance set [number]* - sets the random reply chance value
+
+### Creating A Pull Request
+
+
+
+## License
+
+Distributed under the MIT License. See [LICENSE](https://github.com/berryes/mogusbot/blob/main/LICENSE.md) for more information.
+
+## Authors
+
+* **Barna Mate** - *Software Developer* - [Barna Mate](https://github.com/berryes/) - *Made the bot*
+
+## Acknowledgements
+
+* [ShaanCoding](https://github.com/ShaanCoding/)
+* [Othneil Drew](https://github.com/othneildrew/Best-README-Template)
+* [ImgShields](https://shields.io/)

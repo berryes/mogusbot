@@ -1,4 +1,8 @@
 {
+  "name": "mogus-bot",
+  "main": "index.js",
+  "author": "berryes",
+  "description": "A funny discord bot lol",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/opus": "^0.5.3",
@@ -9,7 +13,9 @@
     "discord-api-types": "^0.31.0",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
+    "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^4.4.1",
+    "fluent-ffmpeg": "^2.1.2",
     "keyv": "^4.2.2",
     "mysql": "^2.18.1",
     "sequelize": "^6.19.0",

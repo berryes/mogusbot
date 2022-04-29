@@ -4,7 +4,7 @@ exports.run = (client, message, args) => {
 // inside a command, event listener, etc.
 const exampleEmbed = new MessageEmbed()
 	.setColor('RANDOM')
-	.setURL('https://berryez.xyz/')
+	.setURL('https://github.com/berryes/mogusbot')
 	.setAuthor({ name: 'The mogus bot', iconURL: 'https://i.imgur.com/nH7tKhI.png', url: 'https://berryez.xyz/' })
 	.setDescription('the mighty mogus bot has appeared. ')
 	.setThumbnail('https://i.imgur.com/lfchERD.gif')

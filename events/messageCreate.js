@@ -15,11 +15,8 @@ module.exports = (client, message) => {
   else {
   const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-
-  // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
 
-  // If that command doesn't exist, silently exit and do nothing
   if (!cmd){
     message.reply('this is not a command you sussy baka | ask with .sus commands')
   }
