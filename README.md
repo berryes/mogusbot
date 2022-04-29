@@ -29,7 +29,7 @@
 
 ## About The Project
 
-![Screen Shot](images/screenshot.png)
+![Screen Shot](screenshot.png)
 
 The mogus bot is one of my many projects that actually succeeded(succeeded= finished).
 
