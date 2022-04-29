@@ -20,7 +20,7 @@ const Quotes = sequelize.define('quotes', {
         type: Sequelize.TEXT,
     }
 });
-
+Quotes.sync()
 var negative = [
     "thats kinda sus ngl",
     "yeah, noone cares",

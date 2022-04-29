@@ -20,6 +20,14 @@ const Quotes = sequelize.define('quotes', {
 });
 const adminrole = '968842654584557578'
 
+
+// NEEED TO CHECK IF THE SHIT THEY ADD EXISTS 
+// BC IF IT DOES THE BOT COMMITS BIG SUISIDE
+// SUICIDE
+// YES THE NOT LIVE ANYMORE. NOT FUNNY 
+
+
+
 exports.run = (client, message, args) => {
     if (message.member.roles.cache.has(adminrole)){
     Quotes.sync()
