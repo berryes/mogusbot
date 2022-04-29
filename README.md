@@ -106,10 +106,11 @@ Distributed under the MIT License. See [LICENSE](https://github.com/berryes/mogu
 
 ## Authors
 
-* **Barna Mate** - *Software Developer* - [Barna Mate](https://github.com/berryes/) - *Made the bot*
+* **berry** - *Software Developer (somewhat)* - [berryes](https://github.com/berryes/)
 
 ## Acknowledgements
 
 * [ShaanCoding](https://github.com/ShaanCoding/)
 * [Othneil Drew](https://github.com/othneildrew/Best-README-Template)
 * [ImgShields](https://shields.io/)
+* [Discordjs Guide](https://discordjs.guide/)
