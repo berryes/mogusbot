@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/berryes/mogusbot">
-    <img src="logo.jpg" alt="Logo" width="80" height="80" style="border-radius: 2em;">
+    <img src="logo.jpg" alt="Logo" width="80" height="80" style="border-radius: 2em">
   </a>
 
   <h3 align="center">Mogus Bot</h3>
