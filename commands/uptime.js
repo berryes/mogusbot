@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 exports.run = (client, message, args) => {
     let days = 0
     let week = 0
@@ -18,7 +19,14 @@ exports.run = (client, message, args) => {
     minutes = 0;
             }
             uptime += `My uptime is: ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`
-    message.channel.send(`${uptime}`)
+            
+const exampleEmbed = new MessageEmbed()
+	.setColor('RANDOM')
+	.addFields(
+		{ name: 'Uptime', value: `${uptime}` },
+	)
+
+message.channel.send({ embeds: [exampleEmbed] });
 }
 
 exports.name = "uptime";

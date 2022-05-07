@@ -10,17 +10,17 @@ const exampleEmbed = new MessageEmbed()
 	.setThumbnail('https://i.imgur.com/lfchERD.gif')
 	.addFields(
 		{ name: 'Commands', value: 'use the .sus prefix' },
-		{ name: 'chad', value: 'Random chad pic', inline: true },
-		{ name: 'sussypic', value: 'A really sussy pic', inline: true },
-		{ name: 'randomsus', value: 'random sussy word.', inline: true },
-		{ name: 'commands', value: 'this embed', inline: true },
-		{ name: 'choose', value: 'choose between two number/words. put space between em', inline: true },
-		{ name: 'chance', value: 'change replychance value', inline: true },
-		{ name: 'uptime', value: 'how long have the bot been running for', inline: true },
-		{ name: 'quotes add', value: 'add a quote to the database | add positive or negative to the end', inline: true },
+		{ name: 'chad', value: 'Random chad pic' },
+		{ name: 'sussypic', value: 'A really sussy pic' },
+		{ name: 'chance set type', value: '1% = always replies with image 100%= always with a quote' },
+		{ name: 'chance set reply', value: 'change the reply chance! lower it is the more the bot replies!' },
+		{ name: 'choose', value: 'choose between two number/words. put space between em' },
+		{ name: 'add quote', value: 'add a quote to the database! | add negative / positive to the end of it' },
+		{ name: 'add image', value: 'insert an image, the bot saves it and later it can reply with it!' },
+		{ name: 'uptime', value: 'how long have the bot been running for' },
 	)
 	.setTimestamp()
-	.setFooter({ text: 'Mogusbot version 0.0.0.9'});
+	.setFooter({ text: 'Mogusbot version 0.0.2.4'});
     message.channel.send({ embeds: [exampleEmbed] });
 }
 

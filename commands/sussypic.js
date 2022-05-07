@@ -2,7 +2,7 @@ const fs = require("fs");
 var filter = [".jpg",".gif",".png",".jpeg"];
 suss = []
 for (const prop of filter) {
-const pics = fs.readdirSync("./images").filter(file => file.endsWith(prop));
+const pics = fs.readdirSync("./amogus").filter(file => file.endsWith(prop));
 for (const file of pics) {
     suss.push(file)
 }}
@@ -10,7 +10,7 @@ for (const file of pics) {
 exports.run = (client, message, args) => {
     var random = Math.floor(Math.random() * suss.length);
     var pic = suss[random]
-    message.channel.send({files:[`./images/${pic}`]});
+    message.channel.send({files:[`./amogus/${pic}`]});
 }
 
 exports.name = "sussypic";

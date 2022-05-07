@@ -1,20 +1,11 @@
-
-const { quote } = require('@discordjs/builders');
-// Generates a random number, if its 1 then the bot replies with a random Positive/negative quote.
-// i will store the data in a database later if i learn to use it
-
+// imports
 const Keyv = require('keyv');
 const keyv = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
-
 const chancheDB = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
-// with database when asking for a random
-// insted of importing the whoel databse to the ram
-// ask for the lenght of the table
-// generate a random number from that
-// random number > ask for the item on table
-// print out the random item // there for not flooding the ram. CHAD MOMEMNTUMOS
 const Sequelize = require('sequelize');
-
+const fs = require('fs')
+const chancheType = 0
+//database create & use
 const sequelize = new Sequelize('mogusbot', 'bot', 'root', {
 	host: 'localhost',
 	dialect: 'mysql',
@@ -38,22 +29,38 @@ function get() {
         order: sequelize.random(),
       })
  }
-
-get().then(function(result){
-    console.log(result.quote);
- });
+images = []
+ const imagefile = fs.readdirSync("./images");
+ for (const file of imagefile) {
+     images.push(file)
+ }
 exports.run = (client, message, args) => {
     (async () => {
-        // true
         await Quotes.sync()
-        const databaseValue = await chancheDB.get('chanche');
 
-    var chanceForReply = Math.floor(Math.random() * databaseValue);
+        // get the chance to reply from database
+        const ReplyChanche = await chancheDB.get('chanche');
+        const chancheType = await chancheDB.get('chacheType');
+        var chanceForReply = Math.floor(Math.random() * ReplyChanche);
+        var chancheTypeValue = Math.floor(Math.random() * 100);
+        var randomimage = Math.floor(Math.random() * images.length);
+
+
     if (chanceForReply == 1) {
-        get().then(function(result){
-           message.reply(result.quote)
-         });
+
+        if (chancheTypeValue <= chancheType){
+            get().then(function(result){
+                message.reply(result.quote)
+              });
+        }
+
+        else if (chancheTypeValue >= chancheType){
+            message.reply({files:[`./images/${images[randomimage]}`]});
+        }
+
     }
+
+
 })();
 }
 

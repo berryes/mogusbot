@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, presence  } = require("discord.js");
+const { Client, Intents, Collection, setActivity  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
 const client = new Client({
@@ -6,13 +6,42 @@ const client = new Client({
 });
 
 
-// Rich presence
-client.on('ready', () => {
-  client.user.setActivity("Among Drip 10 hours sussy baka edition", {
+// start off rich presence
+const listeningList = ["mogusbeats",
+"spotify",
+"red discussing why he is not the imposter",
+]
+const watchingList = ["over the server",
+"you",
+"you're dogs",
+"the impostor getting killed"
+]
+function listening(){
+  var richValue = Math.floor(Math.random() * watchingList.length);
+  client.user.setActivity(`${watchingList[richValue]}`, {
+    type: "WATCHING",
+  });
+}
+function listening(){
+  var richValue = Math.floor(Math.random() * listeningList.length);
+  client.user.setActivity(`${listeningList[richValue]}`, {
     type: "LISTENING",
   });
+}
+function radnomRichpresence(){
+  var random = Math.floor(Math.random() * 2);
+  if (random == 1){
+    listening()
+  }
+  if (random ==2 ){
+    watching()
+  }
 
-});
+}
+setInterval(radnomRichpresence, 900000);
+// end of random rich presence
+// IK ITS RETARDED SPAGHETTI CODE BUT IT WORKS FAG OFF :c
+
 
 const config = require("./config.json");
 client.config = config;
@@ -63,7 +92,7 @@ client.login(config.token);
 
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
 module.exports = [noprefixCommand, noprefixList, commandListus]
-console.log('--- Mogusbot succesfully ran! ---')
+
 
 
 
@@ -84,3 +113,20 @@ console.log('--- Mogusbot succesfully ran! ---')
 // ░░░░░░░░░░░█░░░█░░░░░██████░░░░░░░░░░░░░
 // ░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+
+console.log(`
+ ██████   ██████                                                 █████               █████   
+░░██████ ██████                                                 ░░███               ░░███    
+ ░███░█████░███   ██████   ███████ █████ ████  █████             ░███████   ██████  ███████  
+ ░███░░███ ░███  ███░░███ ███░░███░░███ ░███  ███░░   ██████████ ░███░░███ ███░░███░░░███░   
+ ░███ ░░░  ░███ ░███ ░███░███ ░███ ░███ ░███ ░░█████ ░░░░░░░░░░  ░███ ░███░███ ░███  ░███    
+ ░███      ░███ ░███ ░███░███ ░███ ░███ ░███  ░░░░███            ░███ ░███░███ ░███  ░███ ███
+ █████     █████░░██████ ░░███████ ░░████████ ██████             ████████ ░░██████   ░░█████ 
+░░░░░     ░░░░░  ░░░░░░   ░░░░░███  ░░░░░░░░ ░░░░░░             ░░░░░░░░   ░░░░░░     ░░░░░  
+                          ███ ░███                                                           
+                         ░░██████                                                            
+                          ░░░░░░                                                             
+`)
+console.log('made by berryes(https://github.com/berryes/mogusbot)')
+

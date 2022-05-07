@@ -4,3 +4,5 @@
 0.0.0.6 - donno what i did.
 0.0.0.9 - skipped 3 versions cus i did a lot today, |added the option to add custom quotes, also the bot reply chanche recalls them.
 0.0.1.0 - you can now only input nubmers to the .sus chance command. also you can call the chance value by .sus chance and set it with .sus chance [number]
+0.0.1.1 - fixed some things
+0.0.2.4 - skipped a few versions, added a lot of shit, not gunna write them down tho

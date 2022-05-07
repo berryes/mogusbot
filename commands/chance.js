@@ -1,34 +1,71 @@
+const { MessageEmbed } = require('discord.js');
 const Keyv = require('keyv');
 const chancheDB = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
 const chancheValue = 0
+const chancheType = 0
 const adminrole = '968842654584557578'
-// todo: check if user has the Sussy Rank, and only let the ones who have it allow to change it
+const textEmbed = new MessageEmbed()
+	.setTimestamp()
+
 exports.run = (client, message, args) => {
         (async () => {
             if (message.member.roles.cache.has(adminrole)){
+                
                 if (args[0] == 'set') {
-                    if (isNaN(args[1])){
-                        message.reply('Sorry, the chance can be only a number')
+                    if (args[1] == 'reply'){
+                        if (isNaN(args[2])){
+                            textEmbed.setFields({ name: 'Error', value: 'The reply chance can be only a number!' },);
+                            textEmbed.setColor('DARK_RED')
+                            message.reply({ embeds: [textEmbed] })
+                        }
+                        else {
+                            await chancheDB.set("chanche", args[2]);
+                            const chancheValue = await chancheDB.get('chanche');
+                            textEmbed.setFields({ name: 'Success', value: `The reply chanche has been set to 1/${chancheValue}` },);
+                            textEmbed.setColor('GREEN')
+                            message.reply({ embeds: [textEmbed] })
+                        }
+                }
+                if (args[1] == 'type'){
+                    if (isNaN(args[2])){
+                        textEmbed.setFields({ name: 'Error', value: 'The reply chance can be only a number!' },);
+                        textEmbed.setColor('DARK_RED')
+                        message.reply({ embeds: [textEmbed] })
+                    }
+                    if (args[2] > 100){
+                        textEmbed.setFields({ name: 'Error', value: `The reply chance type can't be higher than 100` },);
+                        textEmbed.setColor('DARK_RED')
+                        message.reply({ embeds: [textEmbed] })
                     }
                     else {
-                        await chancheDB.set("chanche", args[1]);
-                        const chancheValue = await chancheDB.get('chanche');
-                        await message.channel.send(` Reply chanche set to : 1/${chancheValue}`)
+                        await chancheDB.set("chacheType", args[2]);
+                        const chacheType = await chancheDB.get('chacheType');
+                        textEmbed.setFields({ name: 'Succes', value: `The reply chanche type has been set to ${chacheType}%.` },);
+                        textEmbed.setColor('GREEN')
+                        message.reply({ embeds: [textEmbed] })
                     }
+                }
             }
             else {
-                const chancheValue = await chancheDB.get('chanche');
-                await message.channel.send(` Reply chanche is: 1/${chancheValue}`)
+                if (args[0] == 'asd'){
+                    const chacheType = await chancheDB.get('chacheType');
+                    const chancheValue = await chancheDB.get('chanche');
+                    textEmbed.setFields({ name: 'The chanche for a random reply is', value: `${chancheValue}` },{ name: 'The chanche for a quote reply is ', value: `${chancheType}` },);
+                    textEmbed.setColor('GREEN')
+                    message.reply({ embeds: [textEmbed] })
+                }
             }
         }
+
             else {
                 await message.reply('You dont have permision for this... sussy baka')
-            }
-            // true
+            } // end of checkrole
 
-        })();
+        })(); // end of async function
+} // end of export run
 
-}
+
+// create an embed to make it more appealing. text is ugly
 
 exports.name = "chanche";
 
