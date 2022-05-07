@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/berryes/mogusbot">
-    <img src="logo.jpg" alt="Logo" width="80" height="80">
+    <img src="logo.jpg" alt="Logo" width="80" height="80" style="border-radius: 2em">
   </a>
 
   <h3 align="center">Mogus Bot</h3>
@@ -29,7 +29,7 @@
 
 ## About The Project
 
-![Screen Shot](images/screenshot.png)
+![Screen Shot](screenshot.png)
 
 The mogus bot is one of my many projects that actually succeeded(succeeded= finished).
 
@@ -101,9 +101,7 @@ This bot was built on regular prefix chat commands. /commands do not work. Every
 
 
 ## License
-
-Distributed under the MIT License. See [LICENSE](https://github.com/berryes/mogusbot/blob/main/LICENSE.md) for more information.
-
+No license to be found. Use this as you want to.
 ## Authors
 
 * **berry** - *Software Developer (somewhat)* - [berryes](https://github.com/berryes/)
