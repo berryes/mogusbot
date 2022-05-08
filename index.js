@@ -13,7 +13,7 @@ const listeningList = ["mogusbeats",
 ]
 const watchingList = ["over the server",
 "you",
-"you're dogs",
+"your dogs",
 "the impostor getting killed"
 ]
 function listening(){

@@ -29,12 +29,13 @@ function get() {
         order: sequelize.random(),
       })
  }
-images = []
+
+exports.run = (client, message, args) => {
+    images = []
  const imagefile = fs.readdirSync("./images");
  for (const file of imagefile) {
      images.push(file)
  }
-exports.run = (client, message, args) => {
     (async () => {
         await Quotes.sync()
 
