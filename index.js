@@ -4,19 +4,20 @@ const Discord = require('discord.js');
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
 });
-
-
 // start off rich presence
 const listeningList = ["mogusbeats",
 "spotify",
+"Among drip 10 hour bass boosted sussy baka edition premium plus x ++ pro ultimate superior X+ S",
 "red discussing why he is not the imposter",
 ]
 const watchingList = ["over the server",
 "you",
+"as red climbes out of the vent. sussy",
+"the tv",
 "your dogs",
 "the impostor getting killed"
 ]
-function listening(){
+function watching(){
   var richValue = Math.floor(Math.random() * watchingList.length);
   client.user.setActivity(`${watchingList[richValue]}`, {
     type: "WATCHING",
@@ -91,7 +92,7 @@ for (const noprefixFile of noprefixes) {
 client.login(config.token);
 
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
-module.exports = [noprefixCommand, noprefixList, commandListus]
+module.exports = [noprefixCommand, noprefixList, commandListus,,]
 
 
 

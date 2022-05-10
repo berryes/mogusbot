@@ -88,17 +88,13 @@ This bot was built on regular prefix chat commands. /commands do not work. Every
 - *chad* - Generates random image from chads folder.
 - *randomsus* - Generates random word ending with us.
 - *sussypic* - Generates random image from images folder.
-- *random* -sussypic&randomsus combined
 - *uptime* - Displays the bot's uptime.
 - *commands* - Displays commands.
 - *choose* - Chooses between items (.sus choose item1 item2 item3...)
-- *quote [random text] | [positive/negative]* - adds a quote to the database as negative or positive. 
+- *add quote [random text] | [positive/negative]* - adds a quote to the database as negative or positive. 
+- *add image* - Send an image with the command. It gets added to the database
 - *chance* - shows the chance to a random reply
-- *chance set [number]* - sets the random reply chance value
-
-### Creating A Pull Request
-
-
+- *chance set type [number]* - sets the random reply chance type value (100% always quotes 1% always images)
 
 ## License
 No license to be found. Use this as you want to.

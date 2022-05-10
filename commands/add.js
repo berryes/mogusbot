@@ -5,6 +5,7 @@ const textEmbed = new MessageEmbed()
 const fs = require('fs')
 const request = require('request')
 const Sequelize = require('sequelize');
+
 const sequelize = new Sequelize('mogusbot', 'bot', 'root', {
 	host: 'localhost',
 	dialect: 'mysql',
@@ -23,6 +24,17 @@ const Quotes = sequelize.define('quotes', {
         type: Sequelize.TEXT,
     }
 });
+function isIdUnique (quote) {
+    return Quotes.quote.count({ where: { id: quote } })
+      .then(count => {
+        if (count != 0) {
+          return false;
+        }
+        return true;
+    });
+}
+
+// OMFG WHY IS THIS CODE SO FUCKING NESTED AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 fileNameList = []
 const events = fs.readdirSync("./images");
@@ -70,19 +82,19 @@ download(url, path, () => {
 }
 
 else if (args[0] == 'quote'){
-
     if (message.member.roles.cache.has(adminrole)){
         Quotes.sync()
         const user = message.author.username
         var quote = ''
         var norp = ""
-        var middle = args.slice(0, args.length-1);
-        
-            for (var item in middle) {
-                quote += `${middle[item]} `
-            }
+        var middle = args.slice(1, args.length-1);
+        for (var item in middle) {
+            quote += `${middle[item]} `
+        }
             if (args[args.length - 1] == 'positive'){
-                message.reply(`"${quote}" has been added to the database as a positive quote!`)
+                textEmbed.setFields({ name: 'Success', value: `Your quote has been added to the random reply database as a positive quote.` },{ name: 'Quote', value: `${quote}` });
+                textEmbed.setColor('GREEN')
+                message.reply({ embeds: [textEmbed] })
                 const quoteD =  Quotes.create({
                     quote: quote,
                     norp: 'positive',
@@ -90,7 +102,9 @@ else if (args[0] == 'quote'){
                 });
             } 
             else if (args[args.length - 1] == 'negative'){
-                message.reply(`"${quote}" has been added to the database as a negative quote!`)
+                textEmbed.setFields({ name: 'Success', value: `Your quote has been added to the random reply database as a negative quote.` },{ name: 'Quote', value: `${quote}` });
+                textEmbed.setColor('dark_green')
+                message.reply({ embeds: [textEmbed] })
                 const quoteD =  Quotes.create({
                     quote: quote,
                     norp: 'negative',
@@ -102,8 +116,22 @@ else if (args[0] == 'quote'){
             }
     }
     }
-
 }
+
 
 exports.name = "add";
 
+//                                  The judgment frog does not aprove this code.
+//                                 |
+//                     .--._.--.
+//                    ( O     O )
+//                    /   . .   \
+//                   .`._______.'.
+//                  /(           )\
+//                _/  \  \   /  /  \_
+//             .~   `  \  \ /  /  '   ~.
+//            {    -.   \  V  /   .-    }
+//          _ _`.    \  |  |  |  /    .'_ _
+//          >_       _} |  |  | {_       _<
+//           /. - ~ ,_-'  .^.  `-_, ~ - .\
+//                   '-'|/   \|`-`

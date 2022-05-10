@@ -48,20 +48,15 @@ exports.run = (client, message, args) => {
 
 
     if (chanceForReply == 1) {
-
         if (chancheTypeValue <= chancheType){
             get().then(function(result){
-                message.reply(result.quote)
+                message.reply(result.quote) 
               });
         }
-
         else if (chancheTypeValue >= chancheType){
             message.reply({files:[`./images/${images[randomimage]}`]});
         }
-
     }
-
-
 })();
 }
 
