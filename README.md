@@ -57,24 +57,19 @@ git clone https://github.com/berryes/mogusbot.git
 ```sh
 npm install
 ```
-
-4. Enter your API key in  in `config.json`
-
-```JS
-    "token": "your-very-long-api-key-here",
-
-```
-4. Change database login info in  `index.js`
-```JS
-    const sequelize = new Sequelize('database', 'username', 'password', {
-	host: 'localhost',
-	dialect: 'mysql',
-	logging: false,
-	storage: 'database.mysql',
-});
-
-const chancheDB = new Keyv('mysql://username:password@localhost:3306/database');
-
+4. Create a `.env` file in the root folder and fill out with you're information
+```env
+API_KEY=
+LOGGING=TRUE (logging)
+PREFIX=.sus
+DB_NAME=(THE NAME OF THE DATABASE)
+DB_USER=(USERNAME FOR DATABASE)
+DB_PASS=(PASSWORD FOR USER)
+DB_LOCATION=(IP ADRESS OF DATABASE | LOCALHOST)
+DB_TYPE=(DATABASE TYPE | MYSQL MONGODB ECT)
+DB_STORAGE=(DATABASE STORAGE NAME | DATABASE BY DEFAULT)
+DB_PORT=(PORT HERE FOR MYSQL 3306)
+ADMIN_ROLE=(ADMIN ROLE ID HERE)
 ```
 
 
