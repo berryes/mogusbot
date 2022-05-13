@@ -7,12 +7,17 @@ for (const file of pics) {
     suss.push(file)
 }}
 
-exports.run = (client, message, args) => {
+module.exports = {
+    name: "sussypic",
+    arguments: 'none',
+    usage: [`${process.env.PREFIX} sussypic`],
+    description: "Replies with a random sussy pic",
+    run:  (client, message, args) => {
     var random = Math.floor(Math.random() * suss.length);
     var pic = suss[random]
     message.channel.send({files:[`./amogus/${pic}`]});
 }
-
+}
 exports.name = "sussypic";
 
 // ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄

@@ -1,8 +1,12 @@
 // make the bot choose between these too:
 // .sus choose "whatever" or "hahaha"
 
-
-exports.run = (client, message, args) => {
+module.exports = {
+    name: "choose",
+    arguments: 'none',
+    usage: [`${process.env.PREFIX} choose (item1) (item2) (item3)`],
+    description: "Choose between items, item counts after a space!",
+    run:  (client, message, args) => {
 
     if (args.length > 1 ){
         var random = Math.floor(Math.random() * args.length);
@@ -15,6 +19,7 @@ exports.run = (client, message, args) => {
         message.reply('you need to type in something in after the command  you baka')
     }
     }
+}
     
 exports.name = "choose";
 

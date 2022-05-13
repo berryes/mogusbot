@@ -1,17 +1,15 @@
 const { MessageEmbed } = require('discord.js');
-const adminrole = '968842654584557578'
-const textEmbed = new MessageEmbed()
-	.setTimestamp()
+const adminrole = `${process.env.ADMIN_ROLE}`
 const fs = require('fs')
 const request = require('request')
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('mogusbot', 'bot', 'root', {
-	host: 'localhost',
-	dialect: 'mysql',
+const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
+	host: `${process.env.DB_LOCATION}`,
+	dialect: `${process.env.DB_TYPE}`,
 	logging: false,
 	// SQLite only
-	storage: 'database.mysql',
+	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
 });
 const Quotes = sequelize.define('quotes', {
 	quote: {
@@ -42,24 +40,31 @@ for (const file of events) {
     fileNameList.push(file)
 }
 
-exports.run = (client, message, args) => {
+module.exports = {
+    name: "Add",
+    arguments: 'image, quote',
+    usage: [`${process.env.PREFIX} add image`,`${process.env.PREFIX} add quote (quote) (positive/negative)`],
+    description: "Add an image or a quote to the database",
+    run: (client, message, args) => {
+
+    const textEmbed = new MessageEmbed()
+	.setTimestamp()
 
 if (args[0] == 'image'){
+    const user = message.author.username
     const urls = []
     if (message.attachments.size > 0){
         message.attachments.forEach(attachment => {
             urls.push(attachment.proxyURL);
         });
-        var random = Math.floor(Math.random() * 999999);
 
-const path = `./images/${random}.png`
-const url = urls[0]
+        while (fileNameList.includes(random)){
+            var random = Math.floor(Math.random() * 999999);
+        }
+        const path = `./images/${random}.png`
+        const url = urls[0]
 
-while (fileNameList.includes(random)){
-    var random = Math.floor(Math.random() * 999999);
-}
 
-console.log(fileNameList)
 const download = (url, path, callback) => {
     request.head(url, (err, res, body) => {
       request(url)
@@ -72,12 +77,19 @@ download(url, path, () => {
     textEmbed.setFields({ name: 'Success', value: `Your image has been added to the random reply database!` },);
     textEmbed.setColor('GREEN')
     message.reply({ embeds: [textEmbed] })
+
+    if (process.env.LOGGING == 'TRUE'){
+        console.log(`IMAGE ADD LOG || ${user} added an image!`)
+    }
 })
 }
     else {
         textEmbed.setFields({ name: 'Error', value: `You need to attach an image!` },);
         textEmbed.setColor('DARK_RED')
         message.reply({ embeds: [textEmbed] })
+        if (process.env.LOGGING == 'TRUE'){
+            console.log(`IMAGE ADD LOG || ${user} tried to add an image but did not attach one!`)
+        }
     }
 }
 
@@ -100,6 +112,9 @@ else if (args[0] == 'quote'){
                     norp: 'positive',
                     addedBy: user,
                 });
+                if (process.env.LOGGING == 'TRUE'){
+                    console.log(`ADD LOG || ${user} has added a quote (${quote}) as a positive`)
+                }
             } 
             else if (args[args.length - 1] == 'negative'){
                 textEmbed.setFields({ name: 'Success', value: `Your quote has been added to the random reply database as a negative quote.` },{ name: 'Quote', value: `${quote}` });
@@ -110,12 +125,23 @@ else if (args[0] == 'quote'){
                     norp: 'negative',
                     addedBy: user,
                 });
+                if (process.env.LOGGING == 'TRUE'){
+                    console.log(`QUOTE ADD LOG || ${user} has added a quote (${quote}) as a negative`)
+                }
             } 
             else {
                 message.reply(`${args[args.length-1]} is not an option | Use the last word to describe your quote. | Either negative / positive`)
+                if (process.env.LOGGING == 'TRUE'){
+                    console.log(`QUOTE ADD LOG || ${user} tried to add (${quote}) but failed because of prefix issues`)
+                }
             }
+
     }
     }
+    else {
+        message.reply("this is not an option. use .sus commands")
+    }
+}
 }
 
 

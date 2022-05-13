@@ -1,5 +1,10 @@
 const { MessageEmbed } = require('discord.js');
-exports.run = (client, message, args) => {
+module.exports = {
+        name: "uptime",
+        arguments: 'none',
+        usage: [`${process.env.PREFIX} uptime`],
+        description: "Replies with the bot's uptime",
+        run: (client, message, args) => {
     let days = 0
     let week = 0
     let uptime = '';
@@ -28,7 +33,7 @@ const exampleEmbed = new MessageEmbed()
 
 message.channel.send({ embeds: [exampleEmbed] });
 }
-
+}
 exports.name = "uptime";
 
 // ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⣠⣤⣤⣤⣤⣤⣀⣀⠉⠻⣿⣿⣿⣿⣿⣿⣿

@@ -1,17 +1,17 @@
 // imports
 const Keyv = require('keyv');
-const keyv = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
-const chancheDB = new Keyv('mysql://bot:root@localhost:3306/mogusbot');
+const keyv = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const Sequelize = require('sequelize');
 const fs = require('fs')
 const chancheType = 0
 //database create & use
-const sequelize = new Sequelize('mogusbot', 'bot', 'root', {
-	host: 'localhost',
-	dialect: 'mysql',
+const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
+	host: `${process.env.DB_LOCATION}`,
+	dialect: `${process.env.DB_TYPE}`,
 	logging: false,
 	// SQLite only
-	storage: 'database.mysql',
+	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
 });
 const Quotes = sequelize.define('quotes', {
 	quote: {
@@ -29,7 +29,6 @@ function get() {
         order: sequelize.random(),
       })
  }
-
 exports.run = (client, message, args) => {
     images = []
  const imagefile = fs.readdirSync("./images");
@@ -57,8 +56,12 @@ exports.run = (client, message, args) => {
             message.reply({files:[`./images/${images[randomimage]}`]});
         }
     }
-})();
-}
 
+    if (process.env.LOGGING == 'TRUE'){
+        console.log(`REPLY LOG || Chanche for reply was: ${chanceForReply}, reply type: ${chancheTypeValue}`)
+    }
+})();
+
+}
 exports.name = "reply";
 
