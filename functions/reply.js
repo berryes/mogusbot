@@ -29,9 +29,12 @@ function get() {
         order: sequelize.random(),
       })
  }
+ currentDate = new Date()
+const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
+
 exports.run = (client, message, args) => {
     images = []
- const imagefile = fs.readdirSync("./images");
+ const imagefile = fs.readdirSync("././images");
  for (const file of imagefile) {
      images.push(file)
  }
@@ -45,7 +48,6 @@ exports.run = (client, message, args) => {
         var chancheTypeValue = Math.floor(Math.random() * 100);
         var randomimage = Math.floor(Math.random() * images.length);
 
-
     if (chanceForReply == 1) {
         if (chancheTypeValue <= chancheType){
             get().then(function(result){
@@ -53,12 +55,19 @@ exports.run = (client, message, args) => {
               });
         }
         else if (chancheTypeValue >= chancheType){
-            message.reply({files:[`./images/${images[randomimage]}`]});
+            message.reply({files:[`././images/${images[randomimage]}`]});
+
         }
     }
 
     if (process.env.LOGGING == 'TRUE'){
-        console.log(`REPLY LOG || Chanche for reply was: ${chanceForReply}, reply type: ${chancheTypeValue}`)
+        if (chancheTypeValue >= chancheType){
+            console.log(`${date} | REPLY LOG -> Chanche for reply was: ${chanceForReply}, reply type: image`, )
+        }
+        else{
+            console.log(`${date} | REPLY LOG -> Chanche for reply was: ${chanceForReply}, reply type: quote`, )
+        }
+        
     }
 })();
 

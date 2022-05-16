@@ -8,6 +8,6 @@
 // const memberString = memberArray.join('\n')
 // console.log(memberString)
 module.exports = (client, message,oldState,newState) => {
-console.log('someting happened')
+console.log('someting happened in the voice channels')
 }
 exports.name = "voice";

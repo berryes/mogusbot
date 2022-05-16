@@ -5,11 +5,84 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES ]
 });
 require("dotenv").config();
+const Keyv = require("keyv")
+const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+const express = require('express')
+const app = express()
+app.use(express.json())
+const port = process.env.API_PORT
+
+app.listen(port, () => {
+  console.log(`API Server is running on PORT: ${port}`)
+})
 
 
-if (!process.env.API_KEY){
-  console.log('NO API KEY ATTACHED')
-}
+// api:::
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
+
+app.get('/send/:message/',  async (req, res) => {
+  try {
+    const message = req.params.message
+    const channel = client.channels.cache.get('961536522287476766');
+    await channel.send(message)
+
+    res.status(200).json({ message: 'Posted' })
+    console.log('message sent')
+  } catch (err) {
+    res.status(500).json(err)
+    console.error(err)
+  }
+})
+app.get('/chance/get/',  async (req, res) => {
+  try {
+    const chacheTypee = await chancheDB.get('chacheType');
+    const replychanchee = await chancheDB.get('chanche');
+    res.status(200).json({ replychanche: `${replychanchee}`, replytype: `${chacheTypee}` })
+    console.log('replytype requested succesfully')
+  } catch (err) {
+    res.status(500).json(err)
+    console.error(err)
+  }
+})
+
+
+
+
+if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
+if (!process.env.LOGGING)  throw new Error("logging is not filled out in .env"); 
+if (!process.env.PREFIX)  throw new Error("no prefix set in .env"); 
+if (!process.env.ADMIN_ROLE)  throw new Error("no admin role given in .env"); 
+if (!process.env.API_PORT)  throw new Error("no api port in .env"); 
+if (!process.env.DB_NAME)  throw new Error("database name not set in .env"); 
+if (!process.env.DB_USER)  throw new Error("database user not set in .env"); 
+if (!process.env.DB_LOCATION)  throw new Error("database location not given in .env"); 
+if (!process.env.DB_TYPE)  throw new Error("database type not given in .env"); 
+if (!process.env.DB_STORAGE)  throw new Error("database storage not set in .env"); 
+if (!process.env.DB_PORT)  throw new Error("database port not set in .env"); 
+if (!process.env.CAT_API_KEY)  throw new Error("no cat api key given in .env"); 
+//          ⠀⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀
+//          ⠀⠀⠀⠑⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠁⠀⠀⠀
+//          ⠀⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⠘⣀⠄⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠔⠒⠒⠒⠒⠒⠢⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⡰⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⢄⡀⠀⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⡸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠙⠄⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⢀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⢠⠂⠀⠀⠘⡄⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠈⢤⡀⢂⠀⢨⠀⢀⡠⠈⢣⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⢀⢀⡖⠒⠶⠤⠭⢽⣟⣗⠲⠖⠺⣖⣴⣆⡤⠤⠤⠼⡄⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠘⡈⠃⠀⠀⠀⠘⣺⡟⢻⠻⡆⠀⡏⠀⡸⣿⢿⢞⠄⡇⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⢣⡀⠤⡀⡀⡔⠉⣏⡿⠛⠓⠊⠁⠀⢎⠛⡗⡗⢳⡏⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⢱⠀⠨⡇⠃⠀⢻⠁⡔⢡⠒⢀⠀⠀⡅⢹⣿⢨⠇⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⢸⠀⠠⢼⠀⠀⡎⡜⠒⢀⠭⡖⡤⢭⣱⢸⢙⠆⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⠀⡸⠀⠀⠸⢁⡀⠿⠈⠂⣿⣿⣿⣿⣿⡏⡍⡏⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⠀⠀⢀⠇⠀⠀⠀⠀⠸⢢⣫⢀⠘⣿⣿⡿⠏⣼⡏⠀⠀⠀⠀⠀⠀⠀
+//          ⠀⠀⠀⠀⣀⣠⠊⠀⣀⠎⠁⠀⠀⠀⠙⠳⢴⡦⡴⢶⣞⣁⣀⣀⡀⠀⠀⠀⠀⠀
+//          ⠀⠐⠒⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⢀⠤⠀⠀⠀⠀⠀⠀⠀⠈⠉⠀⠀⠀⠀
+
+
 
 // start off rich presence
 const listeningList = ["mogusbeats",
@@ -47,6 +120,8 @@ function radnomRichpresence(){
 }
 setInterval(radnomRichpresence, 900000);
 // end of random rich presence
+
+
 
 // Command's list
 client.commands = new Collection();
@@ -88,7 +163,7 @@ for (const functionFile of functions) {
 client.login(process.env.API_KEY);
 
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
-module.exports = [functionMap, commandListus,,]
+module.exports = [functionMap, commandListus,commandListus,]
 
 
 
@@ -110,4 +185,6 @@ module.exports = [functionMap, commandListus,,]
 // ░░░░░░░░░░░█░░░█░░░░░██████░░░░░░░░░░░░░
 // ░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
+currentDate = new Date()
+const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
+console.log(date)

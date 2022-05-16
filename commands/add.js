@@ -3,7 +3,6 @@ const adminrole = `${process.env.ADMIN_ROLE}`
 const fs = require('fs')
 const request = require('request')
 const Sequelize = require('sequelize');
-
 const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
 	host: `${process.env.DB_LOCATION}`,
 	dialect: `${process.env.DB_TYPE}`,
@@ -22,6 +21,8 @@ const Quotes = sequelize.define('quotes', {
         type: Sequelize.TEXT,
     }
 });
+currentDate = new Date()
+const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
 function isIdUnique (quote) {
     return Quotes.quote.count({ where: { id: quote } })
       .then(count => {
@@ -57,10 +58,7 @@ if (args[0] == 'image'){
         message.attachments.forEach(attachment => {
             urls.push(attachment.proxyURL);
         });
-
-        while (fileNameList.includes(random)){
-            var random = Math.floor(Math.random() * 999999);
-        }
+        var random = Math.floor(Math.random() * 999999);
         const path = `./images/${random}.png`
         const url = urls[0]
 
@@ -79,7 +77,7 @@ download(url, path, () => {
     message.reply({ embeds: [textEmbed] })
 
     if (process.env.LOGGING == 'TRUE'){
-        console.log(`IMAGE ADD LOG || ${user} added an image!`)
+        console.log(`${date} IMAGE ADD LOG || ${user} added an image!`)
     }
 })
 }
@@ -88,7 +86,7 @@ download(url, path, () => {
         textEmbed.setColor('DARK_RED')
         message.reply({ embeds: [textEmbed] })
         if (process.env.LOGGING == 'TRUE'){
-            console.log(`IMAGE ADD LOG || ${user} tried to add an image but did not attach one!`)
+            console.log(`${date}| IMAGE ADD LOG -> ${user} tried to add an image but did not attach one!`)
         }
     }
 }
@@ -113,7 +111,7 @@ else if (args[0] == 'quote'){
                     addedBy: user,
                 });
                 if (process.env.LOGGING == 'TRUE'){
-                    console.log(`ADD LOG || ${user} has added a quote (${quote}) as a positive`)
+                    console.log(`${date}| ADD LOG -> ${user} has added a quote (${quote}) as a positive`)
                 }
             } 
             else if (args[args.length - 1] == 'negative'){
@@ -126,13 +124,13 @@ else if (args[0] == 'quote'){
                     addedBy: user,
                 });
                 if (process.env.LOGGING == 'TRUE'){
-                    console.log(`QUOTE ADD LOG || ${user} has added a quote (${quote}) as a negative`)
+                    console.log(`${date}| QUOTE ADD LOG -> ${user} has added a quote (${quote}) as a negative`)
                 }
             } 
             else {
                 message.reply(`${args[args.length-1]} is not an option | Use the last word to describe your quote. | Either negative / positive`)
                 if (process.env.LOGGING == 'TRUE'){
-                    console.log(`QUOTE ADD LOG || ${user} tried to add (${quote}) but failed because of prefix issues`)
+                    console.log(`${date} | QUOTE ADD LOG -> ${user} tried to add (${quote}) but failed because of prefix issues`)
                 }
             }
 

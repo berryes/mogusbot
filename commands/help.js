@@ -1,6 +1,6 @@
 const commands = require('../index')
 const { MessageEmbed } = require('discord.js');
-const commandListus = require("../index")
+
 module.exports = {
     name: "help",
     arguments: 'none',
