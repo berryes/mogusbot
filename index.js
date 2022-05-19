@@ -2,15 +2,21 @@ const { Client, Intents, Collection  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES ]
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES, ]
 });
 require("dotenv").config();
 const Keyv = require("keyv")
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+
+currentDate = new Date()
+const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
+
 const express = require('express')
 const app = express()
+const cors = require("cors")
 app.use(express.json())
 const port = process.env.API_PORT
+app.use(cors());
 
 app.listen(port, () => {
   console.log(`API Server is running on PORT: ${port}`)
@@ -22,10 +28,10 @@ app.get('/', (req, res) => {
   res.send('hello world')
 })
 
-app.get('/send/:message/',  async (req, res) => {
+app.get('/send/:message/:id',  async (req, res) => {
   try {
     const message = req.params.message
-    const channel = client.channels.cache.get('961536522287476766');
+    const channel = client.channels.cache.get('939115249435562017');
     await channel.send(message)
 
     res.status(200).json({ message: 'Posted' })
@@ -35,19 +41,27 @@ app.get('/send/:message/',  async (req, res) => {
     console.error(err)
   }
 })
-app.get('/chance/get/',  async (req, res) => {
+
+app.get('/chance/get/:type/',  async (req, res) => {
   try {
-    const chacheTypee = await chancheDB.get('chacheType');
-    const replychanchee = await chancheDB.get('chanche');
-    res.status(200).json({ replychanche: `${replychanchee}`, replytype: `${chacheTypee}` })
-    console.log('replytype requested succesfully')
+    if (req.params.type === 'reply'){
+      const replychanchee = await chancheDB.get('chanche');
+      console.log(replychanchee)
+      res.status(200).json({ replychanche: `${replychanchee}` })
+    }
+    else if (req.params.type == 'type'){
+      const chacheTypee = await chancheDB.get('chacheType');
+      res.status(200).json({ replytype: `${chacheTypee}` })
+    }
+    else {
+    res.status(200).json({ error: 'invalid request' })
+    }
+    console.log('chanche get type requested succesfully')
   } catch (err) {
     res.status(500).json(err)
     console.error(err)
   }
 })
-
-
 
 
 if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
@@ -84,7 +98,6 @@ if (!process.env.CAT_API_KEY)  throw new Error("no cat api key given in .env");
 
 
 
-// start off rich presence
 const listeningList = ["mogusbeats",
 "spotify",
 "Among drip 10 hour bass boosted sussy baka edition premium plus x ++ pro ultimate superior X+ S",
@@ -97,28 +110,29 @@ const watchingList = ["over the server",
 "your dogs",
 "the impostor getting killed"
 ]
-function watching(){
-  var richValue = Math.floor(Math.random() * watchingList.length);
-  client.user.setActivity(`${watchingList[richValue]}`, {
-    type: "WATCHING",
-  });
-}
-function listening(){
-  var richValue = Math.floor(Math.random() * listeningList.length);
-  client.user.setActivity(`${listeningList[richValue]}`, {
-    type: "LISTENING",
-  });
-}
+
 function radnomRichpresence(){
   var random = Math.floor(Math.random() * 2);
   if (random == 1){
-    listening()
+    var richValue = Math.floor(Math.random() * listeningList.length);
+    client.user.setActivity(`${listeningList[richValue]}`, {
+      type: "LISTENING",
+    });
+    if (process.env.LOGGING == 'TRUE'){
+      console.log(`${date} RICH PRESENCE LOG || Changed to watching "${listeningList[richValue]}"`)
   }
-  if (random ==2 ){
-    watching()
+  }
+  if (random == 2 ){
+    var richValue = Math.floor(Math.random() * watchingList.length);
+    client.user.setActivity(`${watchingList[richValue]}`, {
+      type: "WATCHING",
+    });
+    if (process.env.LOGGING == 'TRUE'){
+      console.log(`${date} RICH PRESENCE LOG || Changed to watching "${watchingList[richValue]}"`)
+  }
   }
 }
-setInterval(radnomRichpresence, 900000);
+setInterval(radnomRichpresence, 600000);
 // end of random rich presence
 
 
@@ -127,8 +141,8 @@ setInterval(radnomRichpresence, 900000);
 client.commands = new Collection();
 const functionMap = new Collection()
 const commandListus = []
+client.queue = new Map();
 // -----------
-
 // Imports events from events folder, dynamicly
 const events = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of events) {
@@ -163,7 +177,7 @@ for (const functionFile of functions) {
 client.login(process.env.API_KEY);
 
 //exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
-module.exports = [functionMap, commandListus,commandListus,]
+module.exports = [functionMap, commandListus]
 
 
 
@@ -185,6 +199,3 @@ module.exports = [functionMap, commandListus,commandListus,]
 // ░░░░░░░░░░░█░░░█░░░░░██████░░░░░░░░░░░░░
 // ░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-currentDate = new Date()
-const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
-console.log(date)

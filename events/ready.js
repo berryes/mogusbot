@@ -1,4 +1,5 @@
 module.exports = (client, message,) => {
+    
     console.log('\x1b[33m%s\x1b[0m',`
                                                                  █████               █████      
                                                                 ░░███               ░░███       
@@ -26,6 +27,7 @@ module.exports = (client, message,) => {
 console.log('made by berryes(https://github.com/berryes/mogusbot)')
 // https://textkool.com/en/ascii-art-generator
 // DOS REBEL FONT
-    }
+
+}
 exports.name = "ready";
     
