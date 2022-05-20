@@ -1,6 +1,8 @@
-const { Client, Intents, Collection  } = require("discord.js");
+const { Client, Intents, Collection,MessageEmbed  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
+const { Player } = require("discord-music-player");
+const express = require('express')
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES, ]
 });
@@ -11,7 +13,10 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 currentDate = new Date()
 const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
 
-const express = require('express')
+// inside a command, event listener, etc.
+
+
+
 const app = express()
 const cors = require("cors")
 app.use(express.json())
@@ -141,8 +146,52 @@ setInterval(radnomRichpresence, 600000);
 client.commands = new Collection();
 const functionMap = new Collection()
 const commandListus = []
-client.queue = new Map();
-// -----------
+client.currentchannel = new Collection()
+
+
+//     musicbot part
+//
+const player = new Player(client, {
+    leaveOnEmpty: false, // This options are optional.
+});
+client.player = player;
+const musicembed = new MessageEmbed()
+.setColor('RANDOM')
+.setFooter({ text: 'The mighty mogus', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+client.player.on('songAdd', (queue, song) => {
+      musicembed.setFields({ name: 'Added a song', value: `${song}` },);
+      channel = client.channels.cache.get('975844026718769202');
+      channel.send(({ embeds: [musicembed] }))
+  })
+  client.player.on('playlistAdd', (queue, playlist) => {
+    musicembed.setFields({ name: 'Added a playlist', value: `${playlist}` },);
+    channel = client.channels.cache.get('975844026718769202');
+    channel.send(({ embeds: [musicembed] }))
+})
+client.player.on('channelEmpty', (queue, song) => {
+  musicembed.setFields({ name: 'Left the channel', value: `since everyone left... :(` },);
+  channel = client.channels.cache.get('975844026718769202');
+  channel.send(({ embeds: [musicembed] }))
+})
+client.player.on('queueEnd', (queue, song) => {
+  musicembed.setFields({ name: 'End', value: `The que has ended` },);
+  channel = client.channels.cache.get('975844026718769202');
+  channel.send(({ embeds: [musicembed] }))
+})
+client.player.on('clientDisconnect', (queue, song) => {
+  musicembed.setFields({ name: 'OY!', value: `I was kicked` },);
+  channel = client.channels.cache.get('975844026718769202');
+  channel.send(({ embeds: [musicembed] }))
+})
+client.player.on('songFirst', (queue, song) => {
+  musicembed.setFields({ name: 'Playing', value: `${song}` },);
+  channel = client.channels.cache.get('975844026718769202');
+  channel.send(({ embeds: [musicembed] }))
+})
+
+
+
+
 // Imports events from events folder, dynamicly
 const events = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of events) {
@@ -163,7 +212,6 @@ for (const commandfile of commands) {
   commandListus.push(commandName)
   client.commands.set(commandName, command);
 }
-
 
 // reads all the non prefix commands from the folder and puts them into an array of noprefixCommand
 const functions = fs.readdirSync("./functions").filter(file => file.endsWith(".js"));

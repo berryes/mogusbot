@@ -9,3 +9,4 @@ images/**
 .env
 temp/**
 version.txt
+.idea*

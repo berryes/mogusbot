@@ -4,15 +4,14 @@ const changelog = new MessageEmbed()
     .setTitle('Mogus bot update!')
 	.setURL('https://github.com/berryes/mogusbot')
 	.setAuthor({ name: 'The mogus bot', iconURL: 'https://i.imgur.com/nH7tKhI.png', url: 'https://berryez.xyz/' })
-	.setDescription('the mighty mogus bot has appeared with an update 0.0.2.9!')
+	.setDescription('the mighty mogus bot has appeared with an update 0.0.3.0!')
 	.setThumbnail('https://i.imgur.com/lfchERD.gif')
 	.addFields(
-		{ name: 'Better optimalization', value: 'The bots response is now even more sexier, and a lot of bugs have been fixed!' },
-		{ name: 'New help command!', value: 'Complete idiot? No idea how to use a command? ask with .sus help (command name) '},
-		{ name: 'New cat command!', value: 'use .sus cat / .sus cat delete to get a random pic of a cat', },
+		{ name: 'MUSIC!', value: 'Lost of other bots can do the same, i know. But the mighty mogus is just.. better you know.' },
+		{ name: 'Soon music control panel', value: 'I am currently working on a frontend for the mogus. Soon it will be hosted on my webiste'},
 	)
 	.setTimestamp()
-	.setFooter({ text: 'Mogusbot version 0.0.2.9'});
+	.setFooter({ text: 'Mogusbot version 0.0.3.0'});
 
 
 exports.run = (client, message, args) => {

@@ -1,0 +1,6 @@
+.sus play [music/url/spotify/url]
+get music from it and download it via, ytbdl
+add to a list
+if not playing: play and remove first element of list and 
+
+.sus skip
