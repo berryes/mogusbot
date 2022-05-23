@@ -5,7 +5,7 @@ module.exports = {
     description: "Replies with a random sussy pic",
     run: (client, message, args) => {
         
-    channel = client.channels.cache.get('939115249435562017');
+    channel = client.channels.cache.get('949601166688399401');
     channel.send('ur a fuckwit');
     message.delete()
 }

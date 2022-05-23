@@ -28,7 +28,7 @@ export default {
   methods:{
     sendmessage(){
       const tosend = document.getElementById("tosendInput").value;
-      fetch(`http://localhost:9000/send/${tosend}`)
+      fetch(`http://localhost:9000/music/${tosend}`)
         .then(function(response) {
           console.log("sent",response)
         })

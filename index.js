@@ -32,11 +32,23 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
   res.send('hello world')
 })
-
-app.get('/send/:message/:id',  async (req, res) => {
+// api:::
+app.get('/music/play/:title', async (req, res) => {
+    let guildQueue = client.player.getQueue('976915692140003408');
+    let queue = client.player.createQueue('939115249435562014');
+    await queue.join('976915692140003408');
+    let song = await queue.play(req.params.title)
+    }
+)
+app.get('/music/stop', async (req, res) => {
+  let guildQueue = client.player.getQueue('976915692140003408');
+        guildQueue.stop();
+  }
+)
+app.get('/send/:message',  async (req, res) => {
   try {
     const message = req.params.message
-    const channel = client.channels.cache.get('939115249435562017');
+    const channel = client.channels.cache.get('975844026718769202');
     await channel.send(message)
 
     res.status(200).json({ message: 'Posted' })
@@ -157,7 +169,8 @@ const player = new Player(client, {
 client.player = player;
 const musicembed = new MessageEmbed()
 .setColor('RANDOM')
-.setFooter({ text: 'The mighty mogus', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+.setFooter({ text: 'The mighty mogus' });
+
 client.player.on('songAdd', (queue, song) => {
       musicembed.setFields({ name: 'Added a song', value: `${song}` },);
       channel = client.channels.cache.get('975844026718769202');
@@ -188,7 +201,11 @@ client.player.on('songFirst', (queue, song) => {
   channel = client.channels.cache.get('975844026718769202');
   channel.send(({ embeds: [musicembed] }))
 })
-
+client.player.on('songChanged', (queue, song) => {
+  musicembed.setFields({ name: 'Playing', value: `${song}` },);
+  channel = client.channels.cache.get('975844026718769202');
+  channel.send(({ embeds: [musicembed] }))
+})
 
 
 
