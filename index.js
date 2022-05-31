@@ -10,12 +10,15 @@ require("dotenv").config();
 const Keyv = require("keyv")
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
-currentDate = new Date()
-const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
-
+function getDate(){
+  currentDate = new Date()
+  const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
+  return date
+}
 // inside a command, event listener, etc.
 
 
+client.currentchannel = new Collection()
 
 const app = express()
 const cors = require("cors")
@@ -33,16 +36,23 @@ app.get('/', (req, res) => {
   res.send('hello world')
 })
 // api:::
+client.currentchannel.set("channel","975844026718769202")
 app.get('/music/play/:title', async (req, res) => {
     let guildQueue = client.player.getQueue('976915692140003408');
     let queue = client.player.createQueue('939115249435562014');
     await queue.join('976915692140003408');
     let song = await queue.play(req.params.title)
+
     }
 )
-app.get('/music/stop', async (req, res) => {
-  let guildQueue = client.player.getQueue('976915692140003408');
-        guildQueue.stop();
+app.get('/music/skip', async (req, res) => {
+  let guildQueue = client.player.getQueue('939115249435562014');
+  guildQueue.skip();
+  }
+)
+app.get('/music/playing', async (req, res) => {
+  
+  res.send(`${guildQueue.nowPlaying}`)
   }
 )
 app.get('/send/:message',  async (req, res) => {
@@ -129,26 +139,15 @@ const watchingList = ["over the server",
 ]
 
 function radnomRichpresence(){
-  var random = Math.floor(Math.random() * 2);
-  if (random == 1){
-    var richValue = Math.floor(Math.random() * listeningList.length);
-    client.user.setActivity(`${listeningList[richValue]}`, {
-      type: "LISTENING",
-    });
-    if (process.env.LOGGING == 'TRUE'){
-      console.log(`${date} RICH PRESENCE LOG || Changed to watching "${listeningList[richValue]}"`)
+  let random = Math.floor(Math.random() * 2);
+  if (!random == 1){
+    let richValue = Math.floor(Math.random() * listeningList.length);
+    client.user.setActivity(`${listeningList[richValue]}`, {type: "LISTENING",});
   }
-  }
-  if (random == 2 ){
-    var richValue = Math.floor(Math.random() * watchingList.length);
-    client.user.setActivity(`${watchingList[richValue]}`, {
-      type: "WATCHING",
-    });
-    if (process.env.LOGGING == 'TRUE'){
-      console.log(`${date} RICH PRESENCE LOG || Changed to watching "${watchingList[richValue]}"`)
-  }
-  }
-}
+  else{
+    let richValue = Math.floor(Math.random() * watchingList.length);
+    client.user.setActivity(`${watchingList[richValue]}`, {type: "WATCHING",});
+}}
 setInterval(radnomRichpresence, 600000);
 // end of random rich presence
 
@@ -158,7 +157,7 @@ setInterval(radnomRichpresence, 600000);
 client.commands = new Collection();
 const functionMap = new Collection()
 const commandListus = []
-client.currentchannel = new Collection()
+
 
 
 //     musicbot part
@@ -168,43 +167,47 @@ const player = new Player(client, {
 });
 client.player = player;
 const musicembed = new MessageEmbed()
-.setColor('RANDOM')
 .setFooter({ text: 'The mighty mogus' });
 
-client.player.on('songAdd', (queue, song) => {
+client.player.on('songAdd', async (queue, song) => {
       musicembed.setFields({ name: 'Added a song', value: `${song}` },);
-      channel = client.channels.cache.get('975844026718769202');
-      channel.send(({ embeds: [musicembed] }))
+      musicembed.setColor('BLURPLE')
+      client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
   })
-  client.player.on('playlistAdd', (queue, playlist) => {
+  client.player.on('playlistAdd', async (queue, playlist) => {
     musicembed.setFields({ name: 'Added a playlist', value: `${playlist}` },);
-    channel = client.channels.cache.get('975844026718769202');
-    channel.send(({ embeds: [musicembed] }))
+    musicembed.setColor('BLURPLE')
+    client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('channelEmpty', (queue, song) => {
+client.player.on('channelEmpty', async (queue, song) => {
   musicembed.setFields({ name: 'Left the channel', value: `since everyone left... :(` },);
-  channel = client.channels.cache.get('975844026718769202');
-  channel.send(({ embeds: [musicembed] }))
+  musicembed.setColor('RED')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('queueEnd', (queue, song) => {
+client.player.on('queueEnd', async (queue, song) => {
   musicembed.setFields({ name: 'End', value: `The que has ended` },);
-  channel = client.channels.cache.get('975844026718769202');
-  channel.send(({ embeds: [musicembed] }))
+  musicembed.setColor('RED')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('clientDisconnect', (queue, song) => {
+client.player.on('clientDisconnect', async (queue, song) => {
   musicembed.setFields({ name: 'OY!', value: `I was kicked` },);
-  channel = client.channels.cache.get('975844026718769202');
-  channel.send(({ embeds: [musicembed] }))
+  musicembed.setColor('RED')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('songFirst', (queue, song) => {
+client.player.on('songFirst', async (queue, song) => {
   musicembed.setFields({ name: 'Playing', value: `${song}` },);
-  channel = client.channels.cache.get('975844026718769202');
-  channel.send(({ embeds: [musicembed] }))
+  musicembed.setColor('GREEN')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('songChanged', (queue, song) => {
+client.player.on('songChanged', async (queue, song) => {
   musicembed.setFields({ name: 'Playing', value: `${song}` },);
-  channel = client.channels.cache.get('975844026718769202');
-  channel.send(({ embeds: [musicembed] }))
+  musicembed.setColor('BLURPLE')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
+})
+client.player.on('Error',async  (queue, song) => {
+  musicembed.setFields({ name: 'Error', value: `Failed to load` },);
+  musicembed.setColor('RED')
+  client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 
 

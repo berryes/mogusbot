@@ -29,10 +29,11 @@ function get() {
         order: sequelize.random(),
       })
  }
- currentDate = new Date()
-const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
 
 exports.run = (client, message, args) => {
+    currentDate = new Date()
+    const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
+    
     images = []
  const imagefile = fs.readdirSync("././images");
  for (const file of imagefile) {

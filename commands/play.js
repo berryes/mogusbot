@@ -14,6 +14,9 @@ module.exports = {
             message.channel.send(({ embeds: [musicembed] }))
         }
         else {
+            client.currentchannel.set("channel", message.channel.id)
+            console.log(client.currentchannel.get("channel"))
+
             if(args[0].includes("spotify.com/playlist/")){
                 let queue = client.player.createQueue(message.guild.id);
                 await queue.join(message.member.voice.channel);
@@ -23,14 +26,12 @@ module.exports = {
                 });
             
             }
-            // retardedus codeus rightus hereus |
-            //                                  #   
-            else if(!args[0].includes("spotify.com/playlist/")){
+            else {
             let guildQueue = client.player.getQueue(message.guild.id);
             let queue = client.player.createQueue(message.guild.id);
             await queue.join(message.member.voice.channel);
             let song = await queue.play(args.join(" "))
-            }
         }
+    }
         console.log(message.guild.id)
 }}
