@@ -10,3 +10,4 @@ images/**
 temp/**
 version.txt
 .idea*
+/.vscode
