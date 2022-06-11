@@ -22,16 +22,14 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Usage](#usage)
-* [Contributing](#contributing)
+* [WIP](#wip)
 * [License](#license)
 * [Authors](#authors)
 * [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
-![Screen Shot](screenshot.png)
-
-The mogus bot is one of my many projects that actually succeeded(succeeded= finished).
+The mogusbot is one of my many projects that actually I feel like working on.
 
 The mogusbot is a powerfull discord management bot tool. It has multiple core features such as. Monitoring and data collection with prometheus x grafana. Musicbot, logging, advanced moderation and custom language support!
 
