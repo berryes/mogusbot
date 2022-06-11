@@ -1,40 +1,14 @@
 const { MessageEmbed } = require('discord.js');
-const adminrole = `${process.env.ADMIN_ROLE}`
 const fs = require('fs')
 const request = require('request')
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
-	host: `${process.env.DB_LOCATION}`,
-	dialect: `${process.env.DB_TYPE}`,
-	logging: false,
-	// SQLite only
-	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
-});
-const Quotes = sequelize.define('quotes', {
-	quote: {
-		type: Sequelize.STRING,
-	},
-	norp: {
-        type: Sequelize.TEXT,
-    },
-    addedBy: {
-        type: Sequelize.TEXT,
-    }
-});
+const lang = require("../lang.json");
 currentDate = new Date()
 const date = "[" + currentDate.getFullYear()+ "/" + currentDate.getMonth() + "/" + currentDate.getDate() + "] "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
-function isIdUnique (quote) {
-    return Quotes.quote.count({ where: { id: quote } })
-      .then(count => {
-        if (count != 0) {
-          return false;
-        }
-        return true;
-    });
-}
-
 // OMFG WHY IS THIS CODE SO FUCKING NESTED AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
+
+
+// make it so the server has its own pictures
 fileNameList = []
 const events = fs.readdirSync("./images");
 for (const file of events) {
@@ -44,8 +18,8 @@ for (const file of events) {
 module.exports = {
     name: "Add",
     arguments: 'image, quote',
-    usage: [`${process.env.PREFIX} add image`,`${process.env.PREFIX} add quote (quote) (positive/negative)`],
-    description: "Add an image or a quote to the database",
+    usage: [`${process.env.PREFIX} add image`],
+    description: "Add an image to the database",
     run: (client, message, args) => {
 
     const textEmbed = new MessageEmbed()
@@ -59,10 +33,13 @@ if (args[0] == 'image'){
             urls.push(attachment.proxyURL);
         });
         var random = Math.floor(Math.random() * 999999);
-        const path = `./images/${random}.png`
+        const path = `./images/${message.guild.id}/${random}.png`
         const url = urls[0]
-
-
+        
+        // if the server doesnt have a folder make one.
+        if(!fs.existsSync(`./images/${message.guild.id}/`)){
+            fs.mkdirSync(`./images/${message.guild.id}/`)
+        }
 const download = (url, path, callback) => {
     request.head(url, (err, res, body) => {
       request(url)
@@ -72,7 +49,7 @@ const download = (url, path, callback) => {
   }
 
 download(url, path, () => {
-    textEmbed.setFields({ name: 'Success', value: `Your image has been added to the random reply database!` },);
+    textEmbed.setFields({ name: `${lang.success}`, value: `${lang.succesfullImageAdd}`  },);
     textEmbed.setColor('GREEN')
     message.reply({ embeds: [textEmbed] })
 
@@ -82,7 +59,7 @@ download(url, path, () => {
 })
 }
     else {
-        textEmbed.setFields({ name: 'Error', value: `You need to attach an image!` },);
+        textEmbed.setFields({ name: `${lang.error}`, value: `${lang.noImageAttached}` },);
         textEmbed.setColor('DARK_RED')
         message.reply({ embeds: [textEmbed] })
         if (process.env.LOGGING == 'TRUE'){
@@ -90,54 +67,8 @@ download(url, path, () => {
         }
     }
 }
-
-else if (args[0] == 'quote'){
-    if (message.member.roles.cache.has(adminrole)){
-        Quotes.sync()
-        const user = message.author.username
-        var quote = ''
-        var norp = ""
-        var middle = args.slice(1, args.length-1);
-        for (var item in middle) {
-            quote += `${middle[item]} `
-        }
-            if (args[args.length - 1] == 'positive'){
-                textEmbed.setFields({ name: 'Success', value: `Your quote has been added to the random reply database as a positive quote.` },{ name: 'Quote', value: `${quote}` });
-                textEmbed.setColor('GREEN')
-                message.reply({ embeds: [textEmbed] })
-                const quoteD =  Quotes.create({
-                    quote: quote,
-                    norp: 'positive',
-                    addedBy: user,
-                });
-                if (process.env.LOGGING == 'TRUE'){
-                    console.log(`${date}| ADD LOG -> ${user} has added a quote (${quote}) as a positive`)
-                }
-            } 
-            else if (args[args.length - 1] == 'negative'){
-                textEmbed.setFields({ name: 'Success', value: `Your quote has been added to the random reply database as a negative quote.` },{ name: 'Quote', value: `${quote}` });
-                textEmbed.setColor('dark_green')
-                message.reply({ embeds: [textEmbed] })
-                const quoteD =  Quotes.create({
-                    quote: quote,
-                    norp: 'negative',
-                    addedBy: user,
-                });
-                if (process.env.LOGGING == 'TRUE'){
-                    console.log(`${date}| QUOTE ADD LOG -> ${user} has added a quote (${quote}) as a negative`)
-                }
-            } 
-            else {
-                message.reply(`${args[args.length-1]} is not an option | Use the last word to describe your quote. | Either negative / positive`)
-                if (process.env.LOGGING == 'TRUE'){
-                    console.log(`${date} | QUOTE ADD LOG -> ${user} tried to add (${quote}) but failed because of prefix issues`)
-                }
-            }
-
-    }
-    }
     else {
-        message.reply("this is not an option. use .sus commands")
+        message.reply(`${lang.commandOptionDoesNotExist}`)
     }
 }
 }

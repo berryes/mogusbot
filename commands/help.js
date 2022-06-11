@@ -1,5 +1,6 @@
 const commands = require('../index')
 const { MessageEmbed } = require('discord.js');
+const lang = require("../lang.json");
 
 module.exports = {
     name: "help",
@@ -14,15 +15,15 @@ module.exports = {
 
         const command = client.commands.get(args[0])
         if (!command){
-            textEmbed.setFields({ name: `Error`, value: `${args[0]} is not a command. Ask for them with ${process.env.PREFIX} commands`,});
+            textEmbed.setFields({ name: `${lang.error}`, value: `${lang.helpCommandDoesNotExist}`,});
             textEmbed.setColor('RED')
             message.reply({embeds: [textEmbed]})
         }
         else {
             textEmbed.setFields(
-             { value: `Name`, name: `**${command.name}**` },
-             { value: `Description`, name: `${command.description}` },
-             { value: `Usage`, name: `${command.usage}` },
+             { value: `${lang.name}`, name: `**${command.name}**` },
+             { value: `${lang.description}`, name: `${command.description}` },
+             { value: `${lang.usage}`, name: `${command.usage}` },
              );
             message.channel.send({ embeds: [textEmbed] })
         }

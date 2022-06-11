@@ -1,4 +1,5 @@
 const {MessageEmbed} = require("discord.js")
+const lang = require("../lang.json")
 const musicembed = new MessageEmbed()
 .setColor('RED')
 .setFooter({ text: 'The mighty mogus' });
@@ -10,13 +11,24 @@ module.exports = {
     description: "Skips the current song",
     run: (client, message, args) => {
         if (!message.member.voice.channel){
-            musicembed.setFields({ name: 'Error!', value: 'You are not in a voice channel!' },);
+            musicembed.setFields({ name: `${lang.error}`, value: `${lang.userNotInVoiceChannel}` },);
             message.channel.send(({ embeds: [musicembed] }))
         }
-        else{ 
-        let guildQueue = client.player.getQueue(message.guild.id);
-        guildQueue.skip();
-    }}
+        if (!args[0]){
+            let guildQueue = client.player.getQueue(message.guild.id);
+            guildQueue.skip();
+        }
+        else {
+            if(!isNaN(args[0])){
+                let guildQueue = client.player.getQueue(message.guild.id);
+                    guildQueue.skip(args[0])
+            }
+            else {
+                musicembed.setFields({ name: `${lang.error}`, value: `${lang.skippingIsNotNumber}` },);
+                message.channel.send(({ embeds: [musicembed] }))
+            }
+        }
+    }
 }
 exports.name = "skip";
 

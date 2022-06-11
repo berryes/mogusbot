@@ -1,6 +1,6 @@
 // make the bot choose between these too:
 // .sus choose "whatever" or "hahaha"
-
+const lang = require("../lang.json");
 module.exports = {
     name: "choose",
     arguments: 'none',
@@ -13,10 +13,10 @@ module.exports = {
         message.channel.send(`i choose: ${args[random]}`)
     }
     else if (args.length == 1){
-        message.reply('i cant choose from one...')
+        message.reply(`${lang.cantChooseFromOne}`)
     }
     else {
-        message.reply('you need to type in something in after the command  you baka')
+        message.reply(`${lang.noArgumentsGiven}`)
     }
     }
 }

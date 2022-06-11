@@ -1,7 +1,8 @@
 const {MessageEmbed} = require("discord.js")
+const lang = require("../lang.json")
 const musicembed = new MessageEmbed()
-.setColor('RED')
-.setFooter({ text: 'The mighty mogus' });
+.setColor('BLUE')
+.setFooter({ text: `${lang.botname}` });
 
 module.exports = {
     name: "shuffle",
@@ -10,12 +11,15 @@ module.exports = {
     description: "Shuffles the current playlist",
     run: (client, message, args) => {
         if (!message.member.voice.channel){
-            musicembed.setFields({ name: 'Error!', value: 'You are not in a voice channel!' },);
+            musicembed.setFields({ name: `${lang.error}`, value: `${lang.userNotInVoiceChannel}` },);
             message.channel.send(({ embeds: [musicembed] }))
         }
         else {
         let guildQueue = client.player.getQueue(message.guild.id);
         guildQueue.shuffle();
+
+        musicembed.setFields({ name: `${lang.success}`, value: `${lang.queueShuffle}` },);
+        message.channel.send(({ embeds: [musicembed] }))
     }}
 }
 exports.name = "shuffle";

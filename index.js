@@ -1,15 +1,12 @@
 const { Client, Intents, Collection,MessageEmbed  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
-const { Player } = require("discord-music-player");
 const express = require('express')
+const lang = require("./lang.json")
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES, ]
 });
 require("dotenv").config();
-const Keyv = require("keyv")
-const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
-
 function getDate(){
   currentDate = new Date()
   const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
@@ -20,7 +17,7 @@ function getDate(){
 
 client.currentchannel = new Collection()
 
-const app = express()
+/* const app = express()
 const cors = require("cors")
 app.use(express.json())
 const port = process.env.API_PORT
@@ -88,7 +85,7 @@ app.get('/chance/get/:type/',  async (req, res) => {
     res.status(500).json(err)
     console.error(err)
   }
-})
+}) */
 
 
 if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
@@ -162,51 +159,66 @@ const commandListus = []
 
 //     musicbot part
 //
+const { Player } = require("discord-music-player");
 const player = new Player(client, {
     leaveOnEmpty: false, // This options are optional.
 });
 client.player = player;
 const musicembed = new MessageEmbed()
-.setFooter({ text: 'The mighty mogus' });
+.setFooter({ text: `${lang.botname}` });
+
+const errorEmbed = new MessageEmbed()
+.setFooter({ text: `${lang.botname}` });
 
 client.player.on('songAdd', async (queue, song) => {
-      musicembed.setFields({ name: 'Added a song', value: `${song}` },);
-      musicembed.setColor('BLURPLE')
+  musicembed.setTitle(`${song}`)
+	musicembed.setURL(`${song.url}`)
+  musicembed.setColor('BLURPLE')
+  musicembed.setThumbnail(`${song.thumbnail}`)
+  musicembed.setDescription(`${lang.songAdded}`)
       client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
   })
   client.player.on('playlistAdd', async (queue, playlist) => {
-    musicembed.setFields({ name: 'Added a playlist', value: `${playlist}` },);
+    musicembed.setTitle(`${playlist}`)
+    musicembed.setURL(`${playlist.url}`)
     musicembed.setColor('BLURPLE')
+    musicembed.setDescription(`${lang.playlistAdded}`)
     client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('channelEmpty', async (queue, song) => {
-  musicembed.setFields({ name: 'Left the channel', value: `since everyone left... :(` },);
+  musicembed.setFields({ name: `${lang.voiceChannelEmpty}`, value: `${lang.voiceChannelEmptyDesc}` },);
   musicembed.setColor('RED')
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('queueEnd', async (queue, song) => {
-  musicembed.setFields({ name: 'End', value: `The que has ended` },);
-  musicembed.setColor('RED')
+  errorEmbed.setFields({ name: `${lang.queueEnd}`, value: `${lang.queueEndDesc}` },);
+  errorEmbed.setColor('BLURPLE')
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('clientDisconnect', async (queue, song) => {
-  musicembed.setFields({ name: 'OY!', value: `I was kicked` },);
+  musicembed.setFields({ name: `${lang.error}`, value: `${lang.botKicked}` },);
   musicembed.setColor('RED')
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songFirst', async (queue, song) => {
-  musicembed.setFields({ name: 'Playing', value: `${song}` },);
-  musicembed.setColor('GREEN')
+  musicembed.setTitle(`${song}`)
+	musicembed.setURL(`${song.url}`)
+  musicembed.setColor('BLURPLE')
+  musicembed.setThumbnail(`${song.thumbnail}`)
+  musicembed.setDescription(`${lang.playing}`)
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songChanged', async (queue, song) => {
-  musicembed.setFields({ name: 'Playing', value: `${song}` },);
+  musicembed.setTitle(`${song}`)
+	musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
+  musicembed.setThumbnail(`${song.thumbnail}`)
+  musicembed.setDescription(`${lang.playing}`)
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('Error',async  (queue, song) => {
-  musicembed.setFields({ name: 'Error', value: `Failed to load` },);
-  musicembed.setColor('RED')
+  errorEmbed.setFields({ name: `${lang.error}`, value: `${lang.failedToLoad}` },);
+  errorEmbed.setColor('RED')
   client.channels.cache.get(`${ await client.currentchannel.get("channel")}`).send(({ embeds: [musicembed] }))
 })
 

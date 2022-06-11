@@ -1,0 +1,31 @@
+{
+    "botname": "The migthy mogus",
+    "success": "Success!",
+    "error": "Error",
+    "userNotInVoiceChannel": "You are not in a voice channel!",
+    "succesfullImageAdd": "Your image has been added to the random reply database!",
+    "noImageAttached": "You need to attach an image!",
+    "commandOptionDoesNotExist": "This is not an option use .s help",
+    "cantChooseFromOne": "I can't choose from one option",
+    "noArgumentsGiven": "you need to type in something in after the command  you baka",
+    "helpCommandDoesNotExist": "This is not a command. ask for them with with the commands command",
+
+    "name": "Name",
+    "description": "Description",
+    "usage": "Usage",
+
+
+    "songAdded":"Added a song",
+    "playlistAdded":"Added a playlist",
+    "voiceChannelEmpty":"Left the channel",
+    "voiceChannelEmptyDesc": "Everyone left the channel",
+    "queueEnd":"Queue Ended",
+    "queueEndDesc": "The queue has ended",
+    "botKicked":"I was kicked",
+    "playing": "Playing",
+    "failedToLoad":"Failed to load",
+    "seekDesc": "seconds was skipped in the music",
+    "seekAmountIsNotNumber": "Seeking can be only done with a number",
+    "queueShuffle":"The que has been shuffled",
+    "skippingIsNotNumber": "You can only skip with numbers"
+}

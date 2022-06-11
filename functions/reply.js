@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
     const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
     
     images = []
- const imagefile = fs.readdirSync("././images");
+ const imagefile = fs.readdirSync(`./images/${message.guild.id}/`);
  for (const file of imagefile) {
      images.push(file)
  }
@@ -56,7 +56,7 @@ exports.run = (client, message, args) => {
               });
         }
         else if (chancheTypeValue >= chancheType){
-            message.reply({files:[`././images/${images[randomimage]}`]});
+            message.reply({files:[`././images/${message.guild.id}/${images[randomimage]}`]});
 
         }
     }

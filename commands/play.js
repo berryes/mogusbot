@@ -1,7 +1,9 @@
 const {MessageEmbed} = require("discord.js")
+const lang = require("../lang.json");
 const musicembed = new MessageEmbed()
 .setColor('RED')
-.setFooter({ text: 'The mighty mogus' });
+.setFooter({ text: `${lang.botname}` });
+
 
 module.exports = {
     name: "play",
@@ -10,7 +12,7 @@ module.exports = {
     description: "Plays a song/playlist",
     run: async (client, message, args)  => {
         if (!message.member.voice.channel){
-            musicembed.setFields({ name: 'Error!', value: 'You are not in a voice channel!' },);
+            musicembed.setFields({ name: `${lang.error}`, value: `${lang.userNotInVoiceChannel}` },);
             message.channel.send(({ embeds: [musicembed] }))
         }
         else {
@@ -24,7 +26,6 @@ module.exports = {
                     if(!guildQueue)
                         queue.stop();
                 });
-            
             }
             else {
             let guildQueue = client.player.getQueue(message.guild.id);
@@ -33,5 +34,4 @@ module.exports = {
             let song = await queue.play(args.join(" "))
         }
     }
-        console.log(message.guild.id)
 }}
