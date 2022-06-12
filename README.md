@@ -39,7 +39,9 @@ Here are some information you need before running the bot!
 
 ### Prerequisites
 
-You will need a mysql databse for it to work, any pc/vps/raspberry pi with at least 1 GB of ram.
+You will need a mysql databse for it to work
+Any pc/vps/raspberry pi with at least 1 GB of ram.
+And NodeJS 16.X
 
 ### Installation
 
