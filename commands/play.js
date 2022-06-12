@@ -16,8 +16,7 @@ module.exports = {
             message.channel.send(({ embeds: [musicembed] }))
         }
         else {
-            client.currentchannel.set("channel", message.channel.id)
-            console.log(client.currentchannel.get("channel"))
+            client.currentchannel.set(message.guild.id, message.channel.id)
 
             if(args[0].includes("spotify.com/playlist/")){
                 let queue = client.player.createQueue(message.guild.id);
