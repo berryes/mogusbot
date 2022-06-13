@@ -1,10 +1,10 @@
 const lang = require("../lang.json");
 require("dotenv").config();
 
-const data = require("../functions/dbDataInit")
-const image = require("../functions/dbImageInit")
-const quote = require("../functions/dbQuoteInit")
-const mod = require("../functions/dbModInit")
+const data = require("../models/dbDataInit")
+const image = require("../models/dbImageInit")
+const quote = require("../models/dbQuoteInit")
+const mod = require("../models/dbModInit")
 
 module.exports = {
     name: "init",

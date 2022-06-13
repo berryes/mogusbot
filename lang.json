@@ -14,8 +14,18 @@
     "description": "Description",
     "usage": "Usage",
 
+    "destroyIMG": "image db entry was destroyed since it does not exist any more",
 
     "songAdded":"Added a song",
+    "paused": "Pause",
+    "queuePause": "The queue has been paused",
+    "resume": "Resumed",
+    "queueResume": "The queue has been resumed",
+    "stop": "Stopped",
+    "queueStop": "The queue has been stopped",
+    "repeat": "Repeating",
+    "repeatQueue": "Queue will be looped",
+    "RepeatSong": "Song will be looped",
     "playlistAdded":"Added a playlist",
     "voiceChannelEmpty":"Left the channel",
     "voiceChannelEmptyDesc": "Everyone left the channel",

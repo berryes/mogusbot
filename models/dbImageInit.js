@@ -9,9 +9,9 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 	// SQLite only
 	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
 });
-
+const dbImage = 0
 const createServerModerationDB = async (serverid) =>{
-	const dcDB = sequelize.define(`images_${serverid}`, {
+	const dbImage = sequelize.define(`images_${serverid}`, {
 		image_id: {
 			type: Sequelize.STRING,
 		},
@@ -19,8 +19,8 @@ const createServerModerationDB = async (serverid) =>{
 			type: Sequelize.STRING,
 		},
 	})
-	await dcDB.sync()
+	await dbImage.sync()
+    return dbImage;
 	}
-
-
+    console.log(dbImage)
 module.exports = createServerModerationDB;

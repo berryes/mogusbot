@@ -6,8 +6,6 @@ const chancheValue = 0
 const chancheType = 0
 const adminrole = `${process.env.ADMIN_ROLE}`
 
-
-
     module.exports = {
         name: "chance",
         arguments: 'set, current',
@@ -21,25 +19,28 @@ const adminrole = `${process.env.ADMIN_ROLE}`
             if (message.member.roles.cache.has(adminrole)){
                 if (args[0] == 'set') {
                     if (args[1] == 'reply'){
+
+                        // if nothing is declared
                         if (!args[2]){
                             textEmbed.setFields({ name: 'Error', value: 'You need to declare a number!' },);
                             textEmbed.setColor('DARK_RED')
-                            message.reply({ embeds: [textEmbed] })
-                        }
+                            message.reply({ embeds: [textEmbed] })}
+
+                         // if the argument is a letter   
                         else if (isNaN(args[2])){
                             textEmbed.setFields({ name: 'Error', value: 'The reply chance can be only a number!' },);
                             textEmbed.setColor('DARK_RED')
-                            message.reply({ embeds: [textEmbed] })
-                        }
+                            message.reply({ embeds: [textEmbed] })}
+                        
+                        // successfully set the chance
                         else {
-                            await chancheDB.set("chanche", args[2]);
-                            const chancheValue = await chancheDB.get('chanche');
+                            await chancheDB.set(`${message.guild.id}`, args[2]);
+                            const chancheValue = await chancheDB.get(`${message.guild.id}`);
                             textEmbed.setFields({ name: 'Success', value: `The reply chanche has been set to 1/${chancheValue}` },);
                             textEmbed.setColor('GREEN')
-                            message.reply({ embeds: [textEmbed] })
-                        }
-                }
-                if (args[1] == 'type'){
+                            message.reply({ embeds: [textEmbed] })}}
+                // reply type
+                /* if (args[1] == 'type'){
                     if (!args[2]){
                         textEmbed.setFields({ name: 'Error', value: 'You need to declare a number!' },);
                         textEmbed.setColor('DARK_RED')
@@ -62,7 +63,7 @@ const adminrole = `${process.env.ADMIN_ROLE}`
                         textEmbed.setColor('GREEN')
                         message.reply({ embeds: [textEmbed] })
                     }
-                }
+                } */
             }
             else {
                 if (args[0] == 'current'){
@@ -70,11 +71,9 @@ const adminrole = `${process.env.ADMIN_ROLE}`
                     const chancheValue = await chancheDB.get('chanche');
                     textEmbed.setFields({ name: 'The chanche for a random reply is', value: `${chancheValue}` },{ name: 'The chanche for a quote reply is ', value: `${chancheType}` },);
                     textEmbed.setColor('GREEN')
-                    message.reply({ embeds: [textEmbed] })
-                }
-            }
-        }
-
+                    message.reply({ embeds: [textEmbed] })}}}
+                
+                    // if no admin role
             else {
                 await message.reply('You dont have permision for this... sussy baka')
             } // end of checkrole
@@ -83,8 +82,6 @@ const adminrole = `${process.env.ADMIN_ROLE}`
 } // end of export run
     }
 
-// create an embed to make it more appealing. text is ugly
-
-exports.name = "chanche";
+exports.name = "chance";
 
 
