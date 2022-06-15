@@ -1,5 +1,6 @@
 {
     "botname": "The migthy mogus",
+    "Richpresence": "asd",
     "success": "Success!",
     "error": "Error",
     "userNotInVoiceChannel": "You are not in a voice channel!",
@@ -17,6 +18,7 @@
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
 
     "songAdded":"Added a song",
+    "playingIN": "Playing in:",
     "paused": "Pause",
     "queuePause": "The queue has been paused",
     "resume": "Resumed",

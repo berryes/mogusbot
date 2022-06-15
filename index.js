@@ -1,4 +1,4 @@
-const { Client, Intents, Collection,MessageEmbed  } = require("discord.js");
+const { Client, Intents, Collection,MessageEmbed,  } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js');
 const lang = require("./lang.json")
@@ -12,10 +12,6 @@ function getDate(){
   const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
   return date
 }
-// inside a command, event listener, etc.
-    console.log(client.guilds.cache.map(guild => guild.id));
-
-
 
 /* 
 const express = require('express')
@@ -123,49 +119,20 @@ if (!process.env.CAT_API_KEY)  throw new Error("no cat api key given in .env");
 //          ⠀⠐⠒⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⢀⠤⠀⠀⠀⠀⠀⠀⠀⠈⠉⠀⠀⠀⠀
 
 
-
-
-const listeningList = ["mogusbeats",
-"spotify",
-"Among drip 10 hour bass boosted sussy baka edition premium plus x ++ pro ultimate superior X+ S",
-"red discussing why he is not the imposter",
-]
-const watchingList = ["over the server",
-"you",
-"as red climbes out of the vent. sussy",
-"the tv",
-"your dogs",
-"the impostor getting killed"
-]
-
-function radnomRichpresence(){
-  let random = Math.floor(Math.random() * 2);
-  if (!random == 1){
-    let richValue = Math.floor(Math.random() * listeningList.length);
-    client.user.setActivity(`${listeningList[richValue]}`, {type: "LISTENING",});
-  }
-  else{
-    let richValue = Math.floor(Math.random() * watchingList.length);
-    client.user.setActivity(`${watchingList[richValue]}`, {type: "WATCHING",});
-}}
-setInterval(radnomRichpresence, 600000);
-// end of random rich presence
-
+/* const radnomRichpresence = require("./functions/randomRichPresence")
+setInterval(radnomRichpresence, 10000); */
 
 
 // Command's list
-client.commands = new Collection();
-const functionMap = new Collection()
-const commandListus = []
 
 
 
 //     musicbot part
-//
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
-    leaveOnEmpty: false, // This options are optional.
+    leaveOnEmpty: false, 
 });
+
 client.player = player;
 client.currentchannel = new Collection()
 const musicembed = new MessageEmbed()
@@ -174,19 +141,23 @@ const musicembed = new MessageEmbed()
 const errorEmbed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}` });
 
-client.player.on('songAdd', async (queue, song) => {
+client.player.on('songAdd', async (queue, song, ) => {
+  let guildID = queue.guild.id
   musicembed.setTitle(`${song}`)
 	musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(`${lang.songAdded}`)
+  musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
+  console.log(queue)
+  console.log(queue.connection.channel.id)
+
       client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
   })
   client.player.on('playlistAdd', async (queue, playlist) => {
     musicembed.setTitle(`${playlist}`)
     musicembed.setURL(`${playlist.url}`)
     musicembed.setColor('BLURPLE')
-    musicembed.setDescription(`${lang.playlistAdded}`)
+    musicembed.setDescription(`${lang.playlistAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
     client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('channelEmpty', async (queue, song) => {
@@ -205,7 +176,7 @@ client.player.on('songFirst', async (queue, song) => {
 	musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(`${lang.playing}`)
+  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songChanged', async (queue, song) => {
@@ -213,7 +184,7 @@ client.player.on('songChanged', async (queue, song) => {
 	musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(`${lang.playing}`)
+  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('Error',async  (queue, song) => {
@@ -224,6 +195,8 @@ client.player.on('Error',async  (queue, song) => {
 
 
 
+
+client.commands = new Collection();
 // Imports events from events folder, dynamicly
 const events = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of events) {
@@ -234,23 +207,16 @@ for (const file of events) {
 }
 
 // Imports events from events folder, dynamicly
-
 const commands = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 for (const commandfile of commands) {
   const commandName = commandfile.split(".")[0];
   const command = require(`./commands/${commandfile}`);
 
   console.log('\x1b[32m%s\x1b[0m',`🔧 Loaded a command | ${commandName}`);
-  commandListus.push(commandName)
   client.commands.set(commandName, command);
 }
 
 client.login(process.env.API_KEY);
-
-//exports the noprefixCommand,NoprefixList and ect array so you can import them on another js file
-module.exports = [functionMap, commandListus]
-
-
 
 
 // 

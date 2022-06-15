@@ -17,7 +17,6 @@ module.exports = {
         }
         else {
             client.currentchannel.set(message.guild.id, message.channel.id)
-
             if(args[0].includes("spotify.com/playlist/")){
                 let queue = client.player.createQueue(message.guild.id);
                 await queue.join(message.member.voice.channel);
@@ -30,7 +29,7 @@ module.exports = {
             let guildQueue = client.player.getQueue(message.guild.id);
             let queue = client.player.createQueue(message.guild.id);
             await queue.join(message.member.voice.channel);
-            let song = await queue.play(args.join(" "))
+            let song = await tqueue.play(args.join(" "))
         }
     }
 }}

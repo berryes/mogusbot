@@ -12,18 +12,7 @@ module.exports = (client, message,) => {
                           ███ ░███                                                              
                          ░░██████                                                               
                           ░░░░░░                                                                
-                    ████████      ████████ 
-                   ███░░░░███    ███░░░░███
- █████ █████      ░░░    ░███   ░███   ░███
-░░███ ░░███          ███████    ░░█████████
- ░███  ░███         ███░░░░      ░░░░░░░███
- ░░███ ███         ███      █    ███   ░███
-  ░░█████    ██ ██░██████████ ██░░████████ 
-   ░░░░░    ░░ ░░ ░░░░░░░░░░ ░░  ░░░░░░░░  
-                                           
-                                           
-                                           
-    `)
+ `)
 console.log('made by berryes(https://github.com/berryes/mogusbot)')
 // https://textkool.com/en/ascii-art-generator
 // DOS REBEL FONT
