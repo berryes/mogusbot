@@ -5,7 +5,7 @@ const musicembed = new MessageEmbed()
 
 module.exports = {
     name: "Repeat",
-    arguments: 'queue, song',
+    arguments: 'queue, song, off',
     usage: [`${process.env.PREFIX} repeat queue`],
     description: "Repeats the queue or the song",
     run: (client, message, args) => {
@@ -27,7 +27,13 @@ module.exports = {
                 musicembed.setColor('GREEN')
                 message.channel.send(({ embeds: [musicembed] }))
             }
-            else {
+            if (args[0] == "off"){
+                guildQueue.setRepeatMode(0);
+                musicembed.setFields({ name: `${lang.repeatOff}`, value: `${lang.RepeatSong}` },);
+                musicembed.setColor('GREEN')
+                message.channel.send(({ embeds: [musicembed] }))
+            }
+            else if(!args[0]){
                 musicembed.setFields({ name: `${lang.error}`, value: `${lang.commandOptionDoesNotExist}` },);
                 musicembed.setColor('RED')
                 message.channel.send(({ embeds: [musicembed] }))

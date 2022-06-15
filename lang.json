@@ -18,6 +18,8 @@
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
 
     "songAdded":"Added a song",
+    "repeatOff": "Repeat is now off",
+    "repeatDesc": "Stopped repeating",
     "playingIN": "Playing in:",
     "paused": "Pause",
     "queuePause": "The queue has been paused",
