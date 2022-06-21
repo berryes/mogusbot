@@ -76,7 +76,7 @@ The bot has many features right now but not the ones listed down below. (still i
 * Phrometheus exporter
 * Moderation tool
 * Documents
-
+* Fun time(random reply chance and database management)
 
 ## Authors
 
