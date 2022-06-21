@@ -17,25 +17,11 @@
 
 ## Table Of Contents
 
-* [About the Project](#about-the-project)
-* [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
-* [Usage](#usage)
 * [WIP](#wip)
-* [License](#license)
 * [Authors](#authors)
 * [Acknowledgements](#acknowledgements)
-
-## About The Project
-
-The mogusbot is one of my many projects that actually I feel like working on.
-
-The mogusbot is a powerfull discord management bot tool. It has multiple core features such as. Monitoring and data collection with prometheus x grafana. Musicbot, logging, advanced moderation and custom language support!
-
-## Getting Started
-
-Here are some information you need before running the bot!
 
 ### Prerequisites
 
@@ -82,11 +68,6 @@ CAT_API_KEY=magicnumber
 ```
 
 
-
-## Usage
-
-This bot was built on regular prefix chat commands. /commands do not work. Every command has start with the given prefix (.s by default) and must be a valid command. Everytime the user send a message to any channel the bot has access to it has a chance to reply with any of the images given by the users! 
-
 ## WIP 
 The bot has many features right now but not the ones listed down below. (still in developement)
 * Fixing nested code
@@ -95,9 +76,8 @@ The bot has many features right now but not the ones listed down below. (still i
 * Phrometheus exporter
 * Moderation tool
 * Documents
+* Fun time(random reply chance and database management)
 
-## License
-No license to be found. Use this as you want to.
 ## Authors
 
 * **berry** - *Software Developer (somewhat)* - [berryes](https://github.com/berryes/)
