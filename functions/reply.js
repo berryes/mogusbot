@@ -40,8 +40,10 @@ replyfun = async (message) => {
             type: Sequelize.TEXT,
         }
     })
-
+// PUT THE REPLY CHANCES IN RAM, SINCE IT WILL OVERFLOW THE DATABASE
+// ONLY CHANGE IT ON COMMAND
     if (Math.floor(Math.random() * ReplyChanche) == 1){
+
         const pic = await qtDB.findOne({ 
             order: sequelize.random(),
           })

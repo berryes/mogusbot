@@ -1,10 +1,21 @@
 {
+    "__DESCRIPTION": "HEYOOO, seems like you've found the language json. Here you can change every bit of the bot's language. Ya can make him a rx screaming STUTUTUTUTU or something liek that idk bro its 3am im dying inside",
+
+
     "botname": "The migthy mogus",
+    "botimg": "https://imgur.com/uKs1Q0y.png",
     "Richpresence": "asd",
     "success": "Success!",
     "error": "Error",
+    "missingRole": "You dont have permission for this",
+    "defaultErorr": "An unkown error has accured",
+    "argIsnan": "The argument can only be a number",
+    "badArgs": "the arguments give are invalid",
     "userNotInVoiceChannel": "You are not in a voice channel!",
     "succesfullImageAdd": "Your image has been added to the random reply database!",
+    "currentReplyChance": "The current reply chance is:",
+    "currentTypeChance": "The current type of reply:",
+    "currentChance": "Chance for reply",
     "noImageAttached": "You need to attach an image!",
     "commandOptionDoesNotExist": "This is not an option use .s help",
     "cantChooseFromOne": "I can't choose from one option",

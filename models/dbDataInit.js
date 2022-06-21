@@ -10,7 +10,7 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
 });
 
-const createServerModerationDB = async (serverid) =>{
+const createServerDataDB = async (serverid) =>{
 	const dcDB = sequelize.define(`data_${serverid}`, {
 		name: {
 			type: Sequelize.STRING,
@@ -50,7 +50,8 @@ const createServerModerationDB = async (serverid) =>{
 		},
 	})
 	await dcDB.sync()
+	return console.log("created data database for ", serverid)
 	}
 
 
-module.exports = createServerModerationDB;
+module.exports = createServerDataDB;

@@ -1,9 +1,10 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs')
 const request = require('request')
-const log = require("../functions/log")
 const lang = require("../lang.json");
 const textEmbed = new MessageEmbed()
+const messageCreate = require("../functions/messageCreate")
+const errorMessage = require("../functions/errorMessage")
 
 // sequelize define and login
 const Sequelize = require('sequelize');
@@ -16,7 +17,7 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 
 // define images database
 
-const download = (url, path, callback) => {
+const download =(url, path, callback) => {
     request.head(url, (err, res, body) => {
       request(url)
         .pipe(fs.createWriteStream(path))
@@ -41,14 +42,14 @@ const dbImage = sequelize.define(`images_${message.guild.id}`, {
     },
 })
 
+if (!args[0]) {return errorMessage("noArgs", message)}
 
 if (args[0] == 'image'){
     const user = message.author.username
     const urls = []
 
-    if (message.attachments.size > 0){
+    if (message.attachments.size > 0) {
         
-        // get the url of image sent
         message.attachments.forEach(attachment => {
             urls.push(attachment.proxyURL);
         });
@@ -58,16 +59,9 @@ if (args[0] == 'image'){
         const path = `./images/${message.guild.id}/${random}.png`
         const url = urls[0]
 
-        // if the server doesnt have a folder make one.
-        if(!fs.existsSync(`./images/${message.guild.id}/`)){
-            fs.mkdirSync(`./images/${message.guild.id}/`)
-        }
             // download the file, attach user id to image id in db and comfirm by sending embed 
         download(url, path, async () => {
-            textEmbed.setFields({ name: `${lang.success}`, value: `${lang.succesfullImageAdd}`  },);
-            textEmbed.setColor('GREEN')
-            textEmbed.setTimestamp()
-
+            messageCreate("imageUploaded",message)
             message.reply({ embeds: [textEmbed] })
             console.log(`added image : ${random}`)
             const dbimg = await dbImage.create({
@@ -75,20 +69,15 @@ if (args[0] == 'image'){
                 addedby: message.author.id,
             });
             dbImage.sync()
-        })}
+        })
+    } else return errorMessage("noImg",message)
+    
 
-    // if no mage attached
-    else {
-        textEmbed.setFields({ name: `${lang.error}`, value: `${lang.noImageAttached}` },);
-        textEmbed.setColor('DARK_RED')
-        textEmbed.setTimestamp()
-        message.reply({ embeds: [textEmbed] })
-    }}
+
+    }// end of image
 
     // if wrong argument is given
-    else {
-        message.reply(`${lang.commandOptionDoesNotExist}`)
-}}}
+    else { return errorMessage("badArg", message) }}}
 
 
 exports.name = "add";

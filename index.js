@@ -7,84 +7,7 @@ const client = new Client({
 });
 require("dotenv").config();
 
-function getDate(){
-  currentDate = new Date()
-  const date = "" + currentDate.getFullYear()+ "." + currentDate.getMonth() + "." + currentDate.getDate() + " "+ currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()    
-  return date
-}
-
-/* 
-const express = require('express')
-const app = express()
-const cors = require("cors")
-app.use(express.json())
-const port = process.env.API_PORT
-app.use(cors());
-
-app.listen(port, () => {
-  console.log(`API Server is running on PORT: ${port}`)
-})
-
-
-// api:::
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
-// api:::
-client.currentchannel.set("channel","975844026718769202")
-app.get('/music/play/:title', async (req, res) => {
-    let guildQueue = client.player.getQueue('976915692140003408');
-    let queue = client.player.createQueue('939115249435562014');
-    await queue.join('976915692140003408');
-    let song = await queue.play(req.params.title)
-
-    }
-)
-app.get('/music/skip', async (req, res) => {
-  let guildQueue = client.player.getQueue('939115249435562014');
-  guildQueue.skip();
-  }
-)
-app.get('/music/playing', async (req, res) => {
-  
-  res.send(`${guildQueue.nowPlaying}`)
-  }
-)
-app.get('/send/:message',  async (req, res) => {
-  try {
-    const message = req.params.message
-    const channel = client.channels.cache.get('975844026718769202');
-    await channel.send(message)
-
-    res.status(200).json({ message: 'Posted' })
-    console.log('message sent')
-  } catch (err) {
-    res.status(500).json(err)
-    console.error(err)
-  }
-})
-
-app.get('/chance/get/:type/',  async (req, res) => {
-  try {
-    if (req.params.type === 'reply'){
-      const replychanchee = await chancheDB.get('chanche');
-      console.log(replychanchee)
-      res.status(200).json({ replychanche: `${replychanchee}` })
-    }
-    else if (req.params.type == 'type'){
-      const chacheTypee = await chancheDB.get('chacheType');
-      res.status(200).json({ replytype: `${chacheTypee}` })
-    }
-    else {
-    res.status(200).json({ error: 'invalid request' })
-    }
-    console.log('chanche get type requested succesfully')
-  } catch (err) {
-    res.status(500).json(err)
-    console.error(err)
-  }
-}) */
-
+client.adminroles = new Collection()
 
 if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
 if (!process.env.LOGGING)  throw new Error("logging is not filled out in .env"); 
@@ -136,10 +59,11 @@ const player = new Player(client, {
 client.player = player;
 client.currentchannel = new Collection()
 const musicembed = new MessageEmbed()
-.setFooter({ text: `${lang.botname}` });
+.setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` })
+.setTimestamp();
 
 const errorEmbed = new MessageEmbed()
-.setFooter({ text: `${lang.botname}` });
+.setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 
 client.player.on('songAdd', async (queue, song, ) => {
   let guildID = queue.guild.id
@@ -148,9 +72,6 @@ client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
-  console.log(queue)
-  console.log(queue.connection.channel.id)
-
       client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
   })
   client.player.on('playlistAdd', async (queue, playlist) => {
@@ -187,13 +108,12 @@ client.player.on('songChanged', async (queue, song) => {
   musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
 })
-client.player.on('Error',async  (queue, song) => {
+client.player.on('error',async  (queue, song) => {
   errorEmbed.setFields({ name: `${lang.error}`, value: `${lang.failedToLoad}` },);
   errorEmbed.setColor('RED')
-  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
-})
-
-
+  console.log("error playing")
+/*   client.channels.cache.get(`${queue.guild.systemChannelId}`).send(({ embeds: [musicembed] }))
+ */})
 
 
 client.commands = new Collection();

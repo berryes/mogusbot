@@ -10,7 +10,7 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 	storage: `${process.env.DB_STORAGE}.${process.env.DB_TYPE}`,
 });
 const dbImage = 0
-const createServerModerationDB = async (serverid) =>{
+const createServerImageDB = async (serverid) =>{
 	const dbImage = sequelize.define(`images_${serverid}`, {
 		image_id: {
 			type: Sequelize.STRING,
@@ -23,4 +23,4 @@ const createServerModerationDB = async (serverid) =>{
     return dbImage;
 	}
     console.log(dbImage)
-module.exports = createServerModerationDB;
+module.exports = createServerImageDB;

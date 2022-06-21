@@ -4,6 +4,7 @@ module.exports = {
     usage: [`${process.env.PREFIX} `],
     description: "",
     run: (client, message, args) => {
+        console.log(client.adminroles)
 }
 }
 

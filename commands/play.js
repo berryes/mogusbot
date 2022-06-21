@@ -29,7 +29,7 @@ module.exports = {
             let guildQueue = client.player.getQueue(message.guild.id);
             let queue = client.player.createQueue(message.guild.id);
             await queue.join(message.member.voice.channel);
-            let song = await tqueue.play(args.join(" "))
+            let song = await queue.play(args.join(" "))
         }
     }
 }}
