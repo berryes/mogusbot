@@ -16,9 +16,6 @@ const dcDB = sequelize.define(`quotes_${serverid}`, {
 	quote: {
 		type: Sequelize.STRING,
 	},
-	norp: {
-        type: Sequelize.TEXT,
-    },
     addedBy: {
         type: Sequelize.TEXT,
     }

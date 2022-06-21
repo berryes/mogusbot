@@ -22,6 +22,9 @@ errorMessage = (error,message) => {
         case 'noImg':
             errorEmbed.setDescription(`${lang.noImageAttached}`)
             break;
+        case 'notOwner':
+            errorEmbed.setDescription(`${lang.notOwner}`)
+            break;
 
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)

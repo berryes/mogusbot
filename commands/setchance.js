@@ -3,8 +3,8 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 const errorMessage = require("../functions/errorMessage")
     module.exports = {
         name: "chance",
-        arguments: 'set, current',
-        usage: [`${process.env.PREFIX} chance set reply (number)`,`${process.env.PREFIX}chance set type (1-100)`],
+        arguments: 'reply, type',
+        usage: [`${process.env.PREFIX} reply (number)`,`${process.env.PREFIX}type (1-100)`],
         description: "Set the reply chanche and the type of reply",
         run: (client, message, args) => {
         (async () => {
@@ -14,12 +14,16 @@ const errorMessage = require("../functions/errorMessage")
                 if(isNaN(args[1])){ return errorMessage("argIsnan", message)}
                 if(args[1] > 100){ return errorMessage("moreThan100", message)}
                 chancheDB.set(`type_${message.guild.id}`, args[1])
+                client.replyType.set(message.guild.id,args[1])
             }
             if(args[0].toLowerCase() == 'reply'){
                 if(!args[1]){ return errorMessage("noArgs",message)}
                 if(isNaN(args[1])){ return errorMessage("argIsnan", message)}
                 if(args[1] > 100){ return errorMessage("moreThan100", message)}
+                // sets for database
                 chancheDB.set(`reply_${message.guild.id}`, args[1])
+                // sets for ram
+                client.replyType.set(message.guild.id,args[1])
             }
         })(); // end of async function
 } // end of export run

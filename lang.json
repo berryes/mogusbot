@@ -27,7 +27,7 @@
     "usage": "Usage",
 
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
-
+    "notOwner": "You are not the owner of this server",
     "songAdded":"Added a song",
     "repeatOff": "Repeat is now off",
     "repeatDesc": "Stopped repeating",

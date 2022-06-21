@@ -5,7 +5,7 @@ const lang = require("../lang.json");
 const textEmbed = new MessageEmbed()
 const messageCreate = require("../functions/messageCreate")
 const errorMessage = require("../functions/errorMessage")
-
+const axios = require("axios")
 // sequelize define and login
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {
@@ -17,21 +17,38 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 
 // define images database
 
-const download =(url, path, callback) => {
+/* const download =(url, path, callback) => {
     request.head(url, (err, res, body) => {
       request(url)
         .pipe(fs.createWriteStream(path))
         .on('close', callback)
     })
+  } */
+  const Path = require('path')  
+  async function downloadImage (url,random,uid) {  
+    const path = Path.resolve(__dirname, `../images/${uid}`, `${random}.png`)
+    const writer = fs.createWriteStream(path)
+  
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    })
+  
+    response.data.pipe(writer)
+  
+    return new Promise((resolve, reject) => {
+      writer.on('finish', resolve)
+      writer.on('error', reject)
+    })
   }
 
-  
 module.exports = {
     name: "Add",
     arguments: 'image, quote',
     usage: [`${process.env.PREFIX} add image`],
     description: "Add an image to the database",
-    run: (client, message, args) => {
+    run: async (client, message, args) => {
 
 const dbImage = sequelize.define(`images_${message.guild.id}`, {
     image_id: {
@@ -41,41 +58,46 @@ const dbImage = sequelize.define(`images_${message.guild.id}`, {
         type: Sequelize.STRING,
     },
 })
+const dcQuote = sequelize.define(`quotes_${message.guild.id}`, {
+	quote: {
+		type: Sequelize.STRING,
+	},
+    addedBy: {
+        type: Sequelize.TEXT,
+    }
+})
 
 if (!args[0]) {return errorMessage("noArgs", message)}
 
-if (args[0] == 'image'){
+if (args[0].toLowerCase() == 'image'){
     const user = message.author.username
     const urls = []
-
     if (message.attachments.size > 0) {
-        
         message.attachments.forEach(attachment => {
             urls.push(attachment.proxyURL);
         });
-
         // definme paramaters for download
         const random = Math.floor(Math.random() * 999999999);
-        const path = `./images/${message.guild.id}/${random}.png`
         const url = urls[0]
-
             // download the file, attach user id to image id in db and comfirm by sending embed 
-        download(url, path, async () => {
+            downloadImage(urls[0],random,message.guild.id)
             messageCreate("imageUploaded",message)
-            message.reply({ embeds: [textEmbed] })
             console.log(`added image : ${random}`)
-            const dbimg = await dbImage.create({
+            const image = await dbImage.create({
                 image_id: random,
                 addedby: message.author.id,
             });
             dbImage.sync()
-        })
     } else return errorMessage("noImg",message)
-    
-
-
     }// end of image
-
+    if(args[0].toLowerCase() == 'quote'){
+        args.shift()
+        console.log(args.join(" "))
+        const quote = await dcQuote.create({
+            quote: args.join(" "),
+            addedby: message.author.id,
+        });
+    }
     // if wrong argument is given
     else { return errorMessage("badArg", message) }}}
 

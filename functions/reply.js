@@ -20,7 +20,9 @@ const exampleEmbed = new MessageEmbed()
  .setColor('RANDOM')
 
 replyfun = async (message) => {
-    const ReplyChanche = await chancheDB.get(`${message.guild.id}`);
+    const replyChanche = await chancheDB.get(`reply_${message.guild.id}`);
+    const replyType = await chancheDB.get(`type_${message.guild.id}`);
+
     const dcDB = sequelize.define(`images_${message.guild.id}`, {
         image_id: {
             type: Sequelize.STRING,
@@ -33,27 +35,28 @@ replyfun = async (message) => {
         quote: {
             type: Sequelize.STRING,
         },
-        norp: {
-            type: Sequelize.TEXT,
-        },
         addedBy: {
             type: Sequelize.TEXT,
         }
     })
 // PUT THE REPLY CHANCES IN RAM, SINCE IT WILL OVERFLOW THE DATABASE
 // ONLY CHANGE IT ON COMMAND
-    if (Math.floor(Math.random() * ReplyChanche) == 1){
-
-        const pic = await qtDB.findOne({ 
-            order: sequelize.random(),
-          })
-          if (fs.existsSync(`./images/${message.guild.id}/${pic.image_id}.png`)) {
-            message.reply({files:[`./images/${message.guild.id}/${pic.image_id}.png`]}); 
+    if (Math.floor(Math.random() * replyChanche) == 1){
+        if(Math.floor(Math.random()* replyType) < replyType){
+            const pic = await qtDB.findOne({ 
+                order: sequelize.random(),
+              })
+              if (fs.existsSync(`./images/${message.guild.id}/${pic.image_id}.png`)) {
+                message.reply({files:[`./images/${message.guild.id}/${pic.image_id}.png`]}); 
+            }
+            // destory if image does not exist any more and regenerate
+            else {
+                dcDB.destroy({ where: { image_id: pic.image_id } })
+                console.log(`${pic.image_id} ${lang.destroyIMG}`) }
         }
-        // destory if image does not exist any more and regenerate
         else {
-            dcDB.destroy({ where: { image_id: pic.image_id } })
-            console.log(`${pic.image_id} ${lang.destroyIMG}`) }
+            console.log("quote")
+        }
     }
     else return;
 

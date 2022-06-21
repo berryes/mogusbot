@@ -16,9 +16,6 @@ errorMessage = (type,message,list) => {
         case 'imageUploaded':
             membed.setColor('GREEN')
             membed.setTitle(`${lang.succesfullImageAdd}`)
-        default:
-            membed.setDescription(`${lang.defaultErorr}`)
-
 }
 message.reply(({ embeds: [membed] }))
 }
