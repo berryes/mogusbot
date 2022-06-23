@@ -12,14 +12,21 @@ require("dotenv").config();
 client.adminroles = new Collection()
 client.replyChance = new Collection()
 client.replyType = new Collection()
+client.playerData = new Collection()
+
 //     musicbot part
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
-    leaveOnEmpty: false, 
+    leaveOnEmpty: false,
+    leaveOnEnd: false,
+    leaveOnStop: false,
+    quality: "high",
 });
 
 client.player = player;
 client.currentchannel = new Collection()
+
+
 const musicembed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` })
 .setTimestamp();
@@ -27,15 +34,15 @@ const musicembed = new MessageEmbed()
 const errorEmbed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 
-client.player.on('songAdd', async (queue, song, ) => {
-  let guildID = queue.guild.id
+/* client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setTitle(`${song}`)
-	musicembed.setURL(`${song.url}`)
+  musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
-      client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
-  })
+  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
+  }) */
+  
   client.player.on('playlistAdd', async (queue, playlist) => {
     musicembed.setTitle(`${playlist}`)
     musicembed.setURL(`${playlist.url}`)
@@ -59,7 +66,7 @@ client.player.on('songFirst', async (queue, song) => {
 	musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
+  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}> | **${song.duration}**`)
   client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songChanged', async (queue, song) => {

@@ -1,9 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 module.exports = {
-        name: "uptime",
+        name: "stats",
         arguments: 'none',
         usage: [`${process.env.PREFIX} uptime`],
-        description: "Replies with the bot's uptime",
+        description: "Replies with the bot's stats",
         run: (client, message, args) => {
     let days = 0
     let week = 0
@@ -29,6 +29,7 @@ const exampleEmbed = new MessageEmbed()
 	.setColor('RANDOM')
 	.addFields(
 		{ name: 'Uptime', value: `${uptime}` },
+		{ name: 'Ping with server', value: `${message.createdTimestamp- Date.now()}ms` },
 	)
 
 message.channel.send({ embeds: [exampleEmbed] });

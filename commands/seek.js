@@ -8,10 +8,12 @@ module.exports = {
     usage: [`${process.env.PREFIX} seek (amount in seconds)`],
     description: "Jumps forward in the music",
     run: (client, message, args)  => {
-        if (!message.member.voice.channel){
-            musicembed.setFields({ name: `${lang.error}`, value: `${lang.userNotInVoiceChannel}` },);
-            message.channel.send(({ embeds: [musicembed] }))
-        }
+        if (!client.player.getQueue(message.guild.id)){ return errorMessage("notPlaying",message)}
+        let guildQueue = client.player.getQueue(message.guild.id);
+        if (!guildQueue.isPlaying){ return errorMessage("notPlaying",message)}
+        if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
+        if (!(message.member.voice.channel.id == guildQueue.connection.channel.id)){ return errorMessage("usernotinPlayingVc",message)}
+
         if(!isNaN(args[0])){
             musicembed.setFields({ name: `${lang.seeked}`, value: `${args[0]} ${lang.seekDesc}` },);
             musicembed.setColor('GREEN')

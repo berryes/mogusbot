@@ -1,8 +1,6 @@
 const {MessageEmbed} = require("discord.js")
 const lang = require("../lang.json")
-const musicembed = new MessageEmbed()
-.setColor('RED')
-.setFooter({ text: 'The mighty mogus' });
+const errorMessage = require("../functions/errorMessage")
 
 module.exports = {
     name: "skip",
@@ -10,23 +8,16 @@ module.exports = {
     usage: [`${process.env.PREFIX} skip`],
     description: "Skips the current song",
     run: (client, message, args) => {
-        if (!message.member.voice.channel){
-            musicembed.setFields({ name: `${lang.error}`, value: `${lang.userNotInVoiceChannel}` },);
-            message.channel.send(({ embeds: [musicembed] }))
-        }
-        if (!args[0]){
-            let guildQueue = client.player.getQueue(message.guild.id);
-            guildQueue.skip();
-        }
-        else {
-            if(!isNaN(args[0])){
-                let guildQueue = client.player.getQueue(message.guild.id);
-                    guildQueue.skip(args[0])
-            }
-            else {
-                musicembed.setFields({ name: `${lang.error}`, value: `${lang.skippingIsNotNumber}` },);
-                message.channel.send(({ embeds: [musicembed] }))
-            }
+        if (!client.player.getQueue(message.guild.id)){ return errorMessage("notPlaying",message)}
+        let guildQueue = client.player.getQueue(message.guild.id);
+        if (!guildQueue.isPlaying){ return errorMessage("notPlaying",message)}
+        if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
+        if (!(message.member.voice.channel.id == guildQueue.connection.channel.id)){ return errorMessage("usernotinPlayingVc",message)}
+
+        if (!args[0]){ guildQueue.skip() }
+        else { 
+            if(!isNaN(args[0])) { guildQueue.skip(args[0]) }
+            else { return errorMessage("skippingIsNotNumber",message)}
         }
     }
 }

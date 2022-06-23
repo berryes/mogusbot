@@ -19,7 +19,6 @@ const errorMessage = require("../functions/errorMessage")
             if(args[0].toLowerCase() == 'reply'){
                 if(!args[1]){ return errorMessage("noArgs",message)}
                 if(isNaN(args[1])){ return errorMessage("argIsnan", message)}
-                if(args[1] > 100){ return errorMessage("moreThan100", message)}
                 // sets for database
                 chancheDB.set(`reply_${message.guild.id}`, args[1])
                 // sets for ram

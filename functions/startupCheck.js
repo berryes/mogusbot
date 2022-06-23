@@ -20,7 +20,6 @@ check = async () => {
     if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
     if (!process.env.LOGGING)  throw new Error("logging is not filled out in .env"); 
     if (!process.env.PREFIX)  throw new Error("no prefix set in .env"); 
-    if (!process.env.ADMIN_ROLE)  throw new Error("no admin role given in .env"); 
     if (!process.env.API_PORT)  throw new Error("no api port in .env"); 
     if (!process.env.DB_NAME)  throw new Error("database name not set in .env"); 
     if (!process.env.DB_USER)  throw new Error("database user not set in .env"); 

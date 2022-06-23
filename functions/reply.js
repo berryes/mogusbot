@@ -35,6 +35,7 @@ replyfun = async (message) => {
         quote: {
             type: Sequelize.STRING,
         },
+
         addedBy: {
             type: Sequelize.TEXT,
         }

@@ -25,6 +25,19 @@ errorMessage = (error,message) => {
         case 'notOwner':
             errorEmbed.setDescription(`${lang.notOwner}`)
             break;
+        case 'usernotinvc':
+            errorEmbed.setDescription(`${lang.userNotInVoiceChannel}`)
+            break;
+        case 'skippingIsNotNumber':
+            errorEmbed.setDescription(`${lang.skippingIsNotNumber}`)
+            break;
+        case 'notPlaying':
+            errorEmbed.setDescription(`${lang.notPlaying}`)
+            break;
+        case 'usernotinPlayingVc':
+            errorEmbed.setDescription(`${lang.usernotinPlayingVc}`)
+            break;
+
 
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)

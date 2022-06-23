@@ -42,7 +42,6 @@ for (let x in Guilds){
 console.log('made by berryes(https://github.com/berryes/mogusbot)')
 // https://textkool.com/en/ascii-art-generator
 // DOS REBEL FONT
-console.log(client.replyChance, client.replyType)
 }
 
 exports.name = "ready";

@@ -16,6 +16,15 @@ errorMessage = (type,message,list) => {
         case 'imageUploaded':
             membed.setColor('GREEN')
             membed.setTitle(`${lang.succesfullImageAdd}`)
+            break;
+        case 'queueStop':
+        membed.setFields({ name: `${lang.stop}`, value: `${lang.queueStop}` },);
+        membed.setColor('GREEN')
+        break;
+        case 'adminrole':
+            membed.setFields({ name: `${lang.success}`, value: `${lang.adminrole}` },);
+            membed.setColor('GREEN')
+            break;;
 }
 message.reply(({ embeds: [membed] }))
 }
