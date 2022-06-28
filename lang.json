@@ -29,6 +29,7 @@
 
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
     "notOwner": "You are not the owner of this server",
+    "quoteAdd": "Quote added to the database:",
     "songAdded":"Added a song",
     "queueLeave": "Left the queue",
     "repeatOff": "Repeat is now off",

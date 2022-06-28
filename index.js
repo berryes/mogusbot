@@ -34,14 +34,14 @@ const musicembed = new MessageEmbed()
 const errorEmbed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 
-/* client.player.on('songAdd', async (queue, song, ) => {
+client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setTitle(`${song}`)
   musicembed.setURL(`${song.url}`)
   musicembed.setColor('BLURPLE')
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
   client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
-  }) */
+  })
   
   client.player.on('playlistAdd', async (queue, playlist) => {
     musicembed.setTitle(`${playlist}`)

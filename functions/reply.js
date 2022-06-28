@@ -16,8 +16,7 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 });
 
 
-const exampleEmbed = new MessageEmbed()
- .setColor('RANDOM')
+const embedd = new MessageEmbed()
 
 replyfun = async (message) => {
     const replyChanche = await chancheDB.get(`reply_${message.guild.id}`);
@@ -42,26 +41,41 @@ replyfun = async (message) => {
     })
 // PUT THE REPLY CHANCES IN RAM, SINCE IT WILL OVERFLOW THE DATABASE
 // ONLY CHANGE IT ON COMMAND
-    if (Math.floor(Math.random() * replyChanche) == 1){
-        if(Math.floor(Math.random()* replyType) < replyType){
-            const pic = await qtDB.findOne({ 
-                order: sequelize.random(),
-              })
-              if (fs.existsSync(`./images/${message.guild.id}/${pic.image_id}.png`)) {
-                message.reply({files:[`./images/${message.guild.id}/${pic.image_id}.png`]}); 
-            }
-            // destory if image does not exist any more and regenerate
-            else {
-                dcDB.destroy({ where: { image_id: pic.image_id } })
-                console.log(`${pic.image_id} ${lang.destroyIMG}`) }
-        }
-        else {
-            console.log("quote")
-        }
+    if (!Math.floor(Math.random() * replyChanche) == 1) return;
+
+    const pic = await dcDB.findOne({ 
+        order: sequelize.random(),
+      })
+      if (fs.existsSync(`./images/${message.guild.id}/${pic.image_id}.png`)) {
+        embedd.setTitle(`Image ID: ${pic.image_id}`)
+        embedd.setDescription(`Added by ${message.guild.members.cache.get(pic.addedby)}`)
+        embedd.setImage(`attachment://${pic.image_id}.png`)
     }
-    else return;
+    // destory if image does not exist any more and regenerate
+    else {
+        dcDB.destroy({ where: { image_id: pic.image_id } })
+        console.log(`${pic.image_id} ${lang.destroyIMG}`) }
 
+const quote = await qtDB.findOne({  order: sequelize.random() })
+
+switch(replyType){
+    case 'image':
+        message.reply({ embeds: [embedd], files: [`./images/${message.guild.id}/${pic.image_id}.png`] });
+        break;
+
+    case 'random': 
+    if(Math.floor(Math.random() * 2) == 1){
+        message.reply({ embeds: [embedd], files: [`./images/${message.guild.id}/${pic.image_id}.png`] });
+    }
+    else {
+        message.reply("quote");
+    }
+    break;
+
+    case 'quote':
+        message.reply(`${quote.quote}`)
+        break;
 }
-
+}
 module.exports = replyfun;
 

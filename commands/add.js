@@ -70,7 +70,6 @@ const dcQuote = sequelize.define(`quotes_${message.guild.id}`, {
 if (!args[0]) {return errorMessage("noArgs", message)}
 
 if (args[0].toLowerCase() == 'image'){
-    const user = message.author.username
     const urls = []
     if (message.attachments.size > 0) {
         message.attachments.forEach(attachment => {
@@ -93,11 +92,11 @@ if (args[0].toLowerCase() == 'image'){
 
     if(args[0].toLowerCase() == 'quote'){
         args.shift()
-        console.log(args.join(" "))
         const quote = await dcQuote.create({
             quote: args.join(" "),
-            addedby: message.author.id,
-        });
+            addedby:`${message.author.id}`,
+        }).catch(console.error())
+        messageCreate("quoteAdd",message,[args])
     }
 }}
 
