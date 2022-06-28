@@ -17,9 +17,9 @@ client.playerData = new Collection()
 //     musicbot part
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
-    leaveOnEmpty: false,
     leaveOnEnd: false,
     leaveOnStop: false,
+    timeout: 1,
     quality: "high",
 });
 

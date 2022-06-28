@@ -90,6 +90,7 @@ if (args[0].toLowerCase() == 'image'){
             dbImage.sync()
     } else return errorMessage("noImg",message)
     }// end of image
+
     if(args[0].toLowerCase() == 'quote'){
         args.shift()
         console.log(args.join(" "))
@@ -98,8 +99,7 @@ if (args[0].toLowerCase() == 'image'){
             addedby: message.author.id,
         });
     }
-    // if wrong argument is given
-    else { return errorMessage("badArg", message) }}}
+}}
 
 
 exports.name = "add";

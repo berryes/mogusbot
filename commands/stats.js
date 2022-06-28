@@ -29,7 +29,7 @@ const exampleEmbed = new MessageEmbed()
 	.setColor('RANDOM')
 	.addFields(
 		{ name: 'Uptime', value: `${uptime}` },
-		{ name: 'Ping with server', value: `${message.createdTimestamp- Date.now()}ms` },
+		{ name: 'Ping with server', value: `${message.createdTimestamp - Date.now()}ms` },
 	)
 
 message.channel.send({ embeds: [exampleEmbed] });

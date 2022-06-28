@@ -4,7 +4,7 @@ module.exports = {
     usage: [`${process.env.PREFIX} `],
     description: "",
     run: (client, message, args) => {
-        return;
+        console.log(message.content)
 }
 }
 

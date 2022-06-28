@@ -10,7 +10,6 @@ module.exports = {
     run: (client, message, args) => {
         if (!client.player.getQueue(message.guild.id)){ return errorMessage("notPlaying",message)}
         let guildQueue = client.player.getQueue(message.guild.id);
-        if (!guildQueue.isPlaying){ return errorMessage("notPlaying",message)}
         if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
         if (!(message.member.voice.channel.id == guildQueue.connection.channel.id)){ return errorMessage("usernotinPlayingVc",message)}
 
