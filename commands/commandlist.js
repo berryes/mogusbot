@@ -4,7 +4,7 @@ module.exports = {
     usage: [`${process.env.PREFIX} commandlist`],
     description: "Displays commands",
     run: (client, message, args) => {
-        message.reply("https://github.com/berryes/mogusbot/commands.md")
+        message.reply("https://github.com/berryes/mogusbot/blob/main/commands.md")
 }
 }
 
