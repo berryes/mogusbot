@@ -1,10 +1,9 @@
 ## Features
 
 * [Music](#music)
-* [System & bot](#System&Bot)
-* [WIP](#wip)
-* [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
+* [System & bot](#system--bot)
+* [Reply fun](#reply-fun)
+
 
 
 ## Music
