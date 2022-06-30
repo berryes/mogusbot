@@ -30,7 +30,9 @@ errorMessage = (error,message) => {
         case 'notOwner':
             errorEmbed.setDescription(`${lang.notOwner}`)
             break;
-
+        case 'badURL':
+            errorEmbed.setDescription(`${lang.badURL}`)
+            break;
         case 'usernotinvc':
             errorEmbed.setDescription(`${lang.userNotInVoiceChannel}`)
             break;

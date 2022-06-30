@@ -1,4 +1,5 @@
 const Keyv = require('keyv');
+const messageCreate = require('../events/messageCreate');
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const errorMessage = require("../functions/errorMessage")
     module.exports = {
@@ -15,6 +16,7 @@ const errorMessage = require("../functions/errorMessage")
                 if(['random','image','quote'].indexOf(args[1]) > -1) {
                 chancheDB.set(`type_${message.guild.id}`, args[1])
                 client.replyType.set(message.guild.id,args[1])
+                messageCreate("typeChange",message,[args[1]])
                 }
                 else {return errorMessage("badArg", message)}
             }
@@ -25,11 +27,12 @@ const errorMessage = require("../functions/errorMessage")
                 chancheDB.set(`reply_${message.guild.id}`, args[1])
                 // sets for ram
                 client.replyType.set(message.guild.id,args[1])
+                messageCreate("replyChange",message,[args[1]])
             }
         })(); // end of async function
 } // end of export run
 }
 
-exports.name = "chance";
+exports.name = "setchance";
 
 

@@ -6,7 +6,6 @@ const createServerImageDB = require("../models/dbImageInit")
 const Keyv = require("keyv")
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const fs = require("fs")
-
 module.exports = async (client, message,) => {
 const Guilds = client.guilds.cache.map(guild => guild.id);
 for (let x in Guilds){

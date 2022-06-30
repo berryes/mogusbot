@@ -8,7 +8,7 @@ errorMessage = (type,message,list) => {
     switch (type){
        case 'currentChance':
         membed.setTitle(`${lang.currentChance}`)
-        membed.addFields(
+        membed.setFields(
             { name: `${lang.currentReplyChance}`, value: `${list[0]}` },
             { name: `${lang.currentTypeChance}`, value: `${list[1]}` },
         )
@@ -32,7 +32,12 @@ errorMessage = (type,message,list) => {
         case 'quoteAdd':
             membed.setFields({ name: `${lang.quoteAdd}`, value: `${list[0]}` },);
             membed.setColor('GREEN')
-            break;;
+            break;
+
+        case 'typeChange':
+            membed.setTitle(`${lang.typeChange} ${list[0]}`)
+            membed.setFields(null);
+            break;
 }
 message.reply(({ embeds: [membed] }))
 }
