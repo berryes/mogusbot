@@ -11,9 +11,6 @@ module.exports = {
     run: async (client, message, args)  => {
         if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
         if(!args[0]) { return errorMessage("noArgs",message)}
-            client.currentchannel.set(message.guild.id, message.channel.id)
-
-
             if(args[0].includes("spotify.com/playlist/")){
                 let queue = client.player.createQueue(message.guild.id);
                 await queue.join(message.member.voice.channel);
@@ -23,8 +20,13 @@ module.exports = {
             else {/* if(!args.indexOf("soundcloud","tidal","deezer","music.apple") > -1 ) { return errorMessage("badURL",message)} */
             
             let guildQueue = client.player.getQueue(message.guild.id);
-            let queue = client.player.createQueue(message.guild.id);
+            let queue = await client.player.createQueue(message.guild.id, {
+                data: {
+                    messageCh: `${message.channelId}`
+                }
+            });
             await queue.join(message.member.voice.channel);
             let song = await queue.play(args.join(" "))
+
         }
 }}

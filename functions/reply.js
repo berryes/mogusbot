@@ -18,9 +18,10 @@ const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER
 
 const embedd = new MessageEmbed()
 
-replyfun = async (message) => {
-    const replyChanche = await chancheDB.get(`reply_${message.guild.id}`);
-    const replyType = await chancheDB.get(`type_${message.guild.id}`);
+replyfun = async (message,client) => {
+    const replyChanche = await client.replyChance.get(message.guild.id);
+    const replyType = await client.replyType.get(message.guild.id);
+
 
     const dcDB = sequelize.define(`images_${message.guild.id}`, {
         image_id: {
@@ -41,11 +42,17 @@ replyfun = async (message) => {
     })
 // PUT THE REPLY CHANCES IN RAM, SINCE IT WILL OVERFLOW THE DATABASE
 // ONLY CHANGE IT ON COMMAND
-    if (!Math.floor(Math.random() * replyChanche) == 1) return;
+    if (!(Math.floor(Math.random() * replyChanche) == 1)) return;
 
+    const quote = await qtDB.findOne({  order: sequelize.random() })
     const pic = await dcDB.findOne({ 
         order: sequelize.random(),
       })
+
+      // if no picture return
+      if(!pic){return console.log("no img in db")}
+      if(!quote){return console.log("no quote in db")}
+
       if (fs.existsSync(`./images/${message.guild.id}/${pic.image_id}.png`)) {
         embedd.setTitle(`Image ID: ${pic.image_id}`)
         embedd.setDescription(`Added by ${message.guild.members.cache.get(pic.addedby)}`)
@@ -54,9 +61,11 @@ replyfun = async (message) => {
     // destory if image does not exist any more and regenerate
     else {
         dcDB.destroy({ where: { image_id: pic.image_id } })
-        console.log(`${pic.image_id} ${lang.destroyIMG}`) }
+        console.log(`${pic.image_id} ${lang.destroyIMG}`) 
+        return;
+    }
 
-const quote = await qtDB.findOne({  order: sequelize.random() })
+
 
 switch(replyType){
     case 'image':

@@ -29,6 +29,10 @@
 
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
     "notOwner": "You are not the owner of this server",
+    "typeChange": "The random reply type is now:",
+    "replyChange": "Chance for replying is now 1/",
+    "logset": "The logging channel has been set",
+    "quoteExists": "This quote already exists",
     "quoteAdd": "Quote added to the database:",
     "badURL": "Sorry i cannot play other services than Youtube/Spotify",
     "songAdded":"Added a song",

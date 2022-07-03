@@ -28,16 +28,24 @@ errorMessage = (type,message,list) => {
             membed.setFields({ name: `${lang.success}`, value: `${lang.adminrole}` },);
             membed.setColor('GREEN')
             break;
+        case 'logset':
+            membed.setFields({ name: `${lang.success}`, value: `${lang.logset}` },);
+            membed.setColor('GREEN')
+            break;
 
         case 'quoteAdd':
-            membed.setFields({ name: `${lang.quoteAdd}`, value: `${list[0]}` },);
+            membed.setTitle(`${lang.success}`)
+            membed.setFields({ name: `${lang.quoteAdd}`, value: `${list[0].join(" ")}` },);
             membed.setColor('GREEN')
             break;
 
         case 'typeChange':
             membed.setTitle(`${lang.typeChange} ${list[0]}`)
-            membed.setFields(null);
             break;
+        case 'replyChange':
+            membed.setTitle(`${lang.replyChange} ${list[0]}`)
+            break;
+            
 }
 message.reply(({ embeds: [membed] }))
 }

@@ -48,7 +48,9 @@ errorMessage = (error,message) => {
         case 'usernotinPlayingVc':
             errorEmbed.setDescription(`${lang.usernotinPlayingVc}`)
             break;
-
+        case 'quoteExists':
+            errorEmbed.setDescription(`${lang.quoteExists}`)
+            break;
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)
             break;

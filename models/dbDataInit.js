@@ -19,7 +19,7 @@ const createServerDataDB = async (serverid) =>{
 			type: Sequelize.TEXT,
 		},
         messages: {
-			type: Sequelize.TEXT,
+			type: Sequelize.INTEGER,
 		},
 		most_used_state: {
 			type: Sequelize.TEXT,
@@ -28,7 +28,7 @@ const createServerDataDB = async (serverid) =>{
 			type: Sequelize.TEXT,
 		},
         pictures_sent: {
-			type: Sequelize.TEXT,
+			type: Sequelize.INTEGER,
 		},
         videos_sent: {
 			type: Sequelize.TEXT,
@@ -40,9 +40,9 @@ const createServerDataDB = async (serverid) =>{
 			type: Sequelize.TEXT,
 		},
         commands_used: {
-			type: Sequelize.TEXT,
+			type: Sequelize.INTEGER,
 		},
-        role: {
+        roles: {
 			type: Sequelize.TEXT,
 		},
         warnings: {

@@ -13,6 +13,7 @@ client.adminroles = new Collection()
 client.replyChance = new Collection()
 client.replyType = new Collection()
 client.playerData = new Collection()
+client.logchannel = new Collection()
 
 //     musicbot part
 const { Player } = require("discord-music-player");
@@ -25,12 +26,8 @@ const player = new Player(client, {
 });
 
 client.player = player;
-client.currentchannel = new Collection()
-
-
 const musicembed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` })
-
 const errorEmbed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 
@@ -41,7 +38,7 @@ client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setTimestamp()
   musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
-  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
+  client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   })
 
   client.player.on('playlistAdd', async (queue, playlist) => {
@@ -50,13 +47,13 @@ client.player.on('songAdd', async (queue, song, ) => {
     musicembed.setColor('BLURPLE')
     musicembed.setDescription(`${lang.playlistAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
     musicembed.setTimestamp()
-    client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
+    client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('channelEmpty', async (queue, song) => {
   errorEmbed.setFields({ name: `${lang.voiceChannelEmpty}`, value: `${lang.voiceChannelEmptyDesc}` },);
   errorEmbed.setColor('RED')
   musicembed.setTimestamp()
-  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [errorEmbed] }))
+  client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songFirst', async (queue, song) => {
   musicembed.setTitle(`${song}`)
@@ -65,8 +62,7 @@ client.player.on('songFirst', async (queue, song) => {
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
-  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
-  console.log("songFirst")
+  client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
 })
 client.player.on('songChanged', async (queue, newSong,oldSong) => {
   musicembed.setTitle(`${newSong}`)
@@ -75,8 +71,8 @@ client.player.on('songChanged', async (queue, newSong,oldSong) => {
   musicembed.setThumbnail(`${newSong.thumbnail}`)
   musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
-  client.channels.cache.get(`${ await client.currentchannel.get(`${queue.guild.id}`)}`).send(({ embeds: [musicembed] }))
-  console.log("")
+  client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
+  
 })
 
 
@@ -97,7 +93,6 @@ for (const file of events) {
   console.log('\x1b[36m%s\x1b[0m',` 🔧 Loaded an event | ${eventName}`);
   client.on(eventName, event.bind(null, client));
 }
-
 // Imports events from events folder, dynamicly
 const commands = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 for (const commandfile of commands) {

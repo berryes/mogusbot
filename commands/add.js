@@ -2,9 +2,10 @@ const { MessageEmbed } = require('discord.js');
 const fs = require('fs')
 const request = require('request')
 const lang = require("../lang.json");
-const textEmbed = new MessageEmbed()
 const messageCreate = require("../functions/messageCreate")
 const errorMessage = require("../functions/errorMessage")
+
+
 const axios = require("axios")
 // sequelize define and login
 const Sequelize = require('sequelize');
@@ -92,6 +93,12 @@ if (args[0].toLowerCase() == 'image'){
 
     if(args[0].toLowerCase() == 'quote'){
         args.shift()
+        const qt = await dcQuote.findOne({
+            where: { quote: `${args.join(" ")}` },
+          });
+          console.log(qt)
+          if(qt){ return errorMessage("quoteExists",message)}
+
         const quote = await dcQuote.create({
             quote: args.join(" "),
             addedby:`${message.author.id}`,

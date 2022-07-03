@@ -8,6 +8,10 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 const fs = require("fs")
 module.exports = async (client, message,) => {
 const Guilds = client.guilds.cache.map(guild => guild.id);
+
+if(!fs.existsSync(`./images/`)){
+    fs.mkdirSync(`./images/`)
+}  
 for (let x in Guilds){
     // Creating database for every current guild (if already exists nada happens)
     await createServerQuoteDB(`${Guilds[x]}`)
@@ -19,11 +23,14 @@ for (let x in Guilds){
     await client.adminroles.set(Guilds[x], await chancheDB.get(`adminrole_${Guilds[x]}`) ) 
     await client.replyChance.set(Guilds[x], await chancheDB.get(`reply_${Guilds[x]}`))
     await client.replyType.set(Guilds[x], await chancheDB.get(`type_${Guilds[x]}`))
+    await client.replyType.set(Guilds[x], await chancheDB.get(`logchannel_${Guilds[x]}`))
+
 
     // if the server doesnt have a image folder make one.
     if(!fs.existsSync(`./images/${Guilds[x]}/`)){
         fs.mkdirSync(`./images/${Guilds[x]}/`)
-    }  
+    } 
+
 }
     console.log('\x1b[33m%s\x1b[0m',`
                                                                  █████               █████      
