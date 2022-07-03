@@ -106,20 +106,32 @@ for (const commandfile of commands) {
 client.login(process.env.API_KEY);
 
 
-// 
-// ░░░░░░░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░
-// ░░░░░░░░░░░░░████░░░░░███░░░░░░░░░░░░░░░
-// ░░░░██████████░░░░░░████████████░░░░░░░░
-// ░░░░█░░░░░░░█░░░░████░░░░░░░░░░██░░░░░░░
-// ░░░██░░░░░░██░░░░░█░░░░░░░░░░░██░░░░░░░░
-// ░░░█░░░░░░░█░░░░░░███░░░░░█████░░░░░░░░░
-// ░░░░█░░░░░░█░░░░░░░░░███████░░░░░░░░░░░░
-// ░░░░░███████░░░░░░░░░░░░░░░█░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░███████░░░░░█░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░█░░░░░█░░░░░█░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░█░░░░░█░░░░█░░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░█░░░░░█░░░░█░░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░█░░░░░█░░░░█░░░░░░░░░░░░░
-// ░░░░░░░░░░░█░░░█░░░░░██████░░░░░░░░░░░░░
-// ░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+const express = require('express')
+const app = express()
+const port = process.env.API_PORT
+const cors = require('cors')
+
+const getGuilds = require("./api/getGuilds")
+const getChannels = require("./api/getChannels")
+
+app.use(cors())
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+app.get('/getGuilds/', (req, res) => {
+  const guilds = getGuilds(client)
+  res.send(guilds)
+
+})
+app.get('/getGuild/:id', (req, res) => {
+  const guilds = getGuilds(client,req.params.id)
+  if(!guilds){ return res.send("Nothing was found on that id") }
+  res.send(guilds)
+})
+app.get('/getChannels/:id', (req, res) => {
+  const guilds = getChannels(client,req.params.id)
+  if(!guilds){ return res.send("Nothing was found on that id") }
+  res.send(guilds)
+})
+app.listen(port)
