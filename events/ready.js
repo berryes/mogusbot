@@ -6,7 +6,8 @@ const createServerImageDB = require("../models/dbImageInit")
 const Keyv = require("keyv")
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const fs = require("fs")
-module.exports = async (client, message,) => {
+
+module.exports = async (client) => {
 const Guilds = client.guilds.cache.map(guild => guild.id);
 
 if(!fs.existsSync(`./images/`)){
@@ -23,7 +24,7 @@ for (let x in Guilds){
     await client.adminroles.set(Guilds[x], await chancheDB.get(`adminrole_${Guilds[x]}`) ) 
     await client.replyChance.set(Guilds[x], await chancheDB.get(`reply_${Guilds[x]}`))
     await client.replyType.set(Guilds[x], await chancheDB.get(`type_${Guilds[x]}`))
-    await client.replyType.set(Guilds[x], await chancheDB.get(`logchannel_${Guilds[x]}`))
+    await client.logchannel.set(Guilds[x], await chancheDB.get(`logchannel_${Guilds[x]}`))
 
 
     // if the server doesnt have a image folder make one.
@@ -46,8 +47,12 @@ for (let x in Guilds){
                           ░░░░░░                                                                
  `)
 console.log('made by berryes(https://github.com/berryes/mogusbot)')
+console.log(`${client.user.username}#${client.user.discriminator} bot has started`); 
 // https://textkool.com/en/ascii-art-generator
 // DOS REBEL FONT
+
+// send changelog to channel
+/* console.log(client.guilds.cache.get("984861334116122645").systemChannelId) */
 }
 
 exports.name = "ready";

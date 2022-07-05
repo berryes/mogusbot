@@ -9,6 +9,7 @@ module.exports = {
         description: "Set the reply chanche and the type of reply",
         run: async (client, message, args) => {
                 if (!message.member.roles.cache.has(client.adminroles.get(message.guild.id))){ return errorMessage("noRole",message)}
+                if(!args[0]){ return errorMessage("noArgs",message)}
                 if(args[0].toLowerCase() == 'type'){
                     if(!args[1]){ return errorMessage("noArgs",message)}
                     

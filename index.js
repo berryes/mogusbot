@@ -1,9 +1,15 @@
 const check = require("./functions/startupCheck")
+const statistics = require("./functions/statistics")
 check()
+const randominfo = require("./functions/randomInfo")
 
-const { Client, Intents, Collection,MessageEmbed,  } = require("discord.js");
+
+const { Client, Intents, Collection,MessageEmbed,ShardingManager   } = require("discord.js");
 const fs = require("fs");
-const Discord = require('discord.js');
+const Discord = require('discord.js')
+/* const manager = new ShardingManager('./index.js', { token: `${process.env.API_KEY}` });
+manager.spawn(); */
+
 const lang = require("./lang.json")
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES ]
@@ -39,6 +45,7 @@ client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setTimestamp()
   musicembed.setDescription(`${lang.songAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
+  if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added song: (${song}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
   })
 
   client.player.on('playlistAdd', async (queue, playlist) => {
@@ -48,6 +55,7 @@ client.player.on('songAdd', async (queue, song, ) => {
     musicembed.setDescription(`${lang.playlistAdded} | ${lang.playingIN} <#${queue.connection.channel.id}>`)
     musicembed.setTimestamp()
     client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
+    if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added playlist: (${playlist}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
 })
 client.player.on('channelEmpty', async (queue, song) => {
   errorEmbed.setFields({ name: `${lang.voiceChannelEmpty}`, value: `${lang.voiceChannelEmptyDesc}` },);
@@ -63,6 +71,7 @@ client.player.on('songFirst', async (queue, song) => {
   musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
+  if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Started playing (${song}) in ${queue.guild.name}(${queue.guild.id})`)}
 })
 client.player.on('songChanged', async (queue, newSong,oldSong) => {
   musicembed.setTitle(`${newSong}`)
@@ -80,6 +89,7 @@ client.player.on('error',async  (queue, song) => {
   errorEmbed.setFields({ name: `${lang.error}`, value: `${lang.failedToLoad}` },);
   errorEmbed.setColor('RED')
   console.log("error playing")
+  if(process.env.LOGGING == 'True'){ console.log(`MUSIC | An error has accured  ${queue.guild.name}(${queue.guild.id})`)}
 /*   client.channels.cache.get(`${queue.guild.systemChannelId}`).send(({ embeds: [musicembed] }))
  */})
 
@@ -106,6 +116,9 @@ for (const commandfile of commands) {
 client.login(process.env.API_KEY);
 
 
+// Send statistics to server
+if(process.env.SEND_STATS == 'True'){ statistics(Client) }
+
 const express = require('express')
 const app = express()
 const port = process.env.API_PORT
@@ -117,7 +130,7 @@ const getChannels = require("./api/getChannels")
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('The mogusbot is running!')
 })
 app.get('/getGuilds/', (req, res) => {
   const guilds = getGuilds(client)
@@ -135,3 +148,6 @@ app.get('/getChannels/:id', (req, res) => {
   res.send(guilds)
 })
 app.listen(port)
+
+
+

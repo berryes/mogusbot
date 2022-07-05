@@ -7,13 +7,12 @@ const membed = new MessageEmbed()
 vclogger = (type,oldState,newState,Client) => {
 
 // if the guild doesnt have a log channel set do not run
-if(!Client.logchannel.get(oldState.guild.id)){ return }
+
 
     const user = Client.users.cache.get(`${newState.id}`)
     membed.setThumbnail(`${user.displayAvatarURL()}`)
-    membed.setAuthor(user.username)
-    console.log(user)
-
+    membed.setAuthor(`${user.username}#${user.discriminator}`)
+    membed.setTimestamp()
     switch (type){
        case 'deafened':
         membed.setTitle("Dafened")
@@ -21,6 +20,7 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
         membed.setFields(
             { name: '\u200B', value: `<#${oldState.channelId}>`}
             )
+            if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Deafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
            break;
 
         case 'undeafened':
@@ -29,6 +29,7 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
             membed.setFields(
                 { name: '\u200B', value: `<#${oldState.channelId}>`}
                 )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Undeafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
         break;
 
         case 'muted':
@@ -37,6 +38,8 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
             membed.setFields(
                 { name: '\u200B', value: `<#${oldState.channelId}>`}
                 )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Muted | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+
             break;
 
         case 'unmuted':
@@ -45,6 +48,8 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
             membed.setFields(
                 { name: '\u200B', value: `<#${oldState.channelId}>`}
                 )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Unmuted |${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+
             break;
 
         case 'left':
@@ -53,6 +58,7 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
             membed.setFields(
                 { name: '\u200B', value: `<#${oldState.channelId}>`}  
                 )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} left | ${oldState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
             break;
 
         case 'joined':
@@ -61,6 +67,7 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
             membed.setFields(
                 { name: '\u200B', value: `<#${newState.channelId}>`} 
                 )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Joined |${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
             break;
 
         case 'moved':
@@ -70,9 +77,12 @@ if(!Client.logchannel.get(oldState.guild.id)){ return }
                 { name: 'From', value: `<#${oldState.channelId}> ➡`, inline: true },
                 { name: 'To', value: `<#${newState.channelId}>`, inline: true },
             )
+            if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Moved |${oldState.channelId} -> ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
             break;
     
 }
+
+if(!Client.logchannel.get(oldState.guild.id)){ membed.fields = []; return }
 Client.channels.cache.get(`${Client.logchannel.get(oldState.guild.id)}`).send(({ embeds: [membed] }))
 membed.fields = [];
 }

@@ -27,6 +27,10 @@
     "description": "Description",
     "usage": "Usage",
 
+    "catfact": "Random catfact!",
+    "uselessFact": "Random useless fact",
+
+
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
     "notOwner": "You are not the owner of this server",
     "typeChange": "The random reply type is now:",

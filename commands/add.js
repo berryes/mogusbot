@@ -92,6 +92,7 @@ if (args[0].toLowerCase() == 'image'){
     }// end of image
 
     if(args[0].toLowerCase() == 'quote'){
+        if(!args[1]){return errorMessage("noArgs",message)}
         args.shift()
         const qt = await dcQuote.findOne({
             where: { quote: `${args.join(" ")}` },
@@ -105,6 +106,7 @@ if (args[0].toLowerCase() == 'image'){
         }).catch(console.error())
         messageCreate("quoteAdd",message,[args])
     }
+    else {return errorMessage("noArgs",message) }
 }}
 
 

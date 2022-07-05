@@ -58,5 +58,6 @@ errorMessage = (error,message) => {
 
 }
 message.reply(({ embeds: [errorEmbed] }))
+errorEmbed.fields = [];
 }
 module.exports = errorMessage
