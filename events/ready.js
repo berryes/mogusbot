@@ -26,6 +26,7 @@ for (let x in Guilds){
     await client.replyChance.set(Guilds[x], await chancheDB.get(`reply_${Guilds[x]}`))
     await client.replyType.set(Guilds[x], await chancheDB.get(`type_${Guilds[x]}`))
     await client.logchannel.set(Guilds[x], await chancheDB.get(`logchannel_${Guilds[x]}`))
+    await client.prefixes.set(Guilds[x], await chancheDB.get(`prefixes_${Guilds[x]}`))
 
 
     // if the server doesnt have a image folder make one.

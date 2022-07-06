@@ -6,18 +6,31 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 module.exports = async (client, message) => {
 
   if (message.author.bot) return;
-  if(message.content.includes(process.env.PREFIX)){
-
-  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
-
-  const command = [args[0]].shift().toLowerCase();
   
-  const cmd = await client.commands.get(command)
+  let guildPrefixes = await client.prefixes.get(`${message.guild.id}`)
+  let hasCustomPrefix = false
+  let prefixPlacement = 0
+  let args = []
+  let command = ''
+  for(let x in guildPrefixes){ if(message.content.includes(guildPrefixes[x])){ hasCustomPrefix = true , prefixPlacement = x} }
 
+  console.log(hasCustomPrefix)
+  
+  if(message.content.includes(process.env.PREFIX)){
+   args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
+   command = [args[0]].shift().toLowerCase(); 
+  }
+  
+/*   else if(hasCustomPrefix == true){
+    args = message.content.slice(guildPrefixes[prefixPlacement].length).trim().split(/ +/g)
+
+    console.log(command,args, "run")
+ }
+ */
+
+  const cmd = await client.commands.get(command)
   if (!cmd) return;
   args.shift()
-  await cmd.run(client, message,args )
-
-}
-  else  if(process.env.REPLYFUN == 'True'){ replyfun(message,client) }
+  cmd.run(client, message,args )
+  if(process.env.REPLYFUN == 'True'){ replyfun(message,client) }
 };
