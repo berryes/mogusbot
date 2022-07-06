@@ -29,7 +29,10 @@
 
     "catfact": "Random catfact!",
     "uselessFact": "Random useless fact",
-
+    "currentPrefix": "current prefixes of this server",
+    "prefixRemove": "Prefix(es) removed!",
+    "removed": "Removed",
+    "current": "current",
 
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
     "notOwner": "You are not the owner of this server",

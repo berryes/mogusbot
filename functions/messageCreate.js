@@ -4,7 +4,7 @@ const membed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` })
 .setColor('BLURPLE');
 
-errorMessage = (type,message,list) => {
+messageSend = (type,message,list) => {
     switch (type){
        case 'currentChance':
         membed.setTitle(`${lang.currentChance}`)
@@ -40,14 +40,29 @@ errorMessage = (type,message,list) => {
             break;
 
         case 'typeChange':
+            membed.fields = [];
             membed.setTitle(`${lang.typeChange} ${list[0]}`)
             break;
         case 'replyChange':
+            membed.fields = [];
             membed.setTitle(`${lang.replyChange} ${list[0]}`)
             break;
-            
+        case 'prefix':
+            membed.fields = [];
+            membed.setTitle(`${lang.currentPrefix}`)
+            membed.setDescription(`${process.env.PREFIX}  (Default) | ${list[0].join(" ")}`)
+            break;
+        case 'prefixRemove':
+            membed.fields = [];
+            membed.setTitle(`${lang.prefixRemove}`)
+            membed.addFields(
+                { name: `${lang.current}`, value: `${list[0].join(" ")}` },
+            )
+            break;
+        default:
+            return;
 }
 message.reply(({ embeds: [membed] }))
 membed.fields = [];
 }
-module.exports = errorMessage
+module.exports = messageSend

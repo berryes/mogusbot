@@ -3,10 +3,10 @@ const messageCreate = require('../functions/messageCreate');
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 const errorMessage = require("../functions/errorMessage")
 module.exports = {
-        name: "ch",
+        name: "setchance",
         arguments: 'reply, type',
-        usage: [`${process.env.PREFIX} setchance reply (number)`,`${process.env.PREFIX}setchance type (1-100)`],
-        description: "Set the reply chanche and the type of reply",
+        usage: [`${process.env.PREFIX} setchance reply (number)`,`${process.env.PREFIX}setchance type image/random/quote`],
+        description: "Set the reply chanche and the type of reply.",
         run: async (client, message, args) => {
                 if (!message.member.roles.cache.has(client.adminroles.get(message.guild.id))){ return errorMessage("noRole",message)}
                 if(!args[0]){ return errorMessage("noArgs",message)}

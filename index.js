@@ -20,6 +20,8 @@ client.replyChance = new Collection()
 client.replyType = new Collection()
 client.playerData = new Collection()
 client.logchannel = new Collection()
+client.prefixes = new Collection()
+
 
 //     musicbot part
 const { Player } = require("discord-music-player");

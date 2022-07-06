@@ -19,7 +19,8 @@ for (let x in Guilds){
     await createServerImageDB(`${Guilds[x]}`)
     await createServerModerationDB(`${Guilds[x]}`)
     await createServerDataDB(`${Guilds[x]}`)
-
+    if(!await chancheDB.get(`prefixes_${Guilds[x]}`)){ await chancheDB.set(`prefixes_${Guilds[x]}`,[])}
+    
     // gets the chanches and adminroles from the database and stores them in the ram for efficent use
     await client.adminroles.set(Guilds[x], await chancheDB.get(`adminrole_${Guilds[x]}`) ) 
     await client.replyChance.set(Guilds[x], await chancheDB.get(`reply_${Guilds[x]}`))
