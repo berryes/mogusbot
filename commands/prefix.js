@@ -23,6 +23,7 @@ module.exports = {
                 }
                 await chancheDB.set(`prefixes_${message.guild.id}`, databaseprefix)
                 client.prefixes.set(message.guild.id, databaseprefix)
+                messageCreate("prefixSet",message,[args])
                 break;
 
             case 'current':
@@ -33,6 +34,7 @@ module.exports = {
                 for (let x in args){
                     if(databaseprefix.indexOf(args[x]) >= 0 ){ 
                         databaseprefix.splice(databaseprefix.indexOf(args[x]),databaseprefix.indexOf(args[x])) 
+                        console.log("removed", args[x])
                     }
                 }
                 await chancheDB.delete(`prefixes_${message.guild.id}`, )

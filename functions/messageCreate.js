@@ -52,11 +52,16 @@ messageSend = (type,message,list) => {
             membed.setTitle(`${lang.currentPrefix}`)
             membed.setDescription(`${process.env.PREFIX}  (Default) | ${list[0].join(" ")}`)
             break;
+        case 'prefixSet':
+            membed.fields = [];
+            membed.setTitle(`${lang.prefixSet}`)
+            membed.setDescription(`${process.env.PREFIX}  (Default) | ${list[0].join(" ")}`)
+            break;
         case 'prefixRemove':
             membed.fields = [];
             membed.setTitle(`${lang.prefixRemove}`)
             membed.addFields(
-                { name: `${lang.current}`, value: `${list[0].join(" ")}` },
+                { name: `${lang.current}`, value: `${list.join(" ")}` },
             )
             break;
         default:

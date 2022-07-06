@@ -1,36 +1,28 @@
 require("dotenv").config();
 const replyfun = require("../functions/reply")
-const Keyv = require("keyv")
-const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
-
+const logger = require("../functions/MessageLog")
 module.exports = async (client, message) => {
-
+  logger("messageSent",client,message)
   if (message.author.bot) return;
-  
   let guildPrefixes = await client.prefixes.get(`${message.guild.id}`)
   let hasCustomPrefix = false
   let prefixPlacement = 0
-  let args = []
   let command = ''
-  for(let x in guildPrefixes){ if(message.content.includes(guildPrefixes[x])){ hasCustomPrefix = true , prefixPlacement = x} }
+  let args = []
+  for(let x in guildPrefixes){ if((message.content).slice(0,5).includes(guildPrefixes[x])){  hasCustomPrefix = true , prefixPlacement = x } }
+  if(hasCustomPrefix){
+     args = message.content.slice(guildPrefixes[prefixPlacement].length).trim().split(/ +/g)
+      command = [args[0]].shift().toLowerCase(); }
 
-  console.log(hasCustomPrefix)
-  
-  if(message.content.includes(process.env.PREFIX)){
+      else if(message.content.includes(process.env.PREFIX)){
    args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
-   command = [args[0]].shift().toLowerCase(); 
-  }
+   command = [args[0]].shift().toLowerCase();  }
   
-/*   else if(hasCustomPrefix == true){
-    args = message.content.slice(guildPrefixes[prefixPlacement].length).trim().split(/ +/g)
-
-    console.log(command,args, "run")
- }
- */
-
-  const cmd = await client.commands.get(command)
-  if (!cmd) return;
+        const cmd =  client.commands.get(command)
+        if (!cmd) return;
   args.shift()
+
   cmd.run(client, message,args )
+  
   if(process.env.REPLYFUN == 'True'){ replyfun(message,client) }
 };
