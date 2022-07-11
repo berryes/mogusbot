@@ -35,15 +35,19 @@ And NodeJS 16.X
 
 OR
 ```sh
+cd mogusbot
+```
+3. Cd into the folder
+```sh
 git clone https://github.com/berryes/mogusbot.git
 ```
 
-3. Install NPM packages
+4. Install NPM packages
 
 ```sh
 npm install
 ```
-4. Create a `.env` file in the root folder and fill out with you're information
+5. Create a `.env` file in the root folder and fill out with you're information
 ```env
 #bot 
 API_KEY=
