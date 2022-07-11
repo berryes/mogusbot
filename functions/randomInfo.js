@@ -18,9 +18,8 @@ randomInfo = async (type,channelId,client) => {
             membed.setTimestamp()
            break;
         
-        case 'useless':
+        case 'uselesss':
         membed.fields = []
-
         const ufact = await axios.get(`https://uselessfacts.jsph.pl/random.json?language=en`)
         membed.setTitle(`${lang.uselessFact}`)
         membed	.addFields(
@@ -28,9 +27,19 @@ randomInfo = async (type,channelId,client) => {
         )
         membed.setTimestamp()
         break;
-}
-await client.channels.cache.get(`${channelId}`).send(({ embeds: [membed] }))
 
+        default:
+            return
+            break;
+}
+try{
+client.channels.cache.get(`${channelId}`).send(({ embeds: [membed] }))
+}
+catch(error){
+    console.log(error)
+}
 membed.fields = [];
 }
 module.exports = randomInfo;
+
+

@@ -51,6 +51,9 @@ errorMessage = (error,message) => {
         case 'quoteExists':
             errorEmbed.setDescription(`${lang.quoteExists}`)
             break;
+        case 'biggerthen10':
+            errorEmbed.setDescription(`${lang.biggerthenten}`)
+            break;
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)
             break;

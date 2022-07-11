@@ -34,6 +34,7 @@
     "removed": "Removed",
     "current": "current",
     "prefixSet": "Added the following prefix(es):",
+    "biggerthenten": "the prefix is longer than 10 charachters",
 
     "destroyIMG": "image db entry was destroyed since it does not exist any more",
     "notOwner": "You are not the owner of this server",

@@ -30,6 +30,14 @@ membed.setTimestamp()
             { name: 'In', value: `<#${oldMessage.channelId}>` },
         )
         break;
+        
+    case 'imageSent':
+        membed.setTitle("Image sent")
+        membed.setColor('BLURPLE')
+        membed.addFields(
+            { name: 'In', value: `<#${oldMessage.channelId}>` },
+        )
+        break;
  }
  
 Client.channels.cache.get(`${Client.logchannel.get(oldMessage.guild.id)}`).send(({ embeds: [membed] }))

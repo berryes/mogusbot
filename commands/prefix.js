@@ -18,6 +18,7 @@ module.exports = {
             case 'set':
                 args.shift()
                 for (let x in args){
+                    if(args[x].length > 10){return errorMessage("biggerthen10",message)}
                     if(databaseprefix.indexOf(args[x]) >= 0 ){ alreadyhas.push(args[x]) }
                     else{ databaseprefix.push(args[x]) }
                 }
@@ -41,7 +42,6 @@ module.exports = {
                 await chancheDB.set(`prefixes_${message.guild.id}`, databaseprefix)
                 client.prefixes.set(message.guild.id, databaseprefix)
                 messageCreate("prefixRemove",message,[databaseprefix])
-
             break;
 
             default: 
