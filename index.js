@@ -24,8 +24,6 @@ client.logchannel = new Collection()
 client.prefixes = new Collection()
 
 
-randominfo("uselesss","949601166688399401",client)
-
 //     musicbot part
 const { Player } = require("discord-music-player");
 const player = new Player(client, {

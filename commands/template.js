@@ -5,8 +5,7 @@ module.exports = {
     usage: [`${process.env.PREFIX} `],
     description: "",
     run: (client, message, args) => {
-        randominfo("uselesss","984861334673960992",client)
-
+        randominfo(`uselesss`,"949601166688399401",client)
 }
 }
 
