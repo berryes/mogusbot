@@ -9,14 +9,16 @@ module.exports = async (client, message) => {
   let prefixPlacement = 0
   let command = ''
   let args = []
-  for(let x in guildPrefixes){ if((message.content).slice(0,5).includes(guildPrefixes[x])){  hasCustomPrefix = true , prefixPlacement = x } }
+
+  for(let x in guildPrefixes){ if((message.content).slice(0,5).includes(guildPrefixes[x])){  hasCustomPrefix = true , prefixPlacement = x }  }
   if(hasCustomPrefix){
      args = message.content.slice(guildPrefixes[prefixPlacement].length).trim().split(/ +/g)
       command = [args[0]].shift().toLowerCase(); }
-
+      ///////////////////////////////
       else if(message.content.includes(process.env.PREFIX)){
-   args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
-   command = [args[0]].shift().toLowerCase();  }
+               args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
+               command = [args[0]].shift().toLowerCase();  
+              }
   
         const cmd =  client.commands.get(command)
         if (!cmd) return;

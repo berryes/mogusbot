@@ -41,5 +41,3 @@ catch(error){
 membed.fields = [];
 }
 module.exports = randomInfo;
-
-

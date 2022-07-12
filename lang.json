@@ -26,6 +26,9 @@
     "name": "Name",
     "description": "Description",
     "usage": "Usage",
+    "requested": "requested",
+    "loadingmusic": "Loading the music",
+    "loadingplaylist": "Loading the playlist",
 
     "catfact": "Random catfact!",
     "uselessFact": "Random useless fact",

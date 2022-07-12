@@ -22,7 +22,14 @@ vclogger = (type,oldState,newState,Client) => {
             )
             if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Deafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
            break;
-
+           case 'serverdeafened':
+            membed.setTitle("Server Dafened")
+            membed.setColor('DARK_RED')
+            membed.setFields(
+                { name: '\u200B', value: `<#${oldState.channelId}>`}
+                )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Server Deafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+               break;
         case 'undeafened':
             membed.setTitle("Undefened")
             membed.setColor('GREEN')
@@ -30,6 +37,14 @@ vclogger = (type,oldState,newState,Client) => {
                 { name: '\u200B', value: `<#${oldState.channelId}>`}
                 )
                 if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Undeafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+        break;
+        case 'serverundeafened':
+            membed.setTitle("Server Undefened")
+            membed.setColor('GREEN')
+            membed.setFields(
+                { name: '\u200B', value: `<#${oldState.channelId}>`}
+                )
+                if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Server Undeafened | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
         break;
 
         case 'muted':
@@ -41,6 +56,15 @@ vclogger = (type,oldState,newState,Client) => {
                 if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Muted | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
 
             break;
+            case 'servermuted':
+                membed.setTitle("Server Muted")
+                membed.setColor('DARK_RED')
+                membed.setFields(
+                    { name: '\u200B', value: `<#${oldState.channelId}>`}
+                    )
+                    if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Server Muted | ${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+    
+                break;
 
         case 'unmuted':
             membed.setTitle("unmuted")
@@ -51,6 +75,14 @@ vclogger = (type,oldState,newState,Client) => {
                 if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Unmuted |${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
 
             break;
+            case 'serverunmuted':
+                membed.setTitle("Server unmuted")
+                membed.setColor('GREEN')
+                membed.setFields(
+                    { name: '\u200B', value: `<#${oldState.channelId}>`}
+                    )
+                    if(process.env.LOGGING == 'True'){ console.log(`${new Date} VOICE LOG | ${user.username}#${user.discriminator} Server unmuted |${newState.channelId} ${newState.guild.name}(${newState.guild.id})`)}
+                break;
 
         case 'left':
             membed.setTitle("Left")

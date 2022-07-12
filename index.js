@@ -4,6 +4,7 @@ check()
 const randominfo = require("./functions/randomInfo")
 
 
+
 const { Client, Intents, Collection,MessageEmbed,ShardingManager   } = require("discord.js");
 const fs = require("fs");
 const Discord = require('discord.js')
@@ -22,6 +23,8 @@ client.playerData = new Collection()
 client.logchannel = new Collection()
 client.prefixes = new Collection()
 
+
+randominfo("uselesss","949601166688399401",client)
 
 //     musicbot part
 const { Player } = require("discord-music-player");
@@ -42,12 +45,10 @@ const errorEmbed = new MessageEmbed()
 client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setTitle(`${song}`)
   musicembed.setURL(`${song.url}`)
-  musicembed.addFields( { name: `${lang.songAdded}`, value: `${lang.playingIN} <#${queue.connection.channel.id}>` }, { name: `\u200B`, value: `Requested by ${client.users.cache.get(queue.data.requestedBy)}` }, )
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
-
   if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added song: (${song}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
   })
 
@@ -56,11 +57,10 @@ client.player.on('songAdd', async (queue, song, ) => {
     musicembed.setThumbnail(null)
     musicembed.setTitle(`${playlist}`)
     musicembed.setURL(`${playlist.url}`)
-    musicembed.addFields( { name: `${lang.playlistAdded}`, value: `${lang.playingIN} <#${queue.connection.channel.id}>` }, { name: `\u200B`, value: `Requested by ${client.users.cache.get(queue.data.requestedBy)}` }, )
     musicembed.setTimestamp()
     client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
     musicembed.fields = []
-    if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added playlist: (${playlist}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
+    if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added playlist: to the queue in ${queue.guild.name}(${queue.guild.id})`)}
 })
 client.player.on('channelEmpty', async (queue, song) => {
   errorEmbed.setFields({ name: `${lang.voiceChannelEmpty}`, value: `${lang.voiceChannelEmptyDesc}` },);
@@ -69,12 +69,13 @@ client.player.on('channelEmpty', async (queue, song) => {
   musicembed.fields = []
 })
 client.player.on('songFirst', async (queue, song) => {
+  musicembed.setAuthor({ name: `${client.users.cache.get(queue.data.requestedBy).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(queue.data.requestedBy)).displayAvatarURL()}` })
   musicembed.setTitle(`${song}`)
 	musicembed.setURL(`${song.url}`)
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
-  musicembed.addFields({name: `${song.duration}`, value: `Requested by ${client.users.cache.get(queue.data.requestedBy)}` }, )
+  musicembed.setDescription(` **${song.duration}** | ${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
+  queue.data.delete.delete()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
   if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Started playing (${song}) in ${queue.guild.name}(${queue.guild.id})`)}
@@ -82,14 +83,15 @@ client.player.on('songFirst', async (queue, song) => {
 
 
 client.player.on('songChanged', async (queue, newSong,oldSong) => {
+  musicembed.setAuthor({ name: `${(client.users.cache.get(queue.data.requestedBy)).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(queue.data.requestedBy)).displayAvatarURL()}` })
   musicembed.setTitle(`${newSong}`)
 	musicembed.setURL(`${newSong.url}`)
   musicembed.setThumbnail(`${newSong.thumbnail}`)
-  musicembed.setDescription(`${lang.playingIN} <#${queue.connection.channel.id}>`)
-  musicembed.addFields({name: `${newSong.duration}`, value: `Requested by ${client.users.cache.get(queue.data.requestedBy)}` }, ) 
+  musicembed.setDescription(`** ${newSong.duration}** |${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
+
 })
 
 
@@ -97,9 +99,8 @@ client.player.on('error',async  (queue, song) => {
   errorEmbed.setFields({ name: `${lang.error}`, value: `${lang.failedToLoad}` },);
   errorEmbed.setColor('RED')
   console.log("error playing")
-  if(process.env.LOGGING == 'True'){ console.log(`MUSIC | An error has accured  ${queue.guild.name}(${queue.guild.id})`)}
-/*   client.channels.cache.get(`${queue.guild.systemChannelId}`).send(({ embeds: [musicembed] }))
- */})
+  queue.skip()
+})
 
 
 client.commands = new Collection();

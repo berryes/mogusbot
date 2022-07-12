@@ -5,6 +5,8 @@ const membed = new MessageEmbed()
 .setColor('BLURPLE');
 
 messageSend = (type,message,list) => {
+    membed.setTitle('')
+    membed.fields = []
     switch (type){
        case 'currentChance':
         membed.setTitle(`${lang.currentChance}`)
@@ -40,25 +42,25 @@ messageSend = (type,message,list) => {
             break;
 
         case 'typeChange':
-            membed.fields = [];
+            
             membed.setTitle(`${lang.typeChange} ${list[0]}`)
             break;
         case 'replyChange':
-            membed.fields = [];
+            
             membed.setTitle(`${lang.replyChange} ${list[0]}`)
             break;
         case 'prefix':
-            membed.fields = [];
+            
             membed.setTitle(`${lang.currentPrefix}`)
             membed.setDescription(`${process.env.PREFIX}  (Default) | ${list[0].join(" ")}`)
             break;
         case 'prefixSet':
-            membed.fields = [];
+            
             membed.setTitle(`${lang.prefixSet}`)
             membed.setDescription(`${process.env.PREFIX}  (Default) | ${list[0].join(" ")}`)
             break;
         case 'prefixRemove':
-            membed.fields = [];
+        
             membed.setTitle(`${lang.prefixRemove}`)
             membed.addFields(
                 { name: `${lang.current}`, value: `${list.join(" ")}` },
@@ -68,6 +70,6 @@ messageSend = (type,message,list) => {
             return;
 }
 message.reply(({ embeds: [membed] }))
-membed.fields = [];
+
 }
 module.exports = messageSend
