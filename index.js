@@ -24,15 +24,17 @@ client.logchannel = new Collection()
 client.prefixes = new Collection()
 
 
+setInterval(function(){randominfo("939115249435562017",client)},36000000)
+
 //     musicbot part
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
     leaveOnEnd: false,
     leaveOnStop: false,
-    leaveOnEmpty: false,
     timeout: 5,
     quality: "high",
 });
+
 
 client.player = player;
 const musicembed = new MessageEmbed()
@@ -47,6 +49,7 @@ client.player.on('songAdd', async (queue, song, ) => {
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
+  queue.data.delete.delete().catch(console.error)
   if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added song: (${song}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
   })
 
@@ -56,7 +59,9 @@ client.player.on('songAdd', async (queue, song, ) => {
     musicembed.setTitle(`${playlist}`)
     musicembed.setURL(`${playlist.url}`)
     musicembed.setTimestamp()
+    queue.data.delete.delete().catch(console.error)
     client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
+
     musicembed.fields = []
     if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added playlist: to the queue in ${queue.guild.name}(${queue.guild.id})`)}
 })
@@ -73,9 +78,9 @@ client.player.on('songFirst', async (queue, song) => {
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setDescription(` **${song.duration}** | ${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
-  queue.data.delete.delete()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
+  
   if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Started playing (${song}) in ${queue.guild.name}(${queue.guild.id})`)}
 })
 
@@ -89,7 +94,6 @@ client.player.on('songChanged', async (queue, newSong,oldSong) => {
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
-
 })
 
 

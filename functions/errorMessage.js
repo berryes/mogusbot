@@ -54,6 +54,10 @@ errorMessage = (error,message) => {
         case 'biggerthen10':
             errorEmbed.setDescription(`${lang.biggerthenten}`)
             break;
+        case 'needArgs':
+            errorEmbed.setTitle(`${lang.needArgs}`)
+            errorEmbed.setDescription(`${lang.needArgsDesc}`)
+            break;
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)
             break;

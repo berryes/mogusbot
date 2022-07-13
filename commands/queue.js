@@ -1,22 +1,25 @@
-const {MessageEmbed} = require("discord.js")
+
+const { MessageEmbed } = require('discord.js');
+// inside a command, event listener, etc.
+const embed = new MessageEmbed()
 const lang = require("../lang.json")
-const embedd = new MessageEmbed()
-.setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 module.exports = {
     name: "queue",
     arguments: 'none',
     usage: [`${process.env.PREFIX} queue`],
-    description: "Shows the queue",
+    description: "Shows the current queue",
     run: (client, message, args) => {
-        const asd = []
-        const five = 5
-    for (let x in five){
-        asd.push(`{ name: 'field${x} ', value: 'Some value here', inline: true },`)
-    }
-    console.log(asd)
-    embedd.addFields(asd)
-    message.reply(({ embeds: [embedd] }))
+        let guildQueue = client.player.getQueue(message.guild.id);
+        embed.setAuthor({ name: `${client.users.cache.get(guildQueue.data.requestedBy).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(guildQueue.data.requestedBy)).displayAvatarURL()}` })
+        embed.setDescription(`${lang.playing}  ${guildQueue.songs[0].name}`)
+        for (let x in guildQueue.songs){
+            if(x <= 10 && x != 0){
+            console.log(guildQueue.songs[x].name)
+            embed.addField(`\u200B`, `${x} [${guildQueue.songs[x].name}](${guildQueue.songs[x].url})`)
+            }
+        }
+        message.reply({ embeds: [embed] })
 }
 }
-exports.name = "queue";
+
 

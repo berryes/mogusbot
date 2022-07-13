@@ -29,7 +29,8 @@
     "requested": "requested",
     "loadingmusic": "Loading the music",
     "loadingplaylist": "Loading the playlist",
-
+    "needArgs": "You need to give at least one more argument",
+    "needArgsDesc": "Empty messages cannot be added",
     "catfact": "Random catfact!",
     "uselessFact": "Random useless fact",
     "currentPrefix": "current prefixes of this server",

@@ -33,14 +33,11 @@ module.exports = {
                 await queue.playlist(args.join(" "))
             }
             else {
-            let loadingMsgg = null
-            await message.reply(`${lang.loadingmusic}`).then(msg => { loadingMsgg = msg }).catch(console.error);
             let guildQueue = client.player.getQueue(message.guild.id);
             let queue = await client.player.createQueue(message.guild.id, {
                 data: {
                     messageCh: `${message.channelId}`,
                     requestedBy: message.author.id,
-                    delete: loadingMsgg
                 }
             });
             await queue.join(message.member.voice.channel);

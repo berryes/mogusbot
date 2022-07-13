@@ -3,7 +3,7 @@ const logger = require("../functions/MessageLog")
 
 module.exports = async (client, oldMessage,newMessage) => {
     logger("messageChange",client,oldMessage,newMessage)
-    
+    if(oldMessage.content = newMessage.content){return}
     if (newMessage.author.bot) return;
     let guildPrefixes = await client.prefixes.get(`${newMessage.guild.id}`)
     let hasCustomPrefix = false

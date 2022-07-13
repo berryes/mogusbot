@@ -10,17 +10,18 @@ module.exports = {
     run: async(client, message, args) => {
         if(!message.author.id == message.guild.ownerId) {return errorMessage("notOwner",message)}
         if(!args[0]){ return errorMessage("noArgs",message)}
+        if(!args[1]){ return errorMessage("needArgs",message)}
 
         const databaseprefix = await chancheDB.get(`prefixes_${message.guild.id}`)
         const alreadyhas = []
 
         switch(args[0]){
-            case 'set':
+            case 'add':
                 args.shift()
                 for (let x in args){
-                    if(args[x].length > 10){return errorMessage("biggerthen10",message)}
+                    if(args[x].length > 5){return errorMessage("biggerthen10",message)}
                     if(databaseprefix.indexOf(args[x]) >= 0 ){ alreadyhas.push(args[x]) }
-                    else{ databaseprefix.push(args[x]) }
+                    else{  databaseprefix.push(args[x]) }
                 }
                 await chancheDB.set(`prefixes_${message.guild.id}`, databaseprefix)
                 client.prefixes.set(message.guild.id, databaseprefix)

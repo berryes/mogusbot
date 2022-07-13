@@ -7,9 +7,10 @@ const axios = require("axios")
 randomInfo = async (channelId,client) => {
     membed.setColor('RANDOM');
     membed.setTimestamp()
-
-    switch (Math.floor(Math.random() * 2)){
-       case 1:
+    let random = Math.floor(Math.random() * 2)
+    console.log(random)
+    switch (random){
+       case 0:
         const fact = await axios.get(`https://catfact.ninja/fact`)
         const image = await axios.get(`https://api.thecatapi.com/v1/images/search?api_key=${process.env.CAT_API_KEY}`)
             membed.setTitle(`${lang.catfact}`)
@@ -18,7 +19,7 @@ randomInfo = async (channelId,client) => {
             membed.setTimestamp()
            break;
         
-        case 2:
+        case 1:
         membed.fields = []
         const ufact = await axios.get(`https://uselessfacts.jsph.pl/random.json?language=en`)
         membed.setTitle(`${lang.uselessFact}`)
