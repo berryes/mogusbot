@@ -1,9 +1,11 @@
 require("dotenv").config();
 const replyfun = require("../functions/reply")
 const logger = require("../functions/MessageLog")
+const dataCollection = require("../functions/dataCollection")
 module.exports = async (client, message) => {
   if(!message.content){logger("imageSent",client,message)} else{logger("messageSent",client,message)}
   if (message.author.bot) return;
+  dataCollection("message",[message,client])
   let guildPrefixes = await client.prefixes.get(`${message.guild.id}`)
   let hasCustomPrefix = false
   let prefixPlacement = 0

@@ -4,7 +4,7 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 const Sequelize = require('sequelize');
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs')
-const lang = require("../lang")
+const lang = require("../lang.json")
 
 //database create & use
 const sequelize = new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `${process.env.DB_PASS}`, {

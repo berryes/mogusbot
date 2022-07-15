@@ -58,6 +58,7 @@ errorMessage = (error,message) => {
             errorEmbed.setTitle(`${lang.needArgs}`)
             errorEmbed.setDescription(`${lang.needArgsDesc}`)
             break;
+
         default:
             errorEmbed.setDescription(`${lang.defaultErorr}`)
             break;

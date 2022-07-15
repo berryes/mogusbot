@@ -1,3 +1,4 @@
+// Erro handeling, checking if every data given is correct
 const check = require("./functions/startupCheck")
 const statistics = require("./functions/statistics")
 check()
@@ -15,6 +16,7 @@ const lang = require("./lang.json")
 const client =  new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES ]
 });
+
 require("dotenv").config();
 client.adminroles = new Collection()
 client.replyChance = new Collection()
@@ -24,14 +26,13 @@ client.logchannel = new Collection()
 client.prefixes = new Collection()
 
 
-setInterval(function(){randominfo("939115249435562017",client)},36000000)
+/* setInterval(function(){randominfo("939115249435562017",client)},36000000) */
 
 //     musicbot part
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
     leaveOnEnd: false,
     leaveOnStop: false,
-    timeout: 5,
     quality: "high",
 });
 
@@ -43,40 +44,45 @@ const errorEmbed = new MessageEmbed()
 .setFooter({ text: `${lang.botname}`, iconURL: `${lang.botimg}` });
 
 client.player.on('songAdd', async (queue, song, ) => {
+  musicembed.setAuthor(null)
   musicembed.setTitle(`${song}`)
   musicembed.setURL(`${song.url}`)
   musicembed.setThumbnail(`${song.thumbnail}`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
-  queue.data.delete.delete().catch(console.error)
+
   if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added song: (${song}) to the queue in ${queue.guild.name}(${queue.guild.id})`)}
   })
 
   client.player.on('playlistAdd', async (queue, playlist) => {
-    console.log(playlist)
     musicembed.setThumbnail(null)
     musicembed.setTitle(`${playlist}`)
     musicembed.setURL(`${playlist.url}`)
     musicembed.setTimestamp()
-    queue.data.delete.delete().catch(console.error)
+  
     client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
 
     musicembed.fields = []
     if(process.env.LOGGING == 'True'){ console.log(`MUSIC | Added playlist: to the queue in ${queue.guild.name}(${queue.guild.id})`)}
 })
 client.player.on('channelEmpty', async (queue, song) => {
-  errorEmbed.setFields({ name: `${lang.voiceChannelEmpty}`, value: `${lang.voiceChannelEmptyDesc}` },);
+  musicembed.setThumbnail(null)
+  musicembed.setAuthor(null)
+  musicembed.setTitle(`${lang.voiceChannelEmpty}`)
+  musicembed.setURL(null)
+  musicembed.setDescription(`${lang.voiceChannelEmptyDesc}`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
 })
 client.player.on('songFirst', async (queue, song) => {
-  musicembed.setAuthor({ name: `${client.users.cache.get(queue.data.requestedBy).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(queue.data.requestedBy)).displayAvatarURL()}` })
+  musicembed.setAuthor(null)
+  musicembed.setAuthor({ name: `${song.requestedBy.username} ${lang.requested}`, iconURL: `${(client.users.cache.get(song.requestedBy.id)).displayAvatarURL()}` })
   musicembed.setTitle(`${song}`)
 	musicembed.setURL(`${song.url}`)
   musicembed.setThumbnail(`${song.thumbnail}`)
-  musicembed.setDescription(` **${song.duration}** | ${lang.playingIN} <#${queue.connection.channel.id}>`)
+  musicembed.setDescription(` **${song.duration}** |  ${lang.playingIN} <#${queue.connection.channel.id}>`)
   musicembed.setTimestamp()
   client.channels.cache.get(`${queue.data.messageCh}`).send(({ embeds: [musicembed] }))
   musicembed.fields = []
@@ -86,7 +92,8 @@ client.player.on('songFirst', async (queue, song) => {
 
 
 client.player.on('songChanged', async (queue, newSong,oldSong) => {
-  musicembed.setAuthor({ name: `${(client.users.cache.get(queue.data.requestedBy)).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(queue.data.requestedBy)).displayAvatarURL()}` })
+  musicembed.setAuthor(null)
+  musicembed.setAuthor({ name: `${newSong.requestedBy.username} ${lang.requested}`, iconURL: `${(client.users.cache.get(newSong.requestedBy.id)).displayAvatarURL()}` })
   musicembed.setTitle(`${newSong}`)
 	musicembed.setURL(`${newSong.url}`)
   musicembed.setThumbnail(`${newSong.thumbnail}`)
@@ -105,7 +112,8 @@ client.player.on('error',async  (queue, song) => {
 })
 
 
-client.commands = new Collection();
+
+
 // Imports events from events folder, dynamicly
 const events = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of events) {
@@ -114,21 +122,30 @@ for (const file of events) {
   console.log('\x1b[36m%s\x1b[0m',` 🔧 Loaded an event | ${eventName}`);
   client.on(eventName, event.bind(null, client));
 }
-// Imports events from events folder, dynamicly
-const commands = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
-for (const commandfile of commands) {
-  const commandName = commandfile.split(".")[0];
-  const command = require(`./commands/${commandfile}`);
 
-  console.log('\x1b[32m%s\x1b[0m',`🔧 Loaded a command | ${commandName}`);
-  client.commands.set(commandName, command);
+
+// Imports only the selected commands
+client.commands = new Collection();
+const commandTypes = ["music","system","replyfun","fun"]
+
+for (const dir of commandTypes){
+  let commandDir = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith(".js"))
+  for (const commandfile of commandDir){
+    const commandName = commandfile.split(".")[0];
+    const command = require(`./commands/${dir}/${commandfile}`);
+    console.log('\x1b[32m%s\x1b[0m',`🔧 Loaded a ${command.type} command -> ${commandName}`);
+    client.commands.set(commandName, command);
+  }
 }
 
+// logs the client in via api key
 client.login(process.env.API_KEY);
 
 
-// Send statistics to server
-if(process.env.SEND_STATS == 'True'){ statistics(Client) }
+// Send statistics to server on startup and also every 12hrs (you can disable this)
+if(process.env.SEND_STATS == 'True'){ 
+  statistics()
+  setInterval(function(){statistics()},43200000) }
 
 const express = require('express')
 const app = express()
@@ -154,10 +171,13 @@ app.get('/getGuild/:id', (req, res) => {
   res.send(guilds)
 })
 app.get('/getChannels/:id', (req, res) => {
-  const guilds = getChannels(client,req.params.id)
+  let guilds = getChannels(client,req.params.id)
   if(!guilds){ return res.send("Nothing was found on that id") }
-  res.send(guilds)
+  const obj = Object.fromEntries(guilds);
+  res.send(obj)
+  // returned data is not shown (its a map)
 })
+
 app.listen(port)
 
 

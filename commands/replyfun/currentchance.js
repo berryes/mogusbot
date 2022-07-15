@@ -1,6 +1,6 @@
 const Keyv = require('keyv');
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
-const messageCreate = require("../functions/messageCreate")
+const messageCreate = require("../../functions/embedCreate")
 
     module.exports = {
         name: "currenchance",

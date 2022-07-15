@@ -3,6 +3,7 @@
     <img style="border-radius: 60em" :src="guild.iconURL">
   <h1>{{guild.name}}</h1>
   <h2>Members: {{guild.memberCount}}</h2>
+  <router-link :to="{ name: `music`, params: { id: `${guild.id}` } }"><button >{{guild.name}}</button></router-link>
 
 </div>
 </template>
@@ -25,7 +26,12 @@
 -moz-box-shadow: -57px -91px -400px 49px rgba(0,0,0,1);
 
 }
-
+.server button{
+  height: 5em;
+  width: 10em;
+  border-radius: 2em;
+  background-color: antiquewhite;
+}
 </style>
 <script>
 import { useRoute } from 'vue-router'

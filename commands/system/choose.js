@@ -1,6 +1,6 @@
 // make the bot choose between these too:
 // .sus choose "whatever" or "hahaha"
-const lang = require("../lang.json");
+const lang = require("../../lang.json");
 module.exports = {
     name: "choose",
     arguments: 'none',

@@ -50,7 +50,7 @@ const createServerDataDB = async (serverid) =>{
 		},
 	})
 	await dcDB.sync()
-	return console.log("created data database for ", serverid)
+	return console.log("synced data database for ", serverid)
 	}
 
 

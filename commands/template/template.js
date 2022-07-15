@@ -1,11 +1,11 @@
-const randominfo = require("../functions/randomInfo") 
 module.exports = {
-    name: "",
+    name: "The asd",
     arguments: 'none',
     usage: [`${process.env.PREFIX} `],
     description: "",
+    type: "Fun",
     run: (client, message, args) => {
-        randominfo(`uselesss`,"949601166688399401",client)
+       message.reply("meleg")
 }
 }
 

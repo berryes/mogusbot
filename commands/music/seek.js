@@ -1,5 +1,5 @@
 const {MessageEmbed} = require("discord.js");
-const lang = require("../lang.json")
+const lang = require("../../lang.json")
 const musicembed = new MessageEmbed()
 .setFooter({ text: 'The mighty mogus' });
 module.exports = {
@@ -7,6 +7,7 @@ module.exports = {
     arguments: 'none',
     usage: [`${process.env.PREFIX} seek (amount in seconds)`],
     description: "Jumps forward in the music",
+    type: "Music",
     run: (client, message, args)  => {
         if (!client.player.getQueue(message.guild.id)){ return errorMessage("notPlaying",message)}
         let guildQueue = client.player.getQueue(message.guild.id);

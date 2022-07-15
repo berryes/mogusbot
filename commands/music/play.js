@@ -1,11 +1,12 @@
 const {MessageEmbed} = require("discord.js")
-const lang = require("../lang.json");
-const errorMessage = require("../functions/errorMessage")
+const lang = require("../../lang.json");
+const errorMessage = require("../../functions/errorMessage")
 module.exports = {
     name: "play",
     arguments: 'url',
     usage: [`${process.env.PREFIX} (url/song name)`],
     description: "Plays a song/playlist",
+    type: "Music",
     run: async (client, message, args)  => {
         if(!args[0]){return errorMessage("noArgs",message)}
         const Supported = ["spotify.com/playlist","youtube.com/playlist"]
@@ -24,7 +25,6 @@ module.exports = {
                 let queue = await client.player.createQueue(message.guild.id, {
                     data: {
                         messageCh: `${message.channelId}`,
-                        requestedBy: message.author.id,
                         playlistlength: 0,
                         delete: loadingMsg
                     }
@@ -37,10 +37,11 @@ module.exports = {
             let queue = await client.player.createQueue(message.guild.id, {
                 data: {
                     messageCh: `${message.channelId}`,
-                    requestedBy: message.author.id,
                 }
             });
             await queue.join(message.member.voice.channel);
-            await queue.play(args.join(" "))
+            await queue.play(args.join(" "),{
+                requestedBy: message.author
+            })
         }
 }}

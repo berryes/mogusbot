@@ -1,6 +1,6 @@
-const commands = require('../index')
+const commands = require('../../index')
 const { MessageEmbed } = require('discord.js');
-const lang = require("../lang.json");
+const lang = require("../../lang.json");
 
 module.exports = {
     name: "help",

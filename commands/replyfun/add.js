@@ -1,9 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs')
 const request = require('request')
-const lang = require("../lang.json");
-const messageCreate = require("../functions/messageCreate")
-const errorMessage = require("../functions/errorMessage")
+const lang = require("../../lang.json");
+const messageCreate = require("../../functions/embedCreate")
+const errorMessage = require("../../functions/errorMessage")
 
 
 const axios = require("axios")

@@ -1,7 +1,7 @@
 const {MessageEmbed} = require("discord.js")
-const lang = require("../lang.json");
+const lang = require("../../lang.json");
 const Keyv = require('keyv');
-const messageCreate = require("../functions/messageCreate")
+const messageCreate = require("../../functions/embedCreate");
 const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_LOCATION}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
     module.exports = {
     name: "adminrol",
