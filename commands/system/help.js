@@ -5,6 +5,7 @@ const lang = require("../../lang.json");
 module.exports = {
     name: "help",
     arguments: 'none',
+    type: "System",
     usage: [`${process.env.PREFIX} help`],
     description: "It does what u literally just did. dumbass",
     run: (client, message, args) => {

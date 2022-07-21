@@ -5,6 +5,7 @@ const messageCreate = require("../../functions/embedCreate")
 module.exports = {
     name: "",
     arguments: 'none',
+    type: "System",
     usage: [`${process.env.PREFIX} `],
     description: "",
     run: async(client, message, args) => {

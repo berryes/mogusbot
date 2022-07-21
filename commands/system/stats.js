@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports =  {
         name: "stats",
         arguments: 'none',
+        type: "System",
         usage: [`${process.env.PREFIX} uptime`],
         description: "Replies with the bot's stats",
         run: async (client, message, args) => {

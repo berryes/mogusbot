@@ -15,9 +15,9 @@ module.exports = {
         if (!guildQueue.isPlaying){ return errorMessage("notPlaying",message)}
         if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
         if (!(message.member.voice.channel.id == guildQueue.connection.channel.id)){ return errorMessage("usernotinPlayingVc",message)}
-
-        embed.setAuthor({ name: `${client.users.cache.get(guildQueue.data.requestedBy).username} ${lang.requested}`, iconURL: `${(client.users.cache.get(guildQueue.data.requestedBy)).displayAvatarURL()}` })
+        embed.setAuthor({ name: `${guildQueue.songs[0].requestedBy.username} ${lang.requested}`, iconURL: `${(guildQueue.songs[0].requestedBy).displayAvatarURL()}` })
         embed.setDescription(`${lang.playing}  ${guildQueue.songs[0].name}`)
+
         for (let x in guildQueue.songs){
             if(x <= 10 && x != 0){
             console.log(guildQueue.songs[x].name)

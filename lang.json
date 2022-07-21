@@ -2,12 +2,12 @@
     "__DESCRIPTION": "HEYOOO, seems like you've found the language json. Here you can change every bit of the bot's language. Ya can make him a rx screaming STUTUTUTUTU or something liek that idk bro its 3am im dying inside",
 
 
-    "botname": "The migthy mogus",
-    "botimg": "https://imgur.com/uKs1Q0y.png",
+    "botname": "Xavy the bottom uwu",
+    "botimg": "https://imgur.com/a/XbhAPtA.png",
     "Richpresence": "asd",
     "success": "Success!",
     "error": "Error",
-    "adminrole": "adminrole set",
+    "adminrole": "Adminrole has been set",
     "missingRole": "You dont have permission for this",
     "defaultErorr": "An unkown error has accured",
     "argIsnan": "The argument can only be a number",
@@ -22,7 +22,7 @@
     "cantChooseFromOne": "I can't choose from one option",
     "noArgumentsGiven": "you need to type in something in after the command  you baka",
     "helpCommandDoesNotExist": "This is not a command. ask for them with with the commands command",
-
+    "nootherSongs": "No other songs in the queue",
     "name": "Name",
     "description": "Description",
     "usage": "Usage",

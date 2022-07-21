@@ -17,6 +17,7 @@ check = async () => {
       } catch (error) {
         throw new Error(`Unable to establish connection with the database: ${error}`);
       }
+      
     if (!process.env.API_KEY)  throw new Error("no api key attached in .env"); 
     if (!process.env.PREFIX)  throw new Error("no prefix set in .env"); 
     if (!process.env.DB_NAME)  throw new Error("database name not set in .env"); 

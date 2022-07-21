@@ -16,7 +16,7 @@ module.exports = {
         if (!guildQueue.isPlaying){ return errorMessage("notPlaying",message)}
         if (!message.member.voice.channel) { return errorMessage("usernotinvc",message)}
         if (!(message.member.voice.channel.id == guildQueue.connection.channel.id)){ return errorMessage("usernotinPlayingVc",message)}
-
+        if(guildQueue.repeatMode == 1 || guildQueue.repeatMode == 2 ){guildQueue.setRepeatMode(0)}
         guildQueue.stop();
         messageCreate("queueStop",message)
 

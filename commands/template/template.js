@@ -1,11 +1,11 @@
 module.exports = {
-    name: "The asd",
+    name: "Template",
     arguments: 'none',
-    usage: [`${process.env.PREFIX} `],
-    description: "",
+    usage: [`${process.env.PREFIX} Template`],
+    description: "Template",
     type: "Fun",
     run: (client, message, args) => {
-       message.reply("meleg")
+       message.reply("Hello im a template command")
 }
 }
 

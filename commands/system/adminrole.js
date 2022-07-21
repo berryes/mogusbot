@@ -6,6 +6,7 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
     module.exports = {
     name: "adminrol",
     arguments: 'none',
+    type: "System",
     usage: [`${process.env.PREFIX} (id of role)`],
     description: "Sets the adminrole for the bot (CAN BE DONE ONLY BY THE SERVER OWNER)",
     run: (client, message, args) => {

@@ -8,6 +8,7 @@ const chancheDB = new Keyv(`${process.env.DB_TYPE}://${process.env.DB_USER}:${pr
 module.exports = {
     name: "log",
     arguments: 'none',
+    type: "System",
     usage: [`${process.env.PREFIX} log (channelid)`],
     description: "Sets the logger channel",
     run: (client, message, args) => {

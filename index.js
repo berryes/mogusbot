@@ -108,7 +108,7 @@ client.player.on('error',async  (queue, song) => {
   errorEmbed.setFields({ name: `${lang.error}`, value: `${lang.failedToLoad}` },);
   errorEmbed.setColor('RED')
   console.log("error playing")
-  queue.skip()
+  console.log(queue )
 })
 
 
